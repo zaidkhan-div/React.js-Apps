@@ -1,30 +1,30 @@
-import React ,{useState} from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { decrement, increment } from '../../redux/slices/counterSlice'
-import { Button, Checkbox, Form, Input ,message } from "antd";
+import { Button, Checkbox, Form, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 
 
 
-const LoginForm  = () => {
+const LoginForm = () => {
   const count = useSelector((state) => state.counter.value)
-    const navigate = useNavigate();
-    const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
 
-    
-    const [loading, setLoading] = useState([]);
-    const  onFinish = async (values) => {
+
+  const [loading, setLoading] = useState([]);
+  const onFinish = async (values) => {
     setLoading(['true']);
     // const { username, password } = values;
     const loginResponse = await LoginUser(values);
-    console.log('loginResponse',loginResponse)
-    if(loginResponse==='success'){
+    console.log('loginResponse', loginResponse)
+    if (loginResponse === 'success') {
       navigate('/app/stats')
     }
-    else{
-     message.error('Username or Passwrod is incorrect');
-     }
+    else {
+      message.error('Username or Passwrod is incorrect');
+    }
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -37,30 +37,30 @@ const LoginForm  = () => {
     const userObj = JSON.stringify({
       username,
       password
-  })
+    })
     try {
-      const response = await fetch(url,{
-        method:'POST',
+      const response = await fetch(url, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json' // Specify the content type
-      },
-        body:userObj
+        },
+        body: userObj
       });
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
       const json = await response.json();
-      const {token} = json;
-      localStorage.setItem('isAuth',token)
+      const { token } = json;
+      localStorage.setItem('isAuth', token)
       setLoading([]);
       return 'success'
     } catch (error) {
-      setLoading([]); 
+      setLoading([]);
       console.error(error.message);
       return error.message;
     }
   }
-  
+
 
   return (
     <div className="main-login">
@@ -134,17 +134,17 @@ const LoginForm  = () => {
       </Form>
 
       <button
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        >
-          Increment
-        </button>
-        <button
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
-          Decrement
-        </button>
+        aria-label="Increment value"
+        onClick={() => dispatch(increment())}
+      >
+        Increment
+      </button>
+      <button
+        aria-label="Decrement value"
+        onClick={() => dispatch(decrement())}
+      >
+        Decrement
+      </button>
 
     </div>
   );

@@ -7,7 +7,7 @@ import Reports from "../components/Reports";
 import UserDetails from "../components/UserDetails"
 import ErrorPage from "../components/ErrorPage";
 import RequireAuth from "../routes/ProtectedRoutes";
-import Todo from "../components/Todo/Todo";
+// import Todo from "../components/Todo/Todo";
 
 export default function Routing() {
   return (
@@ -52,11 +52,11 @@ export default function Routing() {
             </RequireAuth>
           }
         />
-        <Route path="todo"  element={
+        {/* <Route path="todo"  element={
             <RequireAuth>
               <Todo />
             </RequireAuth>
-          } />
+          } /> */}
         <Route path="*" element={<ErrorPage />} />
       </Route>
 

@@ -10,6 +10,7 @@ import { Layout, Menu ,Dropdown,Avatar  } from 'antd';
 import { Outlet,Link ,useNavigate } from 'react-router-dom';
 import "./style.css";
 export default function Home() {
+  
   const { Header, Sider, Content } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
