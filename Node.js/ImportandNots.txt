@@ -1,0 +1,19 @@
+What does "single-threaded" mean?
+Think of a thread like a line of workers doing tasks. In many systems, there are multiple lines (threads) so multiple tasks can happen at the same time.
+Node.js only has one line (one thread), so it handles tasks one by one.
+
+3> Non-blocking, Asynchronous Behavior
+Non-blocking: Node.js doesn’t wait for one task to finish before starting the next one. It continues executing other tasks and comes back to the first task when it’s done.
+
+4> Understanding Callbacks 
+Callbacks Functions Play a vital role in Node.js they are very much crucial.
+
+Callbacks are crucial in Node.js because:
+They allow your program to continue running without waiting for long tasks (like reading a file) to complete.
+They help manage what should happen next after a task finishes.
+
+
+5> Understanding Event Loop
+The event loop is a crucial part of Node.js that allows it to perform non-blocking I/O operations, even though it is single-threaded.
+
+The event loop is what makes Node.js efficient. It allows Node.js to handle multiple operations at once without blocking the main thread.

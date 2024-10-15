@@ -28,7 +28,7 @@ var fs = require('fs');
 
 http.createServer(function (req, res) {
     // console.log(req.url);
-  if (req.url === '/home') {
+  if (req.url === '/') {
     fs.readFile('home.html', function (err, data) {
       if (err) {
         res.writeHead(404, {'Content-Type': 'text/html'});

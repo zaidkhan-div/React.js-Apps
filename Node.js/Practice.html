@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>This is I am learning Node.js And practicing it</h1>
+    <script>
+        function afterGreeting() {
+            console.log('This runs after the greeting.');
+        }
+
+        function greet(name, functoberun) {
+            console.log('Hello, ' + name + '!');
+            // callback(); // Calling the callback function
+            functoberun();
+        }
+        // afterGreeting();
+        // Calling the greet function
+        greet('Khan', afterGreeting);
+
+        //  Eevent Loop The Node.js Thread operation works on Event loop
+        console.log('Start');
+
+        setTimeout(() => {
+            console.log('Timeout finished Mid ');
+        }, 1000); // Asynchronous function
+
+        setTimeout(() => {
+            console.log('End');
+        }, 2000);
+
+    </script>
+</body>
+
+</html>
