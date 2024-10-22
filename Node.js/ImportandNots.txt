@@ -17,3 +17,16 @@ They help manage what should happen next after a task finishes.
 The event loop is a crucial part of Node.js that allows it to perform non-blocking I/O operations, even though it is single-threaded.
 
 The event loop is what makes Node.js efficient. It allows Node.js to handle multiple operations at once without blocking the main thread.
+
+
+6> Modules in Node.js
+
+Why Use Modules?
+Reusability: You can use the same code in different parts of your application.
+Maintainability: Code is easier to manage when split into smaller files.
+Separation of Concerns: Each module can have a specific role (e.g., one module for database interactions, another for user authentication).
+
+Types of Modules in Node.js:
+Core Modules: These are built-in modules that come with Node.js (like fs, http, path, etc.).
+Local Modules: These are the modules you create in your project.
+Third-party Modules: These are modules you can install from npm (like express).
