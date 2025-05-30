@@ -1,9 +1,9 @@
-import React from 'react'
+import Table from "./Components/Table"
 
 const App = () => {
   return (
     <div>
-      Hi This TanStack Learning Building Simple Table then Dynamic 
+      <Table/>
     </div>
   )
 }
