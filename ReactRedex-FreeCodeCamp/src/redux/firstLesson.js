@@ -1,8 +1,8 @@
 // The Redux store object provides several methods that allow you to interact with it. For example, you can retrieve the current state held in the Redux store object with the getState() method.
 const store = Redux.createStore(
     (state = 5) => state
-  );
-  
+);
+
 // Change code below this line
 // The code from the previous challenge is re-written more concisely in the code editor. Use store.getState() to retrieve the state from the store, and assign this to a new variable currentState.
 
@@ -14,3 +14,12 @@ const currentState = store.getState();
 // Think of Redux actions as messengers that deliver information about events happening in your app to the Redux store. The store then conducts the business of updating state based on the action that occurred.
 
 // Writing a Redux action is as simple as declaring an object with a type property. Declare an object action and give it a property type set to the string 'LOGIN'.
+// Define an action here:
+const action = {
+    type: "LOGIN"
+}
+
+// After creating an action, the next step is sending the action to the Redux store so it can update its state. In Redux, you define action creators to accomplish this. An action creator is simply a JavaScript function that returns an action. In other words, action creators create objects that represent action events.
+function actionCreator(){
+    return action
+}
