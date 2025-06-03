@@ -1,4 +1,4 @@
-import { flexRender, getCoreRowModel, useReactTable, createColumnHelper } from "@tanstack/react-table"
+import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table"
 
 // Here are all of the rowModels that are available
 

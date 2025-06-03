@@ -1,9 +1,12 @@
 import Table from "./Components/Table"
+import GetFilteredRowModelTable from "./Components/GetFilteredRowModelTable"
 
 const App = () => {
   return (
     <div>
-      <Table/>
+      <Table />
+      {/* Another Filtered Table */}
+      <GetFilteredRowModelTable />
     </div>
   )
 }
