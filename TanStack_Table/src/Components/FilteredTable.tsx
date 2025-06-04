@@ -1,10 +1,10 @@
 import { flexRender, getCoreRowModel, getFilteredRowModel, useReactTable } from "@tanstack/react-table";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 
 const FilteredTable = () => {
-    const [filter, setFilter] = useState('');
 
+    const [filter, setFilter] = useState('');
 
     type User = {
         firstName: string;
@@ -13,11 +13,11 @@ const FilteredTable = () => {
         status: boolean;
     }
 
-    const data: User[] = [
+    const data = useMemo<User[]>(() => [
         { firstName: "Zaid", lastName: "Khan", age: 18, status: false },
         { firstName: "Musab", lastName: "Boss", age: 20, status: false },
         { firstName: "Dilawar", lastName: "Giligiti", age: 22, status: true },
-    ];
+    ], []);
 
     const columns = [
         { accessorKey: "firstName", header: "First Name" },
@@ -25,6 +25,25 @@ const FilteredTable = () => {
         { accessorKey: "age", header: "Age" },
         { accessorKey: "status", header: "Status" },
     ];
+
+    // Custom filter function that handles different types
+
+    // const globalFilterFn = (row, columnId, filterValue) => {
+    //     const value = row.getValue(columnId);
+
+    //     if (typeof value === 'string') {
+    //         return value.toLowerCase().includes(filterValue.toLowerCase());
+    //     }
+    //     if (typeof value === 'number') {
+    //         return value.toString().includes(filterValue);
+    //     }
+    //     if (typeof value === 'boolean') {
+    //         return filterValue === '' ||
+    //             (filterValue.toLowerCase() === 'true' && value) ||
+    //             (filterValue.toLowerCase() === 'false' && !value);
+    //     }
+    //     return false;
+    // };
 
     const table = useReactTable({
         data,
@@ -34,8 +53,13 @@ const FilteredTable = () => {
         },
         onGlobalFilterChange: setFilter,
         getCoreRowModel: getCoreRowModel(),
-        getFilteredRowModel: getFilteredRowModel()
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: 'includesString'
+        // globalFilterFn: globalFilterFn,
     });
+
+    // console.log(table);
+
     // FilterFns
     // Each column can have its own unique filtering logic.Choose from any of the filter functions that are provided by  TanStack Table, or create your own.
 
@@ -53,7 +77,9 @@ const FilteredTable = () => {
     // inNumberRange - Number range inclusion
 
     // console.log('Filtered Table ', table.getRowModel().rows.map(row => row.original))
-
+    const handleClick = () => {
+        console.log('Click Input');
+    }
 
     return (
         <div className="p-4">
@@ -63,8 +89,19 @@ const FilteredTable = () => {
                 placeholder="Filter..."
                 value={filter}
                 onChange={e => setFilter(e.target.value)}
+                onClick={handleClick}
                 className="border-2 border-black p-2 mb-4"
             />
+            {/* Column Filter (Status) */}
+
+            {/* <select
+                onChange={(e) => table.getColumn("status")?.setFilterValue(e.target.value)}
+                className="border ml-4 p-2"
+            >
+                <option value="all">All Statuses</option>
+                <option value={true}>Active</option>
+                <option value={false}>Inactive</option>
+            </select> */}
 
             {/* Table */}
             <table className="w-full border-collapse">
@@ -94,6 +131,16 @@ const FilteredTable = () => {
                     ))}
                 </tbody>
             </table>
+
+            {/* If No Matching is Found */}
+            {
+                table.getRowModel().rows.length === 0 && (
+                    <div className="text-black font-bold text-2xl">
+                        <p>No matching records found</p>
+                    </div>
+                )
+            }
+
         </div>
     );
 }
