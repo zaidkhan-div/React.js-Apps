@@ -1,12 +1,14 @@
-import Table from "./Components/Table"
-import GetFilteredRowModelTable from "./Components/GetFilteredRowModelTable"
+// import Table from "./Components/Table"
+// import GetFilteredRowModelTable from "./Components/GetFilteredRowModelTable"
+import FilteredTable from './Components/FilteredTable'
 
 const App = () => {
   return (
     <div>
-      <Table />
+      {/* <Table /> */}
       {/* Another Filtered Table */}
-      <GetFilteredRowModelTable />
+      {/* <GetFilteredRowModelTable /> */}
+      <FilteredTable />
     </div>
   )
 }
