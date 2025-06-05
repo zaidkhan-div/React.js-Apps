@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 const FilteredTable = () => {
 
     const [filter, setFilter] = useState('');
+    const [rowSelection, setRowSelection] = useState({});
 
     type User = {
         firstName: string;
@@ -39,6 +40,23 @@ const FilteredTable = () => {
     ], [])
 
     const columns = [
+        {
+            id: 'select',
+            header: ({ table }) => (
+                <input
+                    type="checkbox"
+                    checked={table.getIsAllRowsSelected()}
+                    onChange={table.getToggleAllRowsSelectedHandler()}
+                />
+            ),
+            cell: ({ row }) => (
+                <input
+                    type="checkbox"
+                    checked={row.getIsSelected()}
+                    onChange={row.getToggleSelectedHandler()}
+                />
+            ),
+        },
         // { accessorKey: "#s", header: "#S-NO" },
         { accessorKey: "firstName", header: "First Name" },
         { accessorKey: "lastName", header: "Last Name" },
@@ -71,7 +89,8 @@ const FilteredTable = () => {
         data,
         columns,
         state: {
-            globalFilter: filter
+            globalFilter: filter,
+            rowSelection
         },
         onGlobalFilterChange: setFilter,
         getCoreRowModel: getCoreRowModel(),
@@ -79,9 +98,15 @@ const FilteredTable = () => {
         globalFilterFn: 'includesString',
         getSortedRowModel: getSortedRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-        initialState: { pagination: { pageSize: 5 } }, // this decide how many rows per page 
+        initialState: { pagination: { pageSize: 6 } }, // this decide how many rows per page 
+        onRowSelectionChange: setRowSelection,
+        enableRowSelection: true,
+        getRowId: (row) => `${row.firstName}-${row.lastName}`,
         // globalFilterFn: globalFilterFn,
     });
+
+
+
 
     //     const {
     //         pageIndex
@@ -111,14 +136,9 @@ const FilteredTable = () => {
     //      };
 
 
- 
 
-   
     // console.log('Filtered Table ', table.getRowModel().rows.map(row => row.original))
 
-    const handleClick = () => {
-        console.log('Click Input');
-    }
 
     return (
         <div className="p-4">
@@ -128,9 +148,8 @@ const FilteredTable = () => {
                 placeholder="Filter..."
                 value={filter}
                 onChange={(e) => {
-                    setFilter(e.target.value.trim())
+                    setFilter(e.target.value.trim() || "")
                 }}
-                onClick={handleClick}
                 className="border-2 border-black p-2 mb-4"
             />
             {/* Column Filter (Status) */}
@@ -208,8 +227,8 @@ const FilteredTable = () => {
                     ← Prev
                 </button>
                 <span>
-                    {/* table.getState().pagination.pageIndex + 1} / {table.getPageCount() */}
-                    Page {table.getState().pagination.pageIndex + 1}
+                    {/* { table.getState().pagination.pageIndex + 1} / {table.getPageCount()} */}
+                    Page {table.getState().pagination.pageIndex + 1} / {table.getPageCount()}
                 </span>
                 <button
                     onClick={() => table.nextPage()}
@@ -219,6 +238,9 @@ const FilteredTable = () => {
                     Next →
                 </button>
             </div>
+
+            <pre>{JSON.stringify(rowSelection, null, 2)}</pre>
+
 
             {/* If No Matching is Found */}
             {
@@ -236,3 +258,18 @@ const FilteredTable = () => {
 
 export default FilteredTable
 
+// FilterFns
+// Each column can have its own unique filtering logic.Choose from any of the filter functions that are provided by  TanStack Table, or create your own.
+
+// By default there are 10 built -in filter functions to choose from:
+
+// includesString - Case - insensitive string inclusion
+// includesStringSensitive - Case - sensitive string inclusion
+// equalsString - Case - insensitive string equality
+// equalsStringSensitive - Case - sensitive string equality
+// arrIncludes - Item inclusion within an array
+// arrIncludesAll - All items included in an array
+// arrIncludesSome - Some items included in an array
+// equals - Object / referential equality Object.is /===
+// weakEquals - Weak object / referential equality ==
+// inNumberRange - Number range inclusion
