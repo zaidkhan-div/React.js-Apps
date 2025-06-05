@@ -1,4 +1,4 @@
-import { flexRender, getCoreRowModel, getFilteredRowModel, useReactTable } from "@tanstack/react-table";
+import { flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 
 
@@ -14,8 +14,8 @@ const FilteredTable = () => {
     }
 
     const data = useMemo<User[]>(() => [
-        { firstName: "Zaid", lastName: "Khan", age: 18, status: false },
         { firstName: "Musab", lastName: "Boss", age: 20, status: false },
+        { firstName: "Zaid", lastName: "Khan", age: 18, status: false },
         { firstName: "Dilawar", lastName: "Giligiti", age: 22, status: true },
     ], []);
 
@@ -23,7 +23,7 @@ const FilteredTable = () => {
         { accessorKey: "firstName", header: "First Name" },
         { accessorKey: "lastName", header: "Last Name" },
         { accessorKey: "age", header: "Age" },
-        { accessorKey: "status", header: "Status" },
+        { accessorKey: "status", header: "Status", },
     ];
 
     // Custom filter function that handles different types
@@ -54,7 +54,8 @@ const FilteredTable = () => {
         onGlobalFilterChange: setFilter,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
-        globalFilterFn: 'includesString'
+        globalFilterFn: 'includesString',
+        getSortedRowModel: getSortedRowModel()
         // globalFilterFn: globalFilterFn,
     });
 
@@ -77,6 +78,7 @@ const FilteredTable = () => {
     // inNumberRange - Number range inclusion
 
     // console.log('Filtered Table ', table.getRowModel().rows.map(row => row.original))
+
     const handleClick = () => {
         console.log('Click Input');
     }
@@ -94,26 +96,45 @@ const FilteredTable = () => {
             />
             {/* Column Filter (Status) */}
 
-            {/* <select
-                onChange={(e) => table.getColumn("status")?.setFilterValue(e.target.value)}
+            <select
                 className="border ml-4 p-2"
+                onChange={(e) => {
+                    const value = e.target.value === 'true' ? true
+                                : e.target.value === 'false' ? false
+                                : undefined;
+                    table.getColumn("status")?.setFilterValue(value)
+                        
+                }}
             >
                 <option value="all">All Statuses</option>
-                <option value={true}>Active</option>
-                <option value={false}>Inactive</option>
-            </select> */}
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+            </select>
 
             {/* Table */}
             <table className="w-full border-collapse">
                 <thead className="bg-gray-100">
                     {table.getHeaderGroups().map(headerGroup => (
                         <tr key={headerGroup.id}>
-                            {headerGroup.headers.map(header => (
+                            {/* {headerGroup.headers.map(header => (
                                 <th
                                     key={header.id}
-                                    className="p-2 text-left border-b"
+                                    className="p-2 text-left border-b cursor-pointer"
                                 >
                                     {flexRender(header.column.columnDef.header, header.getContext())}
+                                </th>
+                            ))} */}
+                            {headerGroup.headers.map(header => (
+                                <th onClick={header.column.getToggleSortingHandler()}
+                                    key={header.id}
+                                    className="p-2 text-left border-b cursor-pointer"
+                                >
+                                    {/* {flexRender(...)} */}
+                                    {/* {flexRender(header.column.columnDef.header, header.getContext())} */}
+                                    {header.column.columnDef.header as string}
+                                    {header.column.getIsSorted() === 'asc' ? ' ↑' : ''}
+                                    {header.column.getIsSorted() === 'desc' ? ' ↓' : ''}
+                                    {/* {flexRender(header.column.columnDef.header, header.getContext())} */}
                                 </th>
                             ))}
                         </tr>
@@ -141,7 +162,7 @@ const FilteredTable = () => {
                 )
             }
 
-        </div>
+        </div >
     );
 }
 
