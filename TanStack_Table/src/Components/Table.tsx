@@ -1,7 +1,6 @@
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table"
 import { useMemo, useState } from "react"
 
-const [sorting, setSorting] = useState([])
 
 // Here are all of the rowModels that are available
 
@@ -35,6 +34,9 @@ import {
 
 
 const Table = () => {
+
+    const [sorting, setSorting] = useState([])
+
     //Table Data Type
     type User = {
         firstName: string
@@ -87,6 +89,7 @@ const Table = () => {
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         onSortingChange: setSorting, // Required for sorting updates
+        enableSorting: true,
         getSortedRowModel: getSortedRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         initialState: {
@@ -117,11 +120,15 @@ const Table = () => {
                 {table.getHeaderGroups().map(headerGroup => (
                     <div key={headerGroup.id} className="table-row">
                         {headerGroup.headers.map(header => (
-                            <div key={header.id} className="table-cell text-left p-2 font-bold cursor-pointer">
+                            <th
+                                key={header.id}
+                                className="table-cell text-left p-2 font-bold cursor-pointer"
+                                onClick={header.column.getToggleSortingHandler()}
+                            >
                                 {flexRender(header.column.columnDef.header, header.getContext())}
                                 {header.column.getIsSorted() === 'asc' ? "↑" : ""}
                                 {header.column.getIsSorted() === 'desc' ? "↓" : ""}
-                            </div>
+                            </th>
                         ))}
                     </div>
                 ))}
