@@ -85,12 +85,8 @@ const FilteredTable = () => {
     //     return false;
     // };
 
+    const getRowId = (row: User) => `${row.firstName}-${row.lastName}`
 
-    // const randomId: number = new Date().getTime();
-    // let filterShowRows = data
-
-    // const filterToShowData = showOnlySelected ? data.filter((_, index) => rowSelection[index]) : data;
-    const getRowId = (row: User) => `${row.firstName}-${row.lastName}`;
     const filteredData = useMemo(() => {
         if (!showOnlySelected) return data;
         return data.filter((_, index) => {
@@ -98,6 +94,8 @@ const FilteredTable = () => {
             return rowSelection[rowId];
         });
     }, [data, showOnlySelected, rowSelection]);
+
+
     const table = useReactTable({
         data: filteredData,
         columns,
@@ -122,7 +120,7 @@ const FilteredTable = () => {
         // globalFilterFn: globalFilterFn,
     });
 
-    // filterShowRows = data //showOnlySelected ? table.getSelectedRowModel().rows.map((row)=> row.original) : data;
+    // const filterShowRows = showOnlySelected ? table.getSelectedRowModel().rows.map((row)=> row.original) : data;
 
     // const result = table.getSelectedRowModel().flatRows;
 

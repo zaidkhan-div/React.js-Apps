@@ -1,4 +1,7 @@
-import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table"
+import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table"
+import { useMemo, useState } from "react"
+
+const [sorting, setSorting] = useState([])
 
 // Here are all of the rowModels that are available
 
@@ -41,44 +44,29 @@ const Table = () => {
     }
 
     // This is like a row data in Excel
-    const data: User[] = [
-        {
-            firstName: "Zaid",
-            lastName: "Khan",
-            age: 18,
-            status: false
-        },
-        {
-            firstName: "Asad",
-            lastName: "Khan",
-            age: 28,
-            status: true
-        },
-        {
-            firstName: "Ata",
-            lastName: "Khan",
-            age: 28,
-            status: false
-        },
-        {
-            firstName: "Salman",
-            lastName: "Khan",
-            age: 38,
-            status: false
-        },
-        {
-            firstName: "Tanner",
-            lastName: "Linsley",
-            age: 33,
-            status: false
-        },
-        {
-            firstName: "Kevin",
-            lastName: "Vandy",
-            age: 27,
-            status: false
-        }
-    ]
+    const data = useMemo<User[]>(() => [
+        { firstName: "Zaid", lastName: "Khan", age: 18, status: false },
+        { firstName: "Emma", lastName: "Johnson", age: 28, status: true },
+        { firstName: "Liam", lastName: "Smith", age: 32, status: false },
+        { firstName: "Olivia", lastName: "Williams", age: 24, status: true },
+        { firstName: "Noah", lastName: "Brown", age: 45, status: true },
+        { firstName: "Ava", lastName: "Jones", age: 19, status: false },
+        { firstName: "William", lastName: "Garcia", age: 37, status: true },
+        { firstName: "Sophia", lastName: "Miller", age: 29, status: false },
+        { firstName: "Benjamin", lastName: "Davis", age: 51, status: true },
+        { firstName: "Isabella", lastName: "Rodriguez", age: 22, status: false },
+        { firstName: "James", lastName: "Martinez", age: 40, status: true },
+        { firstName: "Mia", lastName: "Hernandez", age: 26, status: false },
+        { firstName: "Lucas", lastName: "Lopez", age: 33, status: true },
+        { firstName: "Charlotte", lastName: "Gonzalez", age: 31, status: false },
+        { firstName: "Henry", lastName: "Wilson", age: 48, status: true },
+        { firstName: "Amelia", lastName: "Anderson", age: 23, status: false },
+        { firstName: "Alexander", lastName: "Thomas", age: 36, status: true },
+        { firstName: "Harper", lastName: "Taylor", age: 27, status: false },
+        { firstName: "Michael", lastName: "Moore", age: 42, status: true },
+        { firstName: "Evelyn", lastName: "Jackson", age: 25, status: false },
+        { firstName: "Daniel", lastName: "Martin", age: 39, status: true }
+    ], [])
 
     // Columns (Define How to Display Data)
     const columns = [
@@ -93,52 +81,78 @@ const Table = () => {
     const table = useReactTable({
         data,
         columns,
-        getCoreRowModel: getCoreRowModel()
+        state: {
+            sorting
+        },
+        getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        onSortingChange: setSorting, // Required for sorting updates
+        getSortedRowModel: getSortedRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        initialState: {
+            pagination: { pageSize: 6 },
+        }
         // getCoreRowModel - returns a basic row model that is just a 1: 1 mapping of the original data passed to the table.
     })
-//     What it does:
-//      Takes your data + columns.
-//      Processes them into a table structure(rows, cells, headers).
+    //     What it does:
+    //      Takes your data + columns.
+    //      Processes them into a table structure(rows, cells, headers).
 
 
 
-// const item = table.getRowModel().rows.map(row => row.original)
-// console.log(item);
+    // const item = table.getRowModel().rows.map(row => row.original)
+    // console.log(item);
 
-// Save table data to localStorage
-// const saveData = () => {
-//     const dataToSave = table.getRowModel().rows.map(row => row.original);
-//     localStorage.setItem("tableData", JSON.stringify(dataToSave));
-// };
+    // Save table data to localStorage
+    // const saveData = () => {
+    //     const dataToSave = table.getRowModel().rows.map(row => row.original);
+    //     localStorage.setItem("tableData", JSON.stringify(dataToSave));
+    // };
 
-// saveData();
+    // saveData();
 
-return (
-    <div className="table-row-group w-1/2">
-        <div className="table-header-group bg-gray-100">
-            {table.getHeaderGroups().map(headerGroup => (
-                <div key={headerGroup.id} className="table-row">
-                    {headerGroup.headers.map(header => (
-                        <div key={header.id} className="table-cell text-left p-2 font-bold">
-                            {flexRender(header.column.columnDef.header, header.getContext())}
-                        </div>
-                    ))}
-                </div>
-            ))}
+    return (
+        <div className="table-row-group w-1/2">
+            <div className="table-header-group bg-gray-100">
+                {table.getHeaderGroups().map(headerGroup => (
+                    <div key={headerGroup.id} className="table-row">
+                        {headerGroup.headers.map(header => (
+                            <div key={header.id} className="table-cell text-left p-2 font-bold cursor-pointer">
+                                {flexRender(header.column.columnDef.header, header.getContext())}
+                                {header.column.getIsSorted() === 'asc' ? "↑" : ""}
+                                {header.column.getIsSorted() === 'desc' ? "↓" : ""}
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+            <div className="table-row-group">
+                {table.getRowModel().rows.map(row => (
+                    <div key={row.id} className="table-row hover:bg-gray-50">
+                        {row.getVisibleCells().map(cell => (
+                            <div key={cell.id} className="table-cell text-left p-2 border-t">
+                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+            <div className="flex items-center justify-start gap-5 text-red-500">
+                <button
+                    onClick={() => table.previousPage()}
+                    disabled={!table.getCanPreviousPage()}
+                    className=" cursor-pointer"
+                >  ← Prev
+                </button>
+                <p>{table.getState().pagination.pageIndex + 1}/{table.getPageCount()}</p>
+                <button
+                    onClick={() => table.nextPage()}
+                    disabled={!table.getCanNextPage()}
+                    className=" cursor-pointer"
+                >   Next →   </button>
+            </div>
         </div>
-        <div className="table-row-group">
-            {table.getRowModel().rows.map(row => (
-                <div key={row.id} className="table-row hover:bg-gray-50">
-                    {row.getVisibleCells().map(cell => (
-                        <div key={cell.id} className="table-cell text-left p-2 border-t">
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </div>
-                    ))}
-                </div>
-            ))}
-        </div>
-    </div>
-)
+    )
 }
 
 export default Table
