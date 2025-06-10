@@ -4,8 +4,9 @@ import { useMemo, useState } from "react";
 
 const FilteredTable = () => {
 
-    const [filter, setFilter] = useState('');
-    const [rowSelection, setRowSelection] = useState({});
+    const [filter, setFilter] = useState(''); // for searching in the table
+    const [rowSelection, setRowSelection] = useState({}); // for storing the selection of rows
+    const [showOnlySelected, setShowOnlySelected] = useState(false) // for showing only Selected Rows
 
     type User = {
         firstName: string;
@@ -44,6 +45,7 @@ const FilteredTable = () => {
             header: ({ table }) => ( // This is for bulk Selection on top of Header 
                 <input
                     type="checkbox"
+                    className="cursor-pointer"
                     checked={table.getIsAllRowsSelected()}
                     onChange={table.getToggleAllRowsSelectedHandler()}
                 />
@@ -51,6 +53,7 @@ const FilteredTable = () => {
             cell: ({ row }) => ( // this is for single row Selection
                 <input
                     type="checkbox"
+                    className="cursor-pointer"
                     checked={row.getIsSelected()}
                     onChange={row.getToggleSelectedHandler()}
                 />
@@ -84,26 +87,42 @@ const FilteredTable = () => {
 
 
     // const randomId: number = new Date().getTime();
+    // let filterShowRows = data
 
+    // const filterToShowData = showOnlySelected ? data.filter((_, index) => rowSelection[index]) : data;
+    const getRowId = (row: User) => `${row.firstName}-${row.lastName}`;
+    const filteredData = useMemo(() => {
+        if (!showOnlySelected) return data;
+        return data.filter((_, index) => {
+            const rowId = getRowId(data[index]);
+            return rowSelection[rowId];
+        });
+    }, [data, showOnlySelected, rowSelection]);
     const table = useReactTable({
-        data,
+        data: filteredData,
         columns,
         state: {
             globalFilter: filter,
             rowSelection
         },
-        onGlobalFilterChange: setFilter,
         getCoreRowModel: getCoreRowModel(),
+        onGlobalFilterChange: setFilter, // my input State
         getFilteredRowModel: getFilteredRowModel(),
         globalFilterFn: 'includesString',
         getSortedRowModel: getSortedRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        initialState: { pagination: { pageSize: 6 } }, // this decide how many rows per page 
         onRowSelectionChange: setRowSelection, // my State
         enableRowSelection: true,
-        getRowId: (row) => `${row.firstName}-${row.lastName}-${Date.now()}`, // () => JSON.stringify(randomId * 1)
+        getPaginationRowModel: getPaginationRowModel(),
+        initialState: {
+            pagination: { pageSize: 6 }, // this decide how many rows per page 
+            // columnOrder: ["firstName", "lastName", "age", "status"]
+        },
+        // : (row) => `${row.firstName}-${row.lastName}-${Date.now()}`
+        getRowId,
         // globalFilterFn: globalFilterFn,
     });
+
+    // filterShowRows = data //showOnlySelected ? table.getSelectedRowModel().rows.map((row)=> row.original) : data;
 
     // const result = table.getSelectedRowModel().flatRows;
 
@@ -138,7 +157,7 @@ const FilteredTable = () => {
 
 
     // TanStack Table is designed to trigger a re-render whenever either the data or columns that are passed into the table change, or whenever any of the table's state changes.
-    
+
     return (
         <div className="p-4">
             {/* Search Input */}
@@ -173,14 +192,32 @@ const FilteredTable = () => {
                 }}>
                 First Page
             </button>
+            <button
+                className="border ml-4 p-2 cursor-pointer"
+                onClick={() => {
+                    table.setPageIndex(3) // 3 = 4 page 
+                }}
+            >
+                Last Page
+            </button>
             {/* Add Bulk Action */}
             <button
                 className="border ml-4 p-2 cursor-pointer"
-                onClick={() =>
-                    table.getToggleAllRowsSelectedHandler()()
-                }
+                onClick={() => {
+                    table.toggleAllRowsSelected()
+                }}
             >
                 Bulk Selection
+            </button>
+            <button
+                className="border ml-4 p-2 cursor-pointer"
+                onClick={() => {
+                    console.log(table.getSelectedRowModel().rows);
+                    // setShowOnlySelected(!setShowOnlySelected)
+                    setShowOnlySelected(!showOnlySelected);
+                }}
+            >
+                Selected Rows
             </button>
             {/* Table */}
             <table className="w-full border-collapse">

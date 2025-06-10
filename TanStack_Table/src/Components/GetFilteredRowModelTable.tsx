@@ -1,5 +1,5 @@
 import { getCoreRowModel, useReactTable, getFilteredRowModel, flexRender, getFacetedRowModel } from "@tanstack/react-table"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 
 const GetFilteredRowModelTable = () => {
   const [filter, setFilter] = useState('')
@@ -11,7 +11,7 @@ const GetFilteredRowModelTable = () => {
     status: boolean
   }
 
-  const data: User[] = [
+  const data = useMemo<User[]>(() => [
     {
       firstName: "Zaid",
       lastName: "Khan",
@@ -30,7 +30,8 @@ const GetFilteredRowModelTable = () => {
       age: 22,
       status: true
     }
-  ]
+  ], [])
+
   const columns = [
     { accessorKey: "firstName", header: "First Name" },
     { accessorKey: "lastName", header: "Last Name" },
@@ -47,7 +48,7 @@ const GetFilteredRowModelTable = () => {
       globalFilter: filter
     },
     onGlobalFilterChange: setFilter,
-    getFacetedRowModel:getFacetedRowModel() // needed for client-side filtering
+    getFacetedRowModel: getFacetedRowModel() // needed for client-side filtering
   })
 
   // console.log(filter);
