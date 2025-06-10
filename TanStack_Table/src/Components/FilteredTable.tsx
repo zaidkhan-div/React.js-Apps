@@ -14,7 +14,6 @@ const FilteredTable = () => {
         status: boolean;
     }
 
-
     const data = useMemo<User[]>(() => [
         { firstName: "Zaid", lastName: "Khan", age: 18, status: false },
         { firstName: "Emma", lastName: "Johnson", age: 28, status: true },
@@ -84,6 +83,7 @@ const FilteredTable = () => {
     // };
 
 
+    const randomId: number = new Date().getTime();
 
     const table = useReactTable({
         data,
@@ -99,16 +99,16 @@ const FilteredTable = () => {
         getSortedRowModel: getSortedRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         initialState: { pagination: { pageSize: 6 } }, // this decide how many rows per page 
-        onRowSelectionChange: setRowSelection,
+        onRowSelectionChange: setRowSelection, // my State
         enableRowSelection: true,
-        getRowId: (row) => `${row.firstName}-${row.lastName}`,
+        getRowId: (row) => `${row.firstName}-${row.lastName}-${Date.now()}`, // () => JSON.stringify(randomId * 1)
         // globalFilterFn: globalFilterFn,
     });
 
+    // const result = table.getSelectedRowModel().flatRows;
 
 
-
-    //     const {
+    // const {
     //         pageIndex
     //     } = table.getState().pagination;
     //     const pageCount = table.getPageCount();
@@ -176,6 +176,12 @@ const FilteredTable = () => {
                 }}>
                 First Page
             </button>
+            {/* Add Bulk Action */}
+            <button
+                className="border ml-4 p-2 cursor-pointer"
+            >
+                Bulk Selection
+            </button>
             {/* Table */}
             <table className="w-full border-collapse">
                 <thead className="bg-gray-100">
@@ -192,11 +198,11 @@ const FilteredTable = () => {
                             {headerGroup.headers.map(header => (
                                 <th onClick={header.column.getToggleSortingHandler()}
                                     key={header.id}
-                                    className="p-2 text-left border-b cursor-pointer"
-                                >
+                                    className="p-2 text-left border-b cursor-pointer">
+
                                     {/* {flexRender(...)} */}
-                                    {/* {flexRender(header.column.columnDef.header, header.getContext())} */}
-                                    {header.column.columnDef.header as string}
+                                    {flexRender(header.column.columnDef.header, header.getContext())}
+                                    {/* {header.column.columnDef.header as string} */}
                                     {header.column.getIsSorted() === 'asc' ? ' ↑' : ''}
                                     {header.column.getIsSorted() === 'desc' ? ' ↓' : ''}
                                     {/* {flexRender(header.column.columnDef.header, header.getContext())} */}
@@ -238,8 +244,8 @@ const FilteredTable = () => {
                     Next →
                 </button>
             </div>
-
-            <pre>{JSON.stringify(rowSelection, null, 2)}</pre>
+            <p>{table.getAllColumns().length} All Columns | {table.getCoreRowModel().rows.length} All Rows </p>
+            <pre>  {JSON.stringify(rowSelection, null, 2)}</pre>
 
 
             {/* If No Matching is Found */}
