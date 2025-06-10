@@ -41,14 +41,14 @@ const FilteredTable = () => {
     const columns = [
         {
             id: 'select',
-            header: ({ table }) => (
+            header: ({ table }) => ( // This is for bulk Selection on top of Header 
                 <input
                     type="checkbox"
                     checked={table.getIsAllRowsSelected()}
                     onChange={table.getToggleAllRowsSelectedHandler()}
                 />
             ),
-            cell: ({ row }) => (
+            cell: ({ row }) => ( // this is for single row Selection
                 <input
                     type="checkbox"
                     checked={row.getIsSelected()}
@@ -83,7 +83,7 @@ const FilteredTable = () => {
     // };
 
 
-    const randomId: number = new Date().getTime();
+    // const randomId: number = new Date().getTime();
 
     const table = useReactTable({
         data,
@@ -137,9 +137,8 @@ const FilteredTable = () => {
 
 
 
-    // console.log('Filtered Table ', table.getRowModel().rows.map(row => row.original))
-
-
+    // TanStack Table is designed to trigger a re-render whenever either the data or columns that are passed into the table change, or whenever any of the table's state changes.
+    
     return (
         <div className="p-4">
             {/* Search Input */}
@@ -148,7 +147,7 @@ const FilteredTable = () => {
                 placeholder="Filter..."
                 value={filter}
                 onChange={(e) => {
-                    setFilter(e.target.value.trim() || "")
+                    setFilter(e.target.value.trim())
                 }}
                 className="border-2 border-black p-2 mb-4"
             />
@@ -160,9 +159,7 @@ const FilteredTable = () => {
                     const value = e.target.value === 'true' ? true
                         : e.target.value === 'false' ? false
                             : undefined;
-
                     table.getColumn("status")?.setFilterValue(value)
-
                 }}
             >
                 <option value="all">All Statuses</option>
@@ -179,6 +176,9 @@ const FilteredTable = () => {
             {/* Add Bulk Action */}
             <button
                 className="border ml-4 p-2 cursor-pointer"
+                onClick={() =>
+                    table.getToggleAllRowsSelectedHandler()()
+                }
             >
                 Bulk Selection
             </button>
@@ -244,8 +244,8 @@ const FilteredTable = () => {
                     Next →
                 </button>
             </div>
-            <p>{table.getAllColumns().length} All Columns | {table.getCoreRowModel().rows.length} All Rows </p>
-            <pre>  {JSON.stringify(rowSelection, null, 2)}</pre>
+            <p className="text-red-600">{table.getAllColumns().length} Columns / {table.getCoreRowModel().rows.length} Rows </p>
+            <pre> {JSON.stringify(rowSelection, null, 2)}</pre> {/* rowSelection is my state */}
 
 
             {/* If No Matching is Found */}
