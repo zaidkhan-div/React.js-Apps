@@ -52,7 +52,7 @@ const FilteredTable = () => {
                     onChange={table.getToggleAllRowsSelectedHandler()}
                 />
             ),
-            cell: ({ row }) => ( // this is for single row Selection
+            cell: ({ row }) => ( // This is for single row Selection
                 <input
                     type="checkbox"
                     className="cursor-pointer"
@@ -180,20 +180,26 @@ const FilteredTable = () => {
 
             <select
                 className="border ml-4 p-2"
-                value={columnFilters.find(f => f.id === "status")?.value ?? "all"} // Show current filter
                 onChange={(e) => {
                     const value = e.target.value === 'true' ? true
                         : e.target.value === 'false' ? false
                             : undefined;
+                    table.getColumn("status")?.setFilterValue(value)
+                }} // This is with Global Filter Change
 
-                    // Update columnFilters state
-                    setColumnFilters(prev =>
-                        e.target.value === "all"
-                            ? prev.filter(f => f.id !== "status") // Remove status filter if "all"
-                            : [...prev.filter(f => f.id !== "status"), { id: "status", value }] 
-                            // This is with columnFiltering Method
-                    );
-                }}
+            // value={columnFilters.find(f => f.id === 'status')?.value ? 'all'}
+            // onChange={(e) => { // This is with the columnFiltering
+            //     const value = e.target.value === 'true' ? true
+            //         : e.target.value === 'false' ? false
+            //             : undefined;
+
+            //     // Update columnFilters state
+            //     setColumnFilters(prev =>
+            //         e.target.value === "all"
+            //             ? prev.filter(f => f.id !== "status") // Remove status filter if "all"
+            //             : [...prev.filter(f => f.id !== "status"), { id: "status", value }] // Set new filter
+            //     );
+            // }}
             >
                 <option value="all">All Statuses</option>
                 <option value="true">Active</option>
