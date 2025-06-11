@@ -8,7 +8,7 @@ const App = () => {
       <Table />
       {/* Another Filtered Table */}
       {/* <GetFilteredRowModelTable /> */}
-      {/* <FilteredTable /> */}
+      <FilteredTable />
     </div>
   )
 }

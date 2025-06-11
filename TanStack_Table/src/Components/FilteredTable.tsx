@@ -1,5 +1,7 @@
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
+import PaginationComp from "./PaginationComp";
+import Table from "./Table";
 
 
 const FilteredTable = () => {
@@ -156,6 +158,7 @@ const FilteredTable = () => {
 
     // TanStack Table is designed to trigger a re-render whenever either the data or columns that are passed into the table change, or whenever any of the table's state changes.
 
+
     return (
         <div className="p-4">
             {/* Search Input */}
@@ -258,8 +261,8 @@ const FilteredTable = () => {
                     ))}
                 </tbody>
             </table>
-
-            <div className="flex gap-2">
+            <PaginationComp props={table} />
+            {/* <div className="flex gap-2">
                 <button
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
@@ -268,7 +271,7 @@ const FilteredTable = () => {
                     ← Prev
                 </button>
                 <span>
-                    {/* { table.getState().pagination.pageIndex + 1} / {table.getPageCount()} */}
+                    { table.getState().pagination.pageIndex + 1} / {table.getPageCount()}
                     Page {table.getState().pagination.pageIndex + 1} / {table.getPageCount()}
                 </span>
                 <button
@@ -278,7 +281,7 @@ const FilteredTable = () => {
                 >
                     Next →
                 </button>
-            </div>
+            </div> */}
             <p className="text-red-600">{table.getAllColumns().length} Columns / {table.getCoreRowModel().rows.length} Rows </p>
             <pre> {JSON.stringify(rowSelection, null, 2)}</pre> {/* rowSelection is my state */}
 

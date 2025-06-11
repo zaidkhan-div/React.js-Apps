@@ -1,5 +1,6 @@
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table"
 import { useMemo, useState } from "react"
+import PaginationComp from "./PaginationComp"
 
 
 // Here are all of the rowModels that are available
@@ -144,7 +145,8 @@ const Table = () => {
                     </div>
                 ))}
             </div>
-            <div className="flex items-center justify-start gap-5 text-red-500">
+            <PaginationComp props={table} />
+            {/* <div className="flex items-center justify-start gap-5 text-red-500">
                 <button
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
@@ -157,7 +159,7 @@ const Table = () => {
                     disabled={!table.getCanNextPage()}
                     className=" cursor-pointer"
                 >   Next →   </button>
-            </div>
+            </div> */}
         </div>
     )
 }
