@@ -91,10 +91,12 @@ const FilteredTable = () => {
 
     const filteredData = useMemo(() => {
         if (!showOnlySelected) return data;
-        return data.filter((_, index) => {
-            const rowId = getRowId(data[index]);
-            return rowSelection[rowId];
-        });
+        else {
+            return data.filter((_, index) => {
+                const rowId = getRowId(data[index]);
+                return rowSelection[rowId];
+            })
+        };
     }, [data, showOnlySelected, rowSelection]);
 
 
@@ -219,6 +221,14 @@ const FilteredTable = () => {
                 }}
             >
                 Selected Rows
+            </button>
+            <button
+                className="border ml-4 p-2 cursor-pointer"
+                onClick={() => {
+                    table.toggleAllRowsSelected(false)
+                }}
+            >
+                DeSelect Rows
             </button>
             {/* Table */}
             <table className="w-full border-collapse">
