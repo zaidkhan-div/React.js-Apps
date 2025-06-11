@@ -28,3 +28,5 @@ const table = useReactTable({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
 })
+
+// filterFromLeafRows

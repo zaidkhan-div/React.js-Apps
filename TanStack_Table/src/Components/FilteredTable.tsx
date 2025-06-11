@@ -1,7 +1,6 @@
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 import PaginationComp from "./PaginationComp";
-import Table from "./Table";
 
 
 const FilteredTable = () => {
@@ -9,6 +8,7 @@ const FilteredTable = () => {
     const [filter, setFilter] = useState(''); // for searching in the table
     const [rowSelection, setRowSelection] = useState({}); // for storing the selection of rows
     const [showOnlySelected, setShowOnlySelected] = useState(false) // for showing only Selected Rows
+    const [columnFilters, setColumnFilters] = useState([])
 
     type User = {
         firstName: string;
@@ -105,9 +105,11 @@ const FilteredTable = () => {
         columns,
         state: {
             globalFilter: filter,
-            rowSelection
+            rowSelection,
+            columnFilters // Column Filtering
         },
         getCoreRowModel: getCoreRowModel(),
+        onColumnFiltersChange: setColumnFilters,
         onGlobalFilterChange: setFilter, // my input State
         getFilteredRowModel: getFilteredRowModel(),
         globalFilterFn: 'includesString',
@@ -161,6 +163,7 @@ const FilteredTable = () => {
     // TanStack Table is designed to trigger a re-render whenever either the data or columns that are passed into the table change, or whenever any of the table's state changes.
 
 
+
     return (
         <div className="p-4">
             {/* Search Input */}
@@ -177,11 +180,19 @@ const FilteredTable = () => {
 
             <select
                 className="border ml-4 p-2"
+                value={columnFilters.find(f => f.id === "status")?.value ?? "all"} // Show current filter
                 onChange={(e) => {
                     const value = e.target.value === 'true' ? true
                         : e.target.value === 'false' ? false
                             : undefined;
-                    table.getColumn("status")?.setFilterValue(value)
+
+                    // Update columnFilters state
+                    setColumnFilters(prev =>
+                        e.target.value === "all"
+                            ? prev.filter(f => f.id !== "status") // Remove status filter if "all"
+                            : [...prev.filter(f => f.id !== "status"), { id: "status", value }] 
+                            // This is with columnFiltering Method
+                    );
                 }}
             >
                 <option value="all">All Statuses</option>

@@ -9,3 +9,12 @@
 // getHeaderGroups()	Gets grouped headers (for rendering)	Inside <thead>
 // getAllColumns()	Gets all column objects (e.g., hiding)	Toggle column visibility programmatically
 // getVisibleColumns()	Gets only visible columns	Syncing with UI controls
+
+// Column Pinning State
+// column.getCanPin: Use to determine if a column can be pinned.
+// Column Sizing
+// ColumnResizeMode:"onChange",
+// ColumnResizeMode: "onChange",
+// EnableColumnResizing: true,
+
+// Column Filtering Guide  
