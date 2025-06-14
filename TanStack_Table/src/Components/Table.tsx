@@ -37,6 +37,9 @@ import {
 const Table = () => {
 
     const [sorting, setSorting] = useState([])
+    const [columnVisibility, setColumnVisibility] = useState({
+
+    })
 
     //Table Data Type
     type User = {
@@ -85,13 +88,16 @@ const Table = () => {
         data,
         columns,
         state: {
-            sorting
+            sorting,
+            columnVisibility
+
         },
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         onSortingChange: setSorting, // Required for sorting updates
         enableSorting: true,
         getSortedRowModel: getSortedRowModel(),
+        onColumnVisibilityChange:setColumnVisibility,
         getPaginationRowModel: getPaginationRowModel(),
         initialState: {
             pagination: { pageSize: 6 },
@@ -101,7 +107,6 @@ const Table = () => {
     //     What it does:
     //      Takes your data + columns.
     //      Processes them into a table structure(rows, cells, headers).
-
 
 
     // const item = table.getRowModel().rows.map(row => row.original)
@@ -115,6 +120,8 @@ const Table = () => {
 
     // saveData();
 
+    
+    
     return (
         <div className="table-row-group w-1/2">
             <div className="table-header-group bg-gray-100">

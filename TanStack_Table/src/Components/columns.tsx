@@ -18,3 +18,19 @@
 // EnableColumnResizing: true,
 
 // Column Filtering Guide  
+
+
+// Column Visibility (enableHiding)
+
+// The column visibility feature allows table columns to be hidden or shown dynamically. In previous versions of react-table, this feature was a static property on a column, but in v8, there is a dedicated columnVisibility state and APIs for managing column visibility dynamically.
+
+// const [columnVisibility, setColumnVisibility] = useState({
+//   columnId1: true,
+//   columnId2: false, //hide this column by default
+//   columnId3: true,
+// });
+
+// state:{
+// columnVisibility   // this is the state
+// } 
+// onColumnVisibilityChange:setColumnVisibilty 
