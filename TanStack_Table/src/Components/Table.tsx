@@ -73,7 +73,7 @@ const Table = () => {
         { firstName: "Evelyn", lastName: "Jackson", age: 25, status: false },
         { firstName: "Daniel", lastName: "Martin", age: 39, status: true }
     ], [])
-
+j
     // Columns (Define How to Display Data)
     const columns = [
         { accessorKey: "firstName", header: "First Name" },
