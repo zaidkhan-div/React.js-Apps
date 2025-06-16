@@ -9,6 +9,7 @@ const FilteredTable = () => {
     const [rowSelection, setRowSelection] = useState({}); // for storing the selection of rows
     const [showOnlySelected, setShowOnlySelected] = useState(false) // for showing only Selected Rows
     const [columnFilters, setColumnFilters] = useState([])
+
     const [columnVisibility, setColumnVisibility] = useState(() => {
         const savedData = localStorage.getItem('columnsData');
         return savedData ? JSON.parse(savedData) : {}
@@ -69,7 +70,7 @@ const FilteredTable = () => {
             ),
         },
         // { accessorKey: "#s", header: "#S-NO" },
-        { accessorKey: "firstName", header: "First Name" },
+        { accessorKey: "firstName", header: "First Name", enableHiding: false },
         { accessorKey: "lastName", header: "Last Name" },
         { accessorKey: "age", header: "Age" },
         { accessorKey: "status", header: "Status", },
@@ -175,6 +176,7 @@ const FilteredTable = () => {
 
     return (
         <div className="p-4">
+            {/* Search Input */}
             <input
                 type="text"
                 placeholder="Filter..."
@@ -269,6 +271,7 @@ const FilteredTable = () => {
             >
                 Visible Columns
             </button>
+
             {/* Table */}
             {/* {
                 table.getAllColumns().map((column) => (
@@ -282,6 +285,19 @@ const FilteredTable = () => {
                     </label>
                 ))
             } */}
+            {
+                table.getAllColumns().map((column) => {
+                    <label key={column.id}>
+                        <input
+                            checked={column.getIsVisible()}
+                            disabled={!column.getCanHide()}
+                            onClick={column.getToggleVisibilityHandler()}
+                            type="checkbox"
+                        />
+                        {column.columnDef.header}
+                    </label>
+                })
+            }
             <table className="w-full border-collapse">
                 <thead className="bg-gray-100">
                     {table.getHeaderGroups().map(headerGroup => (
@@ -322,6 +338,19 @@ const FilteredTable = () => {
                     ))}
                 </tbody>
             </table>
+            {
+                table.getAllColumns().map((column) => {
+                    <label key={column.id}>
+                        <input
+                            checked={column.getIsVisible()}
+                            disabled={!column.getCanHide()}
+                            onClick={column.getToggleVisibilityHandler()}
+                            type="checkbox"
+                        />
+                        {column.columnDef.header}
+                    </label>
+                })
+            }
             <PaginationComp props={table} />
             {/* <div className="flex gap-2">
                 <button
