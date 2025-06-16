@@ -1,5 +1,5 @@
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PaginationComp from "./PaginationComp";
 
 
@@ -9,6 +9,13 @@ const FilteredTable = () => {
     const [rowSelection, setRowSelection] = useState({}); // for storing the selection of rows
     const [showOnlySelected, setShowOnlySelected] = useState(false) // for showing only Selected Rows
     const [columnFilters, setColumnFilters] = useState([])
+    const [columnVisibility, setColumnVisibility] = useState(() => {
+        const savedData = localStorage.getItem('columnsData');
+        return savedData ? JSON.parse(savedData) : {}
+    })
+    useEffect(() => {
+        localStorage.setItem("columnsData", JSON.stringify(columnVisibility))
+    }, [columnVisibility])
 
     type User = {
         firstName: string;
@@ -106,9 +113,11 @@ const FilteredTable = () => {
         state: {
             globalFilter: filter,
             rowSelection,
-            columnFilters // Column Filtering
+            columnFilters, // Column Filtering
+            columnVisibility
         },
         getCoreRowModel: getCoreRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
         onColumnFiltersChange: setColumnFilters,
         onGlobalFilterChange: setFilter, // my input State
         getFilteredRowModel: getFilteredRowModel(),
@@ -166,7 +175,6 @@ const FilteredTable = () => {
 
     return (
         <div className="p-4">
-            {/* Search Input */}
             <input
                 type="text"
                 placeholder="Filter..."
@@ -247,7 +255,33 @@ const FilteredTable = () => {
             >
                 DeSelect Rows
             </button>
+            <button
+                className="border ml-4 p-2 cursor-pointer"
+                onClick={() => {
+                    table.toggleAllColumnsVisible(false)
+                }}
+            >
+                HideAll Columns
+            </button>
+            <button
+                className="border ml-4 p-2 cursor-pointer"
+                onClick={() => table.toggleAllColumnsVisible(true)}
+            >
+                Visible Columns
+            </button>
             {/* Table */}
+            {/* {
+                table.getAllColumns().map((column) => (
+                    <label key={column.id}>
+                        <input
+                            checked={column.getIsVisible()}
+                            disabled={!column.getCanHide()}
+                            onChange={column.getToggleVisibilityHandler()}
+                            type="checkbox" />
+                        {column.columnDef.header}
+                    </label>
+                ))
+            } */}
             <table className="w-full border-collapse">
                 <thead className="bg-gray-100">
                     {table.getHeaderGroups().map(headerGroup => (

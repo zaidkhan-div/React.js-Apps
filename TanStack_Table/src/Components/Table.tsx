@@ -1,5 +1,5 @@
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import PaginationComp from "./PaginationComp"
 
 
@@ -37,9 +37,14 @@ import {
 const Table = () => {
 
     const [sorting, setSorting] = useState([])
-    const [columnVisibility, setColumnVisibility] = useState({
-
-    })
+    const [columnVisibility, setColumnVisibility] = useState(() => {
+        const saved = localStorage.getItem("column-visibility");
+        return saved ? JSON.parse(saved) : {};
+    });
+    // here i done persist data in the localStorage
+    useEffect(() => {
+        localStorage.setItem("column-visibility", JSON.stringify(columnVisibility))
+    }, [columnVisibility])
 
     //Table Data Type
     type User = {
@@ -73,10 +78,10 @@ const Table = () => {
         { firstName: "Evelyn", lastName: "Jackson", age: 25, status: false },
         { firstName: "Daniel", lastName: "Martin", age: 39, status: true }
     ], [])
-j
+
     // Columns (Define How to Display Data)
     const columns = [
-        { accessorKey: "firstName", header: "First Name" },
+        { accessorKey: "firstName", header: "First Name", enableHiding: true }, // enableHiding actions
         { accessorKey: "lastName", header: "Last Name" },
         { accessorKey: "age", header: "Age" },
         { accessorKey: "status", header: "Status" },
@@ -90,14 +95,13 @@ j
         state: {
             sorting,
             columnVisibility
-
         },
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         onSortingChange: setSorting, // Required for sorting updates
         enableSorting: true,
         getSortedRowModel: getSortedRowModel(),
-        onColumnVisibilityChange:setColumnVisibility,
+        onColumnVisibilityChange: setColumnVisibility,
         getPaginationRowModel: getPaginationRowModel(),
         initialState: {
             pagination: { pageSize: 6 },
@@ -120,40 +124,66 @@ j
 
     // saveData();
 
-    
-    
+
+
     return (
-        <div className="table-row-group w-1/2">
-            <div className="table-header-group bg-gray-100">
-                {table.getHeaderGroups().map(headerGroup => (
-                    <div key={headerGroup.id} className="table-row">
-                        {headerGroup.headers.map(header => (
-                            <th
-                                key={header.id}
-                                className="table-cell text-left p-2 font-bold cursor-pointer"
-                                onClick={header.column.getToggleSortingHandler()}
-                            >
-                                {flexRender(header.column.columnDef.header, header.getContext())}
-                                {header.column.getIsSorted() === 'asc' ? "↑" : ""}
-                                {header.column.getIsSorted() === 'desc' ? "↓" : ""}
-                            </th>
-                        ))}
-                    </div>
-                ))}
+        <>
+            <div className="flex gap-2 mb-4">
+                <button
+                    onClick={() => table.toggleAllColumnsVisible(true)}
+                    className="px-2 py-1 bg-blue-100"
+                >
+                    Show All
+                </button>
+                <button
+                    onClick={() => table.toggleAllColumnsVisible(false)}
+                    className="px-2 py-1 bg-red-100"
+                >
+                    Hide All
+                </button>
             </div>
-            <div className="table-row-group">
-                {table.getRowModel().rows.map(row => (
-                    <div key={row.id} className="table-row hover:bg-gray-50">
-                        {row.getVisibleCells().map(cell => (
-                            <div key={cell.id} className="table-cell text-left p-2 border-t">
-                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                            </div>
-                        ))}
-                    </div>
-                ))}
-            </div>
-            <PaginationComp props={table} />
-            {/* <div className="flex items-center justify-start gap-5 text-red-500">
+            {table.getAllColumns().map((column) => (
+                <label key={column.id}>
+                    <input
+                        checked={column.getIsVisible()}
+                        disabled={!column.getCanHide()}
+                        onChange={column.getToggleVisibilityHandler()}
+                        type="checkbox"
+                    />
+                    {column.columnDef.header}
+                </label>
+            ))}
+            <div className="table-row-group w-1/2">
+                <div className="table-header-group bg-gray-100">
+                    {table.getHeaderGroups().map(headerGroup => (
+                        <div key={headerGroup.id} className="table-row">
+                            {headerGroup.headers.map(header => (
+                                <th
+                                    key={header.id}
+                                    className="table-cell text-left p-2 font-bold cursor-pointer"
+                                    onClick={header.column.getToggleSortingHandler()}
+                                >
+                                    {flexRender(header.column.columnDef.header, header.getContext())}
+                                    {header.column.getIsSorted() === 'asc' ? "↑" : ""}
+                                    {header.column.getIsSorted() === 'desc' ? "↓" : ""}
+                                </th>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+                <div className="table-row-group">
+                    {table.getRowModel().rows.map(row => (
+                        <div key={row.id} className="table-row hover:bg-gray-50">
+                            {row.getVisibleCells().map(cell => (
+                                <div key={cell.id} className="table-cell text-left p-2 border-t">
+                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+                <PaginationComp props={table} />
+                {/* <div className="flex items-center justify-start gap-5 text-red-500">
                 <button
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
@@ -167,7 +197,8 @@ j
                     className=" cursor-pointer"
                 >   Next →   </button>
             </div> */}
-        </div>
+            </div>
+        </>
     )
 }
 
