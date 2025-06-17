@@ -6,8 +6,10 @@ const FetchingData = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const controller = new AbortController();
+
     useEffect(() => {
-        fetch('https://dummyjson.com/products') // Replace with your API endpoint
+        fetch('https://dummyjson.com/products', { signal: controller.signal }) // Replace with your API endpoint
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -22,7 +24,12 @@ const FetchingData = () => {
                 setError(error);
                 setLoading(false);
             });
-    }, []); // Empty dependency array means this runs once on mount
+        return()=>{
+            controller.abort() //  cancel the request on unmounting 
+        }
+    }, []); 
+
+
 
     if (loading) return <div className='text-red-500'>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
