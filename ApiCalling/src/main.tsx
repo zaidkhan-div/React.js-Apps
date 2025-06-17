@@ -4,6 +4,10 @@ import './index.css'
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  // <StrictMode>
+  <StrictMode>
     <App />
+  </StrictMode>,
 )
+
+// how to create a common service for axios 
+// also manage authentication for berear and simple request 
