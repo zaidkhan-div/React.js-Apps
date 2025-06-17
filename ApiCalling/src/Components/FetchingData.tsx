@@ -6,10 +6,12 @@ const FetchingData = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const controller = new AbortController();
 
     useEffect(() => {
-        fetch('https://dummyjson.com/products', { signal: controller.signal }) // Replace with your API endpoint
+        const controller = new AbortController();
+        const signal = controller.signal;
+        fetch('https://dummyjson.com/products', { signal }) // Replace with your API endpoint
+
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -24,10 +26,10 @@ const FetchingData = () => {
                 setError(error);
                 setLoading(false);
             });
-        return()=>{
+        return () => {
             controller.abort() //  cancel the request on unmounting 
         }
-    }, []); 
+    }, []);
 
 
 
