@@ -5,12 +5,11 @@ const DataAxios = () => {
   const [data, setData] = useState([]);
 
   const url: string = 'https://fakestoreapi.com/products';
-  
   useEffect(() => { // React expects useEffect to return either nothing or a cleanup function, not a Promise.
-  
     const controller = new AbortController();
+    const signal = controller.signal;
 
-    axios.get(url)
+    axios.get(url, { signal })
       .then((response) => {
         setData(response.data)
       }).catch((err) => {

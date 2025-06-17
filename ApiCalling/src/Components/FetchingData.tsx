@@ -10,8 +10,8 @@ const FetchingData = () => {
     useEffect(() => {
         const controller = new AbortController();
         const signal = controller.signal;
-        fetch('https://dummyjson.com/products', { signal }) // Replace with your API endpoint
 
+        fetch('https://dummyjson.com/products', { signal })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -23,9 +23,16 @@ const FetchingData = () => {
                 setLoading(false);
             })
             .catch(error => {
-                setError(error);
+                if (error === 'AbortError') {
+                    console.log('Fetch request canceled');
+                } else {
+                    console.log(error.message);
+                }
                 setLoading(false);
+            }).finally(() => {
+                console.log("Finally run in anycase");
             });
+
         return () => {
             controller.abort() //  cancel the request on unmounting 
         }
