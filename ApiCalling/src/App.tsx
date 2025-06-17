@@ -1,10 +1,12 @@
 import React from 'react'
-import Gallery from './Components/Gallery'
+import FetchingData from './Components/FetchingData'
+import DataAxios from './Components/DataAxios'
 
 const App = () => {
   return (
     <div>
-      <Gallery />
+      {/* <FetchingData /> */}
+      <DataAxios />
     </div>
   )
 }
