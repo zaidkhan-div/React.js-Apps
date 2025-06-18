@@ -51,7 +51,6 @@ Api.interceptors.response.use(
             // 3. Optionally show toast
             toast.error("Session expired. Please log in again.");
         }
-
         if (status === 403) {
             toast.error("Access Denied (Forbidden)");
         }
