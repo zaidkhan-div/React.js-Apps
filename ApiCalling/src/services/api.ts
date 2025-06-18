@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 // ✅ What is a "Common Axios Service"?
 // A common Axios service is a centralized setup for:
@@ -36,6 +37,32 @@ Api.interceptors.request.use((config) => {
     }
     return config;
 })
+
+Api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        const status = error.response?.status;
+        if (status === 401) {
+            // 🔐 Unauthorized (token invalid or expired)
+            // 1. Remove token
+            localStorage.removeItem("authToken");
+            // 2. Redirect to login page
+            window.location.href = "/login";
+            // 3. Optionally show toast
+            toast.error("Session expired. Please log in again.");
+        }
+
+        if (status === 403) {
+            toast.error("Access Denied (Forbidden)");
+        }
+
+        if (status >= 500) {
+            toast.error("Server error. Try again later.");
+        }
+
+        return Promise.reject(error); // important!
+    }
+)
 
 export default Api
 

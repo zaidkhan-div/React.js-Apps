@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import FetchingData from './Components/FetchingData'
 import DataAxios from './Components/DataAxios'
 import FetchWithReTry from './Components/FetchWithReTry'
@@ -9,6 +10,7 @@ import AxiosServices1 from './Components/AxiosServices1'
 const App = () => {
   return (
     <div>
+      <ToastContainer />
       {/*  */}
       <BrowserRouter>
         <Routes>
