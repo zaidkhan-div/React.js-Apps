@@ -28,7 +28,10 @@ const FetchWithReTry = () => {
     console.log(data);
 
     return (
-        <div>FetchWithReTry</div>
+        <div>
+            <p>This is used to hit the api 3 times in case if it fails to fetch the data</p>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+        </div>
     )
 }
 
