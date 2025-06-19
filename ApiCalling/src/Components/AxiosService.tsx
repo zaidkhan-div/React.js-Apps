@@ -9,7 +9,6 @@ const AxiosService = () => {
             .then((response) => setProducts(response))
             .catch((err) => {
                 console.log('Failed to fetch products', err);
-
             })
     }, [])
 

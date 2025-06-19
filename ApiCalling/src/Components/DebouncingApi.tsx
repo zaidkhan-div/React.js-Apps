@@ -42,7 +42,6 @@ const Debouncing = () => {
 
   console.log(results);
 
-
   return (
     <div>
       <input

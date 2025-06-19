@@ -1,8 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit";
+import CounterSlice from "../Features/Counter/CounterSlice";
 
-export const store = configureStore({
-  reducer: {},
+const store = configureStore({
+  reducer: {
+    counter: CounterSlice
+  }
 })
+
+// extraReducers = ❌ only needed if you're handling API / async logic
+//You don't need extraReducers unless you're doing async stuff.
+
 
 
 // Redux is a state management framework that can be used with a number of different web technologies, including React.

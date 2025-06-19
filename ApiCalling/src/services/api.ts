@@ -30,6 +30,7 @@ const Api = axios.create({
         // Hi Server i am sending JSON data in the body request
     },
 })
+
 Api.interceptors.request.use((config) => {
     const token = localStorage.getItem('authToken');
     if (token) {
