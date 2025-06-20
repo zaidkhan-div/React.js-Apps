@@ -1,17 +1,22 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { increament, updateValue, resetValue } from '../Features/Counter/CounterSlice.js'
+import { increament, updateValue, resetValue, updateName } from '../Features/Counter/CounterSlice.js'
 
 const ReactRedux = () => {
 
     // const value = useSelector((state) => state.counter.value)
-    const dispatch = useDispatch();
-    // const checkin = dispatch(updateValue(2))
-    const value = useSelector((state) => state.counter.value)
+    const dispatch = useDispatch(); // Send Action to Update State
+
+    //  const value  = useSelector((state) => state.counter.value)
+    const { value, name } = useSelector((state) => state.counter)
+    dispatch(updateName('Custom'))
+    console.log(value, name);
+
+
     useEffect(() => {
         dispatch(updateValue(2))
     }, [dispatch])
-    
+
     const handleClick = () => {
         dispatch(resetValue());
         alert(value)
