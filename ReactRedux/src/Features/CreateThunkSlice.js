@@ -3,7 +3,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 // createAsyncThunk will take three parameters 
 // type, payloadCreator, options
 export const fetchUser = createAsyncThunk(
-
     'user/fetchUser', // Action type prefix (must be unique)
     // this type argument will generate three action types
     // 'user/fetchUser/pending'
@@ -12,7 +11,7 @@ export const fetchUser = createAsyncThunk(
 
     async (userId, thunkAPI) => { // Payload creator
         try {
-            const response = await fetch(`https://dummyjson.com/users${userId}`);
+            const response = await fetch(`https://dummyjson.com/users/${userId}`);
             if (!response.ok) throw new Error('Failed to fetch');
             return await response.json(); // Becomes `action.payload` in `fulfilled`
         } catch (error) {
@@ -20,6 +19,14 @@ export const fetchUser = createAsyncThunk(
         }
     }
 );
+
+// createAsyncThunk is mainly for API calls (or any async ops).
+// Parameters:
+// typePrefix (e.g., 'todos/fetchTodos' → generates todos/fetchTodos/pending|fulfilled|rejected).
+
+// payloadCreator (async function with (arg, thunkAPI)).
+
+// options (rarely used, for customizing thunk behavior).
  
 
 // A function that accepts a Redux action type string and a callback function that should return a promise. It generates promise lifecycle action types based on the action type prefix that you pass in, and returns a thunk action creator that will run the promise callback and dispatch the lifecycle actions based on the returned promise.

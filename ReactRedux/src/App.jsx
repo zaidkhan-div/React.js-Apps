@@ -1,6 +1,7 @@
 import ReactRedux from './Components/ReactRedux'
 import Profile from './Components/Profile'
 import TodosPage from './Components/TodoPage'
+import CreateThunk from './Components/CreateThunk'
 
 const App = () => {
   return (
@@ -8,6 +9,7 @@ const App = () => {
       <ReactRedux />
       <Profile />
       <TodosPage />
+      <CreateThunk />
     </>
   )
 }

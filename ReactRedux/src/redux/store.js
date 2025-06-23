@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import CounterSlice from "../Features/CounterSlice";
 import ProfileSlice from '../Features/ProfileSlice'
 import TodosSlice from '../Features/todosSlice'
+import ExtraReducerThunk from '../Features/ExtraReducerThunk'
 
 export const store = configureStore({
   reducer: {
     counter: CounterSlice,
     profile: ProfileSlice,
-    todos: TodosSlice
+    todos: TodosSlice,
+    users: ExtraReducerThunk
   }
 })
 
