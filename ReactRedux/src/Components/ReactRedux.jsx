@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { increament, updateValue, resetValue, updateName } from '../Features/Counter/CounterSlice.js'
+import { increment, updateValue, resetValue, updateName } from '../Features/Counter/CounterSlice.js'
 
 const ReactRedux = () => {
 
@@ -9,7 +9,7 @@ const ReactRedux = () => {
 
     //  const value  = useSelector((state) => state.counter.value)
     const { value, name } = useSelector((state) => state.counter)
-    dispatch(updateName('Custom'))
+    dispatch(updateName('CounterName'))
     console.log(value, name);
 
 
@@ -19,7 +19,7 @@ const ReactRedux = () => {
 
     const handleClick = () => {
         dispatch(resetValue());
-        alert(value)
+        // alert(value)
     }
     console.log(value);
 

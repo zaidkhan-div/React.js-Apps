@@ -1,18 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { currentProfile, updateProfile } from '../Features/Counter/ProfileSlice'
 
 const Profile = () => {
-    const { currentProfile, updateProfile } = useSelector((state) => state.profile);
-    const dispatch = useDispatch()
-    const results = dispatch(updateProfile({ name: "Saad", email: "Email" }))
 
-    console.log(currentProfile.name);
-    console.log(currentProfile.email);
+    const dispatch = useDispatch();
+    const { name, email } = useSelector((state) => state.profile.info);
 
+    useEffect(() => {
+        dispatch(currentProfile({ name: "ZaidKhan", email: "zaid@gmail.com" }));
+    }, [dispatch]);
+
+    console.log(name);
 
     return (
-        <div>Profile</div>
+        <div>My name is {name} and here is my email: {email}</div>
     )
 }
 

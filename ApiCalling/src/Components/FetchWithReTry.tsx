@@ -4,7 +4,7 @@ const FetchWithReTry = () => {
     const [data, setData] = useState([])
     // Retry API Request on Failure
 
-    const retryFetch = async (url, attempts = 3) => {
+    const retryFetch = async (url: string, attempts = 3) => {
         for (let i = 0; i < attempts; i++) {
             try {
                 const res = await fetch(url);

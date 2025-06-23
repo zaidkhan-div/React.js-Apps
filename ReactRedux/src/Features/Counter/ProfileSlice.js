@@ -3,19 +3,19 @@ import { createSlice } from "@reduxjs/toolkit";
 const ProfileSlice = createSlice({
     name: "profile",
     initialState: {
-        profile: {
+        info: {
             name: "",
             email: ""
         }// nested states
     },
     reducers: {
         currentProfile: (state, action) => {
-            state.profile.name = 'ZaidKhan',
-                state.profile.email = "zaid@gmail.com"
+            state.info.name = 'ZaidKhan-info';
+            state.info.email = "zaid@gmail.com";
         },
         updateProfile: (state, action) => {
             state.profile.name = action.payload.name;
-            state.profile.email = action.payload.email
+            state.profile.email = action.payload.email;
         }
     }
 })

@@ -7,7 +7,7 @@ const CounterSlice = createSlice({
         name: "ZaidCounter"
     },
     reducers: { // reducer is just a object where each key is a function
-        increament: (state) => {
+        increment: (state) => {
             state.value += 1;
             // state	Current value of your slice
             // action	Object with type and optional payload sent when dispatching
@@ -38,6 +38,6 @@ const CounterSlice = createSlice({
 
 
 export default CounterSlice.reducer   // In the store to handle state updates
-export const { increament, updateValue, resetValue, updateName } = CounterSlice.actions // In components to dispatch actions
+export const { increment, updateValue, resetValue, updateName } = CounterSlice.actions // In components to dispatch actions
 
 
