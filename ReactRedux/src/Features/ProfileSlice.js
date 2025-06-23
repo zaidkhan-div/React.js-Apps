@@ -2,10 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const ProfileSlice = createSlice({
     name: "profile",
-    initialState: {
+    initialState: { // this is my state which holds data
         info: {
-            name: "",
-            email: ""
+            name: null,
+            email: null
         }// nested states
     },
     reducers: {
@@ -14,8 +14,8 @@ const ProfileSlice = createSlice({
             state.info.email = "zaid@gmail.com";
         },
         updateProfile: (state, action) => {
-            state.profile.name = action.payload.name;
-            state.profile.email = action.payload.email;
+            state.info.name = action.payload.name;
+            state.info.email = action.payload.email;
         }
     }
 })
