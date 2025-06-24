@@ -15,9 +15,6 @@ const Profile = () => {
     // console.log(name);
 
 
-
-
-
     return (
         <div>My name is {name} and here is my email: {email}</div>
     )

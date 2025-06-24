@@ -13,7 +13,7 @@ export const store = configureStore({
   }
 })
 
-// Createasynthunk draftSelecnpmtor createSelector extrareducer 
+// Createasynthunk draftSelector createSelector extrareducer 
 
 // extraReducers = ❌ only needed if you're handling API / async logic
 //You don't need extraReducers unless you're doing async stuff.

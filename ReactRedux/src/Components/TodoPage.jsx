@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addTodo, deleteTodo } from '../Features/todosSlice'
 
 const TodoPage = () => {
-    const [inputValue, setInputValue] = useState()
+    const [inputValue, setInputValue] = useState("")
 
     const dispatch = useDispatch()
     const todo = useSelector((state) => state.todos.todos)
@@ -15,7 +15,6 @@ const TodoPage = () => {
             setInputValue('')
         }
     }
-
 
     return (
         <div style={{ border: "1px solid black", width: "650px", margin: "auto", marginTop: "50px", padding: "20px", display: "flex", flexDirection: "column", alignContent: "center", justifyContent: "space-around", gap: "10px" }}>
@@ -29,8 +28,8 @@ const TodoPage = () => {
             <div>
                 <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                     {todo.map((item, index) => (
-                        <div style={{ display: "flex", gap: "10px" }}>
-                            <li key={item.id}>{item}</li>
+                        <div key={index} style={{ display: "flex", gap: "10px" }}>  {/* ✅ Key here */}
+                            <li >{item}</li>
                             <button onClick={() => dispatch(deleteTodo(item))}>Delete</button>
                         </div>
                     ))}
