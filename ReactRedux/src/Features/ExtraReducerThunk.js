@@ -8,6 +8,11 @@ const ExtraReducerThunk = createSlice({
         error: null,
         data: null
     },
+
+    // extraReducers:
+    // Only for async thunk actions(not button clicks).
+    // Updates state based on pending/ fulfilled / rejected.
+
     reducers: {}, // Sync Reducers (Optionals)
     extraReducers: (builder) => {
         // extraReducers is ONLY for: Handling auto-generated actions from: createAsyncThunk (e.g., fetchTodos.pending/fulfilled/rejected).
@@ -29,5 +34,7 @@ const ExtraReducerThunk = createSlice({
             });
     }
 });
+
+// builder. addCase(), addMatcher(), addDefaultCase()
 
 export default ExtraReducerThunk.reducer

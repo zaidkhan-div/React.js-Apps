@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { currentProfile, updateProfile } from '../Features/ProfileSlice'
 
 const Profile = () => {
-
     const dispatch = useDispatch();
     const { name, email } = useSelector((state) => state.profile.info);
 
@@ -13,7 +12,10 @@ const Profile = () => {
         // we recieve like action.payload
     }, [dispatch]);
 
-    console.log(name);
+    // console.log(name);
+
+
+
 
 
     return (

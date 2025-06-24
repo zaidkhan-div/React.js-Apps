@@ -5,7 +5,8 @@ const ProfileSlice = createSlice({
     initialState: { // this is my state which holds data
         info: {
             name: null,
-            email: null
+            email: null,
+            names: "useSelector-Names"
         }// nested states
     },
     reducers: {

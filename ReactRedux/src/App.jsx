@@ -2,6 +2,7 @@ import ReactRedux from './Components/ReactRedux'
 import Profile from './Components/Profile'
 import TodosPage from './Components/TodoPage'
 import CreateThunk from './Components/CreateThunk'
+import Selector from './Components/Selector'
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <Profile />
       <TodosPage />
       <CreateThunk />
+      <Selector />
     </>
   )
 }
