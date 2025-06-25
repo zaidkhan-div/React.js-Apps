@@ -1,19 +1,30 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addTodo, deleteTodo } from '../Features/todosSlice'
+import { addTodo, deleteTodo, editTodo, startEditing } from '../Features/todosSlice'
 
 const TodoPage = () => {
     const [inputValue, setInputValue] = useState("")
-
     const dispatch = useDispatch()
     const todo = useSelector((state) => state.todos.todos)
+    const editIndex = useSelector((state) => state.todos.editIndex)
+
     console.log(todo);
 
     const handleChange = () => {
         if (inputValue.trim()) {
-            dispatch(addTodo(inputValue))
+            if (editIndex) {
+                dispatch(editTodo(inputValue))
+            }
+            else {
+                dispatch(addTodo(inputValue))
+            }
             setInputValue('')
         }
+    }
+
+    const handleEdit = (todo) => {
+        setInputValue(todo.text)
+        dispatch(startEditing(todo.id))
     }
 
     return (
@@ -22,15 +33,16 @@ const TodoPage = () => {
 
                 <input type="text" placeholder='Enter Todo' style={{ padding: "10px" }} value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)} />
-                <button onClick={handleChange}>Submit</button>
+                <button onClick={handleChange}>{editIndex !== null ? "Update" : "Submit"}</button>
 
             </div>
             <div>
                 <ul style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                     {todo.map((item, index) => (
                         <div key={index} style={{ display: "flex", gap: "10px" }}>  {/* ✅ Key here */}
-                            <li >{item}</li>
+                            <li >{item.text}</li>
                             <button onClick={() => dispatch(deleteTodo(item))}>Delete</button>
+                            <button onClick={() => handleEdit(item)}>EditTodo</button>
                         </div>
                     ))}
                 </ul>
