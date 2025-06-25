@@ -3,6 +3,7 @@ import Profile from './Components/Profile'
 import TodosPage from './Components/TodoPage'
 import CreateThunk from './Components/CreateThunk'
 import Selector from './Components/Selector'
+import ApiCallingWithThunk from './Components/ApiCallingWithThunk'
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <TodosPage />
       <CreateThunk />
       <Selector />
+      <ApiCallingWithThunk />
     </>
   )
 }

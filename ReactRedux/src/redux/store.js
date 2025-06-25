@@ -3,17 +3,19 @@ import CounterSlice from "../Features/CounterSlice";
 import ProfileSlice from '../Features/ProfileSlice'
 import TodosSlice from '../Features/todosSlice'
 import ExtraReducerThunk from '../Features/ExtraReducerThunk'
+import SliceForThunk from '../Features/ThunkSlice2'
 
 export const store = configureStore({
   reducer: {
     counter: CounterSlice,
     profile: ProfileSlice,
     todos: TodosSlice,
-    users: ExtraReducerThunk
+    users: ExtraReducerThunk,
+    apiCalling: SliceForThunk
   }
 })
 
-// Createasynthunk draftSelector createSelector extrareducer 
+// Createasynthunk createDraftSafeSelector createSelector extrareducer 
 
 // extraReducers = ❌ only needed if you're handling API / async logic
 //You don't need extraReducers unless you're doing async stuff.

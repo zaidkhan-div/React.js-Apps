@@ -10,13 +10,13 @@ const Selector = () => {
     // console.log(names, counter);
 
     const todosLenght = useSelector(selectTotalTodos);
-    console.log(todosLenght + " CheckLenght")
+    console.log(todosLenght + " CheckLength")
 
     const { name, counter } = useSelector(selectName);
     console.log(name + ' useSelector');
     console.log(counter + ' useSelectorCounter');
 
-
+    // Without createSelector Problem: Causes re-renders even if state.todos didn’t change (e.g., if state.counter updates).
     return (
         <>
             <p>Name from createSelector: {name}</p>
