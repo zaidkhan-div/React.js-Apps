@@ -4,16 +4,37 @@ import ProfileSlice from '../Features/ProfileSlice'
 import TodosSlice from '../Features/todosSlice'
 import ExtraReducerThunk from '../Features/ExtraReducerThunk'
 import SliceForThunk from '../Features/ThunkSlice2'
+// persist-redux 
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from "redux-persist/lib/storage";
+// import storageSession from 'redux-persist/lib/storage/session'
+
+const persistConfig = {
+  key: 'root',
+  version: 1,
+  storage,
+  // storageSession,
+  // If we want to prevent notes from persisting, the config object should look like the following:
+  // blacklist:['todos']
+
+  // And if you want the users state to always be persisted, you would indicate it in the config object like so:
+  // whitelist: ['todos']
+}
+
+const persistedReducer = persistReducer(persistConfig, TodosSlice)
 
 export const store = configureStore({
   reducer: {
+    todos: persistedReducer,
+    // todos: TodosSlice,
     counter: CounterSlice,
     profile: ProfileSlice,
-    todos: TodosSlice,
     users: ExtraReducerThunk,
     apiCalling: SliceForThunk
   }
 })
+
+export const Persistor = persistStore(store);
 
 // Createasynthunk createDraftSafeSelector createSelector extrareducer 
 

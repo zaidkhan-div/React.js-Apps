@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { addTodo, deleteTodo, editTodo, startEditing } from '../Features/todosSlice'
+import { nanoid } from '@reduxjs/toolkit'
 
 const TodoPage = () => {
     const [inputValue, setInputValue] = useState("")
     const dispatch = useDispatch()
     const todo = useSelector((state) => state.todos.todos)
     const editIndex = useSelector((state) => state.todos.editIndex)
+    console.log(editIndex, " EditIndex");
 
-    console.log(todo);
+
+    console.log(todo, " Todo");
 
     const handleChange = () => {
         if (inputValue.trim()) {
@@ -24,7 +27,7 @@ const TodoPage = () => {
 
     const handleEdit = (todo) => {
         setInputValue(todo.text)
-        dispatch(startEditing(todo.id))
+        dispatch(startEditing(todo.id)) // action.payload we send here
     }
 
     return (
