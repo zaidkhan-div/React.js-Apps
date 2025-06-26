@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import CounterSlice from "../Features/CounterSlice";
 import ProfileSlice from '../Features/ProfileSlice'
 import TodosSlice from '../Features/todosSlice'
@@ -19,13 +19,26 @@ const persistConfig = {
 
   // And if you want the users state to always be persisted, you would indicate it in the config object like so:
   // whitelist: ['todos']
+
+  // whitelist: ['todos', 'counter'] // only these will persist
 }
 
-const persistedReducer = persistReducer(persistConfig, TodosSlice)
+// const rootReducer = combineReducers({
+//   todos: TodosSlice,
+//   counter: CounterSlice,
+//   profile: ProfileSlice,
+//   users: ExtraReducerThunk,
+//   apiCalling: SliceForThunk
+// })
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const persistedReducer = persistReducer(persistConfig, TodosSlice);
+
 
 export const store = configureStore({
+  // reducer: persistedReducer
   reducer: {
-    todos: persistedReducer,
+    todos: persistedReducer, // this is persisted only in localStorage
     // todos: TodosSlice,
     counter: CounterSlice,
     profile: ProfileSlice,
