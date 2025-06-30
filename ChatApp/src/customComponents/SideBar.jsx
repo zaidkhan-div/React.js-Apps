@@ -1,7 +1,9 @@
-import React, { use, useState } from 'react'
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { setReceiver } from '@/features/ChatSlice';
 
 const SideBar = () => {
+    const dispatch = useDispatch();
     const [searchTerm, setSearchTerm] = useState('');
 
     const users = useSelector((state) => state.Chat.users);
@@ -34,7 +36,8 @@ const SideBar = () => {
                     <div
                         key={user.id}
                         className="p-3 hover:bg-gray-100 cursor-pointer flex items-center"
-                        onClick={() => onUserClick(user)} // Pass clicked user to parent
+                        // onClick={() => onUserClick(setReceiver(user))} // Pass clicked user to parent
+                        onClick={() => dispatch(setReceiver(user))}
                     >
                         <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
                             {/* This is like a profile pic */}

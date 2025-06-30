@@ -26,10 +26,13 @@ const ChatSlice = createSlice({
             // users: {
             //     key: "XQ4kL9-randomId": { id: "XQ4kL9", userName: "Alice" }
             // }
+        },
+        setReceiver: (state, action) => {
+            state.receiver = action.payload;
         }
     }
 
 })
 
 export default ChatSlice.reducer;
-export const { addUserToCurrentUser } = ChatSlice.actions;
+export const { addUserToCurrentUser, setReceiver } = ChatSlice.actions;

@@ -4,6 +4,8 @@ const CounterSlice = createSlice({
     name: 'counter', // name used in action types
     initialState: {
         value: 0,
+        Error: null,
+        loading: false,
         name: "ZaidCounter"
     },
     reducers: { // reducer is just a object where each key is a function
@@ -13,7 +15,7 @@ const CounterSlice = createSlice({
             // action	Object with type and optional payload sent when dispatching
         },
         updateValue: (state, action) => {
-            state.value = action.payload
+            state.value = action.payload // dispatch(updateValue(7))
             // State Current values in your slice
             // Action What you just dispatched
             // Action.payload The actual value you passed (like 2, "Zaid")

@@ -9,7 +9,7 @@ export const fetchUser = createAsyncThunk(
     // 'user/fetchUser/fulfilled'
     // 'user/fetchUser/rejected'
 
-    async (userId, thunkAPI) => { // Payload creator
+    async (userId, thunkAPI) => { // Payloadcreator
         try {
             const response = await fetch(`https://dummyjson.com/users/${userId}`);
             if (!response.ok) throw new Error('Failed to fetch');

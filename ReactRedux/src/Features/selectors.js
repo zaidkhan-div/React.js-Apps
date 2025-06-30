@@ -31,6 +31,8 @@ export const selectTotalTodos = createSelector(
     (todos) => todos.todos.length
     // createSelector is for derived/computed data (e.g., totals, filtered lists).
 )
+// Purpose: Memoize Redux state-derived data (global, reusable).
+// Use Case: Optimize calculations used across multiple components
 
 // Why Use createSelector?
 // It memoizes results → returns cached value unless the state changes

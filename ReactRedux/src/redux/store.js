@@ -21,6 +21,7 @@ const persistConfig = {
   // whitelist: ['todos']
 
   // whitelist: ['todos', 'counter'] // only these will persist
+  // Blacklist:['counter']
 }
 
 // const rootReducer = combineReducers({
