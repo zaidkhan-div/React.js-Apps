@@ -1,11 +1,24 @@
-import React, { useState } from 'react'
+import React, { use, useState } from 'react'
+import { useSelector } from 'react-redux';
 
 const SideBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
+    const users = useSelector((state) => state.Chat.users);
+    let result = Object.values(users) // converts Object to array
+    console.log(result);
+
+    const now = new Date();
+    const timeString = `${now.getHours()}:${now.getMinutes()}`;
+    const dateString = `${now.getDate()} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][now.getMonth()]}`;
+
+    const filterUsers = result.filter((item) =>
+        item.userName.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+    )
+
+
     return (
-        <div className="h-full bg-white border-r border-gray-200 rounded-3xl flex flex-col">
-            {/* Search Bar */}
+        <div className="h-full bg-white border border-gray-200 rounded-3xl flex flex-col">
             <div className="p-3 bg-gray-50 rounded-3xl">
                 <input
                     type="text"
@@ -16,25 +29,23 @@ const SideBar = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </div>
-
-            {/* Contacts List */}
-            <div className="flex-1 overflow-y-auto rounded-3xl">
-                {/* {filteredUsers.map((user) => ( */}
-                <div
-                    // key={user.id}
-                    className="p-3 hover:bg-gray-100 cursor-pointer flex items-center"
-                // onClick={() => onUserClick(user)}
-                >
-                    <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
-                        {/* {user.userName.charAt(0).toUpperCase()} */}
+            <div className="flex-1 overflow-y-auto">
+                {filterUsers.map((user) => (
+                    <div
+                        key={user.id}
+                        className="p-3 hover:bg-gray-100 cursor-pointer flex items-center"
+                        onClick={() => onUserClick(user)} // Pass clicked user to parent
+                    >
+                        <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
+                            {/* This is like a profile pic */}
+                            {user.userName.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                            <p className="font-medium">{user.userName}</p>
+                            <p className="text-xs text-gray-500">{`${dateString} ${timeString}`}</p>
+                        </div>
                     </div>
-                    <div>
-                        {/* <p className="font-medium">{user.userName}</p> */}
-                        <p className="font-medium">UserName</p>
-                        <p className="text-xs text-gray-500">Last seen today</p>
-                    </div>
-                </div>
-                {/* ))} */}
+                ))}
             </div>
         </div>
     )

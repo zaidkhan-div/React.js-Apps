@@ -10,7 +10,9 @@ const Navbar = () => {
                     <div className="flex items-center">
                         <div className="flex-shrink-0 flex items-center">
                             <span className="ml-2 text-xl font-bold text-indigo-600">
-                                ChatApp
+                                <NavLink to='/'>
+                                    ChatApp
+                                </NavLink>
                             </span>
                         </div>
                     </div>
