@@ -20,7 +20,7 @@ const ChatArea = () => {
                 <div className="flex mb-3">
                     <div className="w-8 h-8 rounded-full bg-gray-300 mr-2"></div>
                     <div className="bg-white p-2 rounded-lg max-w-xs">
-                        <p>Hey there!</p>
+                        <p>Hi! ZaidKhan </p>
                         <p className="text-xs text-gray-500 text-right mt-1">12:30 PM</p>
                     </div>
                 </div>

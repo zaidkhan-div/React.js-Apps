@@ -17,18 +17,25 @@ import { useNavigate } from "react-router-dom"
 
 const Login = () => {
     const [inputValue, setInputValue] = useState("")
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleChange = () => {
         if (!inputValue.trim()) {
-            toast.error('Enter your name')
-        } else {
+            toast.error('Enter your name');
+            return;
+        }
+        try {
             dispatch(addUserToCurrentUser(inputValue))
             console.log(inputValue, " User Name");
-            setInputValue('')
             navigate('/')
+        } catch (error) {
+            toast.error(error.message)
         }
+        finally {
+            setInputValue('')
+        }
+
     }
 
     return (
