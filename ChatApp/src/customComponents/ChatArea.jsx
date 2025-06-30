@@ -32,7 +32,7 @@ const ChatArea = () => {
             )}
 
             {/* Messages (Placeholder) */}
-            <div className="flex-1 p-4 overflow-y-auto rounded-t-3xl bg-gray-50">
+            <div className="flex-1 p-4 overflow-y-auto  bg-gray-50">
                 {/* Incoming Message */}
                 <div className="flex mb-3">
                     <div className="w-8 h-8 rounded-full bg-gray-300 mr-2"></div>

@@ -29,6 +29,7 @@ const Login = () => {
             dispatch(addUserToCurrentUser(inputValue))
             console.log(inputValue, " User Name");
             navigate('/')
+            toast.success(`Welcome ${inputValue}`)
         } catch (error) {
             toast.error(error.message)
         }
