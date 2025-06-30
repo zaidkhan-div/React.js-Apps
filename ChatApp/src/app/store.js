@@ -1,5 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
+import ChatSlice from './../features/ChatSlice'
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+const persisConfig = {
+    key: 'chatApp',
+    version: 1,
+    storage,
+    whitelist: ['currentUser', 'users']
+}
+
+const persisReducer = persistReducer(persisConfig, ChatSlice);
 
 export const store = configureStore({
-    reducer: {}
+    reducer: {
+        Chat: persisReducer,
+    }
 })
+
+export const Persistore = persistStore(store);
