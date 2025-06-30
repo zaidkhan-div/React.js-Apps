@@ -29,10 +29,19 @@ const ChatSlice = createSlice({
         },
         setReceiver: (state, action) => {
             state.receiver = action.payload;
+        },
+        sendMessage: (state, action) => {
+            const randomId = nanoid();
+            const { text } = action.payload;
+            const chatId = [state.currentUser.id, state.receiver.id].sort().join('_');
+            state.messages[chatId] = [
+                ...(state.messages[chatId] || []),
+                { id: randomId, sender: state.currentUser.id, text }
+            ];
         }
     }
 
 })
 
 export default ChatSlice.reducer;
-export const { addUserToCurrentUser, setReceiver } = ChatSlice.actions;
+export const { addUserToCurrentUser, setReceiver, sendMessage } = ChatSlice.actions;
