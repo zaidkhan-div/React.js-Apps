@@ -4,10 +4,10 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 const persisConfig = {
-    key: 'chatApp',
+    key: 'chatApp1',
     version: 1,
     storage,
-    whitelist: ['currentUser', 'users']
+    whitelist: ['currentUser', 'users', 'messages'],
 }
 
 const persisReducer = persistReducer(persisConfig, ChatSlice);

@@ -8,7 +8,7 @@ const ChatArea = () => {
     const [inputValue, setInputValue] = useState('')
 
     const { receiver, messages } = useSelector((state) => state.Chat);
-    // console.log(receiver);
+    console.log(messages," Message");
 
     if (!receiver) {
         return (
@@ -20,16 +20,13 @@ const ChatArea = () => {
 
     const handleChange = () => {
         if (inputValue.trim()) {
-            dispatch(sendMessage({
-                text: inputValue,
-                receiverId: receiver.id
-            }))
+            dispatch(sendMessage(inputValue))
             setInputValue("");
         }
     }
 
     // const messages = useSelector((state) => state.Chat.messages);
-    const messagesArray = Object.values(messages);
+    // const messagesArray = Object.values(messages);
     // console.log(messagesArray);
 
     return (
@@ -62,9 +59,9 @@ const ChatArea = () => {
                 </div>
             </div>
 
+
             {/* Input Box (Disabled) */}
             < div className="p-3 border-t border-gray-300 bg-white flex items-center gap-2 rounded-b-3xl" >
-                {/* Input + Button Container */}
                 < div className="flex flex-1 items-center border border-indigo-600 rounded-3xl overflow-hidden" >
                     <input
                         type="text"

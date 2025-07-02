@@ -39,7 +39,7 @@ const SideBar = () => {
                         // onClick={() => onUserClick(setReceiver(user))} // Pass clicked user to parent
                         onClick={() => dispatch(setReceiver(user))}
                     >
-                        <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
+                        <div className="w-10 h-10  rounded-full bg-gray-300 flex items-center justify-center mr-3">
                             {/* This is like a profile pic */}
                             {user.userName.charAt(0).toUpperCase()}
                         </div>

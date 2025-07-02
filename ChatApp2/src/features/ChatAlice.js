@@ -1,7 +1,7 @@
 import React from 'react'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, nanoid } from '@reduxjs/toolkit'
 
-const ChatAlice = createSlice({
+const ChatSlice = createSlice({
     name: "ChatSlice",
     initialState: {
         currentUser: null,
@@ -9,5 +9,26 @@ const ChatAlice = createSlice({
         users: {},
         messages: {}
     },
-    reducers: {}
+    reducers: {
+        addUserToCurrentUser: (state, action) => {
+            const userName = action.payload;
+            const alreadyExists = Object.values(state.users).find((user) => user.userName === userName);
+            if (alreadyExists) {
+                throw new Error('User Already Exist');
+            }
+            const randomId = nanoid();
+            state.currentUser = {
+                id: randomId,
+                userName: action.payload,
+            }
+            state.users[randomId] = state.currentUser;
+        },
+        setRecevier: (state, action) => {
+            state.receiver = action.payload;
+        },
+        sendMessage: (state, action) => { }
+    }
 })
+
+export default ChatSlice.reducer;
+export const { addUserToCurrentUser } = ChatSlice.actions;
