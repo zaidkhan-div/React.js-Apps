@@ -8,8 +8,17 @@ const ChatArea = () => {
     const [inputValue, setInputValue] = useState('')
 
     const { currentUser, receiver, messages } = useSelector((state) => state.Chat);
-    console.log(messages, " Message");
-    let messageArray = Object.values(messages);
+    // console.log(messages, " Message");
+    let messageArray = Object.values(messages).flat();
+    // const currentChatMessages = messageArray.filter((msg)=>
+    // (msg.senderId === currentUSer.id && msg.receiverId === receiver?.id) ||
+    // (msg.senderid === receiver?.id && msg.receiverId === currentUser.id)
+    // );
+    const currentChatId = [currentUser?.id, receiver?.id].sort().join('_');
+    const currentChatMessages = messageArray.filter(
+        (msg) => [msg.senderId, msg.receiverId].sort().join('_') === currentChatId
+    )
+    console.log(currentChatMessages, " CurrentMessages");
 
 
     if (!receiver) {
@@ -47,10 +56,11 @@ const ChatArea = () => {
             {/* Messages (Placeholder) */}
             < div className="flex-1 p-4 overflow-y-auto  bg-gray-50">
                 {/* Incoming Message */}
-                {messageArray.map((message, index) => (
-                    <div key={message.id} className="flex mb-3">
-                        <div className="w-8 h-8 rounded-full bg-gray-300 mr-2"></div>
-                        <div className="bg-white p-2 rounded-lg max-w-xs">
+                {currentChatMessages.map((message, index) => (
+                    <div key={message.id}
+                        className={`flex mb-3 ${message.senderId === currentUser.id ? "justify-end" : ""
+                            }`}>
+                        <div className={`p-2 rounded-lg max-w-xs text-white ${message.senderId === currentUser.id ? "bg-blue-500" : "bg-gray-400"}`}>
                             <p>{message?.text}</p>
                         </div>
                     </div>

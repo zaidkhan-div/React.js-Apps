@@ -30,7 +30,7 @@ const ChatSlice = createSlice({
         },
         sendMessage: (state, action) => {
             // const {}
-            const chatId = [state.currentUser.id, state.receiver.id].sort().join('_')
+            const chatId = [state.currentUser.id, state.receiver.id].sort().join('_');
             if (!state.messages[chatId]) {
                 state.messages[chatId] = []
             }
