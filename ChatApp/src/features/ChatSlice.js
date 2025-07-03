@@ -6,7 +6,6 @@ const ChatSlice = createSlice({
         currentUser: null,
         receiver: null, // here i will store the selected user for chatting
         users: {},
-        message: null, // single Message
         messages: {}
     },
     reducers: {
@@ -31,13 +30,16 @@ const ChatSlice = createSlice({
         },
         sendMessage: (state, action) => {
             // const {}
-            const randomId = nanoid()
             const chatId = [state.currentUser.id, state.receiver.id].sort().join('_')
-            state.message = {
-                id: chatId,
-                text: action.payload
+            if (!state.messages[chatId]) {
+                state.messages[chatId] = []
             }
-            state.messages[randomId] = state.message;
+            state.messages[chatId].push({
+                id: nanoid(),
+                text: action.payload,
+                senderId: state.currentUser.id,
+                receiverId: state.receiver.id,
+            })
         }
     }
 
@@ -45,3 +47,8 @@ const ChatSlice = createSlice({
 
 export default ChatSlice.reducer;
 export const { addUserToCurrentUser, setReceiver, sendMessage } = ChatSlice.actions;
+
+// state.messages[chatId].push({
+//     id: nanoid(),
+//     text: action.payload
+// })

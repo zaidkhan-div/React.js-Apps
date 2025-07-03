@@ -7,8 +7,10 @@ const ChatArea = () => {
     const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState('')
 
-    const { receiver, messages } = useSelector((state) => state.Chat);
-    console.log(messages," Message");
+    const { currentUser, receiver, messages } = useSelector((state) => state.Chat);
+    console.log(messages, " Message");
+    let messageArray = Object.values(messages);
+
 
     if (!receiver) {
         return (
@@ -45,18 +47,25 @@ const ChatArea = () => {
             {/* Messages (Placeholder) */}
             < div className="flex-1 p-4 overflow-y-auto  bg-gray-50">
                 {/* Incoming Message */}
-                <div className="flex mb-3">
+                {messageArray.map((message, index) => (
+                    <div key={message.id} className="flex mb-3">
+                        <div className="w-8 h-8 rounded-full bg-gray-300 mr-2"></div>
+                        <div className="bg-white p-2 rounded-lg max-w-xs">
+                            <p>{message?.text}</p>
+                        </div>
+                    </div>
+                ))}
+                {/* <div className="flex mb-3">
                     <div className="w-8 h-8 rounded-full bg-gray-300 mr-2"></div>
                     <div className="bg-white p-2 rounded-lg max-w-xs">
                         <p>Hi! ZaidKhan </p>
                     </div>
                 </div>
-                {/* Outgoing Message */}
                 <div className="flex mb-3 justify-end">
                     <div className="bg-blue-500 text-white p-2 rounded-lg max-w-xs">
                         <p>Hi! How's it going?</p>
                     </div>
-                </div>
+                </div> */}
             </div>
 
 
