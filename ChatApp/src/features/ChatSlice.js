@@ -34,10 +34,10 @@ const ChatSlice = createSlice({
             const randomId = nanoid()
             const chatId = [state.currentUser.id, state.receiver.id].sort().join('_')
             state.message = {
-                id: randomId,
+                id: chatId,
                 text: action.payload
             }
-            state.messages[chatId] = state.message;
+            state.messages[randomId] = state.message;
         }
     }
 
