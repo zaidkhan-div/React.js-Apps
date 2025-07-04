@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { toast } from "react-toastify"
 import { addUserToCurrentUser } from "@/features/ChatSlice"
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 const Login = () => {
@@ -22,7 +22,7 @@ const Login = () => {
 
     const handleChange = () => {
         if (!inputValue.trim()) {
-            toast.error('Enter your name');
+            toast.error('Enter your name.');
             return;
         }
         try {

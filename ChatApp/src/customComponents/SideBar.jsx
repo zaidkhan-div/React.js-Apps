@@ -7,16 +7,29 @@ const SideBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const users = useSelector((state) => state.Chat.users);
+    const { currentUser, receiver, messages } = useSelector((state) => state.Chat);
+
     let result = Object.values(users) // converts Object to array
-    console.log(result);
+    // console.log("chat", localStorage.getItem("persist:chatApp1"));
+    // console.log(result)
+
+
+    const filterUsers = result.filter((el) => {
+        // console.log(el.id,currentUser.id)
+        return el.id !== currentUser.id
+    })
+
+    console.log("filtered Users ", filterUsers)
+
+
 
     const now = new Date();
     const timeString = `${now.getHours()}:${now.getMinutes()}`;
     const dateString = `${now.getDate()} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][now.getMonth()]}`;
 
-    const filterUsers = result.filter((item) =>
-        item.userName.toLowerCase().includes(searchTerm.toLocaleLowerCase())
-    )
+    // const filterUsers = result.filter((item) =>
+    //     item.userName.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+    // )
 
 
     return (

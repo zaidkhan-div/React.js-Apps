@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Login from './pages/login'
 import ChatApp from './pages/ChatApp'
@@ -8,6 +8,20 @@ import { ToastContainer } from 'react-toastify'
 import ProtectedRoute from './customComponents/ProtectedRoute'
 
 const App = () => {
+
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      if (event.key === 'persist:chatApp1') {
+        // You can add checks here to avoid unnecessary reloads
+        window.location.reload();
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
 
   return (
     <>

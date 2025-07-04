@@ -7,7 +7,7 @@ const persisConfig = {
     key: 'chatApp1',
     version: 1,
     storage,
-    whitelist: ['currentUser', 'users', 'messages'],
+    whitelist: ['currentUser', 'users', 'messages',],
 }
 
 const persisReducer = persistReducer(persisConfig, ChatSlice);
@@ -17,5 +17,4 @@ export const store = configureStore({
         Chat: persisReducer,
     }
 })
-
 export const Persistore = persistStore(store);

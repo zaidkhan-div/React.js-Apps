@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdSend } from "react-icons/md";
 import { useSelector, useDispatch } from 'react-redux';
 import { sendMessage } from '@/features/ChatSlice';
@@ -7,19 +7,21 @@ const ChatArea = () => {
     const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState('')
 
-    const { currentUser, receiver, messages } = useSelector((state) => state.Chat);
-    // console.log(messages, " Message");
+    const { currentUser, messages, receiver } = useSelector((state) => state.Chat);
     let messageArray = Object.values(messages).flat();
     // const currentChatMessages = messageArray.filter((msg)=>
-    // (msg.senderId === currentUSer.id && msg.receiverId === receiver?.id) ||
+    // (msg.senderId === currentUser.id && msg.receiverId === receiver?.id) ||
     // (msg.senderid === receiver?.id && msg.receiverId === currentUser.id)
     // );
+
     const currentChatId = [currentUser?.id, receiver?.id].sort().join('_');
     const currentChatMessages = messageArray.filter(
         (msg) => [msg.senderId, msg.receiverId].sort().join('_') === currentChatId
-    )
-    console.log(currentChatMessages, " CurrentMessages");
+    );
 
+    // const currentChatMessages = messages[currentChatId] || [];
+    console.log(currentChatMessages, " CurrentMessages");
+    console.log(messageArray, " Stil messages are in the MessageArray")
 
     if (!receiver) {
         return (
@@ -40,12 +42,18 @@ const ChatArea = () => {
     // const messagesArray = Object.values(messages);
     // console.log(messagesArray);
 
+    // const lsData = JSON.parse(localStorage.getItem('persist:chatApp1'));
+    // const savedMessages = lsData?.Chat ? JSON.parse(lsData.Chat).messages : {};
+    // console.log(savedMessages)
+
+
     return (
         <div className="flex flex-col rounded-3xl h-full">
             {/* Chat Header */}
             {receiver && (
                 <div className="p-3 border-b border-gray-300 bg-gray-100 flex items-center">
-                    <div className="w-10 h-10 rounded-full bg-gray-300 mr-3"></div>
+                    <div className="w-10 h-10 rounded-full bg-gray-300 mr-3 flex items-center justify-center">
+                        {receiver.userName.charAt(0).toUpperCase()}</div>
                     <div>
                         <p className="font-medium">{receiver.userName}</p>
                         <p className="text-xs text-gray-500">Online</p>
@@ -56,7 +64,7 @@ const ChatArea = () => {
             {/* Messages (Placeholder) */}
             < div className="flex-1 p-4 overflow-y-auto  bg-gray-50">
                 {/* Incoming Message */}
-                {currentChatMessages.map((message, index) => (
+                {currentChatMessages.map((message) => (
                     <div key={message.id}
                         className={`flex mb-3 ${message.senderId === currentUser.id ? "justify-end" : ""
                             }`}>
@@ -68,7 +76,7 @@ const ChatArea = () => {
                 {/* <div className="flex mb-3">
                     <div className="w-8 h-8 rounded-full bg-gray-300 mr-2"></div>
                     <div className="bg-white p-2 rounded-lg max-w-xs">
-                        <p>Hi! ZaidKhan </p>
+                        <p>Hi! ZaidKhan</p>
                     </div>
                 </div>
                 <div className="flex mb-3 justify-end">

@@ -6,7 +6,7 @@ const ChatSlice = createSlice({
         currentUser: null,
         receiver: null, // here i will store the selected user for chatting
         users: {},
-        messages: {}
+        messages: {},
     },
     reducers: {
         addUserToCurrentUser: (state, action) => {
