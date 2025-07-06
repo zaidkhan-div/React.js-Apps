@@ -17,7 +17,7 @@ const SideBar = () => {
     const filterUsers = result.filter((el) => {
         // console.log(el.id,currentUser.id)
         return el.id !== currentUser.id
-    })
+    });
 
     console.log("filtered Users ", filterUsers)
 

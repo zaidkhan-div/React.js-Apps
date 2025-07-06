@@ -1,8 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const NotFound = () => {
     const navigate = useNavigate();
+    const { currentUser } = useSelector((state) => state.Chat);
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white flex flex-col">
@@ -22,15 +24,15 @@ const NotFound = () => {
 
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
                         <button
-                            onClick={() => navigate(-1)}
-                            className="px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 shadow-sm"
+                            onClick={() => navigate(`/home/${currentUser.id}`)}
+                            className="px-6 cursor-pointer py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 shadow-sm"
                         >
                             Go back
                         </button>
 
                         <button
-                            onClick={() => navigate("/")}
-                            className="px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 transition duration-300 shadow-sm"
+                            onClick={() => navigate(`/home/${currentUser.id}`)}
+                            className="px-6 cursor-pointer py-3 border border-gray-300 text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 transition duration-300 shadow-sm"
                         >
                             Return home
                         </button>

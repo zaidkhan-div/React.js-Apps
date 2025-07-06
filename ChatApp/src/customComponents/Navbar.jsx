@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
-    const { currentUser, receiver, messages } = useSelector((state) => state.Chat);
+    const { currentUser } = useSelector((state) => state.Chat);
     // console.log(currentUser.userName)
 
     return (
@@ -14,7 +14,7 @@ const Navbar = () => {
                     <div className="flex items-center">
                         <div className="flex-shrink-0 flex items-center">
                             <span className="ml-2 text-xl font-bold text-indigo-600">
-                                <NavLink to='/'>
+                                <NavLink to={`/home/`}>
                                     ChatApp
                                 </NavLink>
                             </span>
@@ -23,7 +23,8 @@ const Navbar = () => {
                     {/* Left side menu items */}
                     <div className="flex items-center space-x-8">
                         {
-                            currentUser && <div className="text-black">
+                            currentUser &&
+                            <div className="text-black">
                                 {currentUser.userName}
                             </div>
                         }
@@ -34,16 +35,20 @@ const Navbar = () => {
                         >
                             Chat
                         </NavLink>
-                        <NavLink
-                            to="/login"
-                            className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300"
-                        >
-                            Login
-                        </NavLink>
+                        {
+                            currentUser ? "" : (
+                                <NavLink
+                                    to="/login"
+                                    className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300"
+                                >
+                                    Login
+                                </NavLink>
+                            )
+                        }
                     </div>
                 </div>
             </div>
-        </nav>
+        </nav >
     );
 };
 

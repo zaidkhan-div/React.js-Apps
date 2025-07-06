@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { MdSend } from "react-icons/md";
 import { useSelector, useDispatch } from 'react-redux';
-import { sendMessage } from '@/features/ChatSlice';
+import { selectCurrentUser, sendMessage } from '@/features/ChatSlice';
+import { useParams } from 'react-router-dom';
 
 const ChatArea = () => {
     const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState('')
+    const { id } = useParams();
+    const currentUser = useSelector(selectCurrentUser(id))
 
-    const { currentUser, messages, receiver } = useSelector((state) => state.Chat);
+    const { messages, receiver } = useSelector((state) => state.Chat);
     let messageArray = Object.values(messages).flat();
     // const currentChatMessages = messageArray.filter((msg)=>
     // (msg.senderId === currentUser.id && msg.receiverId === receiver?.id) ||

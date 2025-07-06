@@ -11,14 +11,18 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { toast } from "react-toastify"
-import { addUserToCurrentUser } from "@/features/ChatSlice"
-import { useDispatch } from "react-redux"
+import { addUserToCurrentUser, selectUsers } from "@/features/ChatSlice"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import { nanoid } from "@reduxjs/toolkit"
 
 const Login = () => {
+    
     const [inputValue, setInputValue] = useState("")
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const users = useSelector(selectUsers)
+    // const { currentUser } = useSelector((state) => state.Chat);
 
     const handleChange = () => {
         if (!inputValue.trim()) {
@@ -26,15 +30,25 @@ const Login = () => {
             return;
         }
         try {
-            dispatch(addUserToCurrentUser(inputValue))
-            console.log(inputValue, " User Name");
-            navigate('/')
-            toast.success(`Welcome ${inputValue}`)
+            let user = {
+                    id:nanoid(), 
+                    userName: inputValue.trim()
+                }
+            const existingUser = users[user.userName]
+
+            if(!existingUser)
+            dispatch(addUserToCurrentUser(user))
+           else { 
+             user = existingUser
+           }
+            // console.log(inputValue, " User Name");
+            navigate(`/home/${user.id}`);
+            toast.success(`Welcome ${user.userName}`);
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.message);
         }
         finally {
-            setInputValue('')
+            setInputValue('');
         }
 
     }
