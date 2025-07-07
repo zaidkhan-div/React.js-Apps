@@ -1,10 +1,12 @@
+import { selectUsers } from "@/features/ChatSlice";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const NotFound = () => {
     const navigate = useNavigate();
-    const { currentUser } = useSelector((state) => state.Chat);
+    // const { currentUser } = useSelector((state) => state.Chat);
+    const currentUser = useSelector(selectUsers);
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-white flex flex-col">

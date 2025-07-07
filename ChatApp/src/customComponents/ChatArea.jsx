@@ -10,7 +10,7 @@ const ChatArea = () => {
     const { id } = useParams();
     const currentUser = useSelector(selectCurrentUser(id))
 
-    const { messages, receiver } = useSelector((state) => state.Chat);
+    const {  messages, receiver } = useSelector((state) => state.Chat);
     let messageArray = Object.values(messages).flat();
     // const currentChatMessages = messageArray.filter((msg)=>
     // (msg.senderId === currentUser.id && msg.receiverId === receiver?.id) ||

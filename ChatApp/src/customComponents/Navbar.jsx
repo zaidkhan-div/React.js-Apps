@@ -1,10 +1,18 @@
+import { selectUsers } from "@/features/ChatSlice";
 import React from "react";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 const Navbar = () => {
-    const { currentUser } = useSelector((state) => state.Chat);
-    // console.log(currentUser.userName)
+    // const { currentUser } = useSelector((state) => state.Chat);
+    // const currentUser = useSelector(selectUsers)
+    // console.log(currentUser);
+    const { userNamesById } = useSelector((state) => state.Chat);
+    const checkId = Object.keys(userNamesById);
+    let result = checkId[0];
+    console.log(result, "currentUser");
+
+
 
     return (
         <nav className="bg-white shadow-sm  w-full z-10">
@@ -14,7 +22,7 @@ const Navbar = () => {
                     <div className="flex items-center">
                         <div className="flex-shrink-0 flex items-center">
                             <span className="ml-2 text-xl font-bold text-indigo-600">
-                                <NavLink to={`/home/`}>
+                                <NavLink to={`/home/${result}`}>
                                     ChatApp
                                 </NavLink>
                             </span>
@@ -22,29 +30,25 @@ const Navbar = () => {
                     </div>
                     {/* Left side menu items */}
                     <div className="flex items-center space-x-8">
-                        {
+                        {/* {
                             currentUser &&
                             <div className="text-black">
                                 {currentUser.userName}
                             </div>
-                        }
+                        } */}
 
                         <NavLink
-                            to="/"
+                            to={`/home/${userNamesById.id}`}
                             className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300"
                         >
                             Chat
                         </NavLink>
-                        {
-                            currentUser ? "" : (
-                                <NavLink
-                                    to="/login"
-                                    className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300"
-                                >
-                                    Login
-                                </NavLink>
-                            )
-                        }
+                        <NavLink
+                            to="/login"
+                            className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-300"
+                        >
+                            Login
+                        </NavLink>
                     </div>
                 </div>
             </div>

@@ -13,45 +13,78 @@ import { useState } from "react"
 import { toast } from "react-toastify"
 import { addUserToCurrentUser, selectUsers } from "@/features/ChatSlice"
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { nanoid } from "@reduxjs/toolkit"
 
 const Login = () => {
-    
+
     const [inputValue, setInputValue] = useState("")
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const users = useSelector(selectUsers)
     // const { currentUser } = useSelector((state) => state.Chat);
 
-    const handleChange = () => {
+    // const handleChange = () => {
+    //     if (!inputValue.trim()) {
+    //         toast.error('Enter your name.');
+    //         return;
+    //     }
+    //     try {
+    //         let user = {
+    //             id: nanoid(),
+    //             userName: inputValue.trim()
+    //         }
+    //         const existingUser = users[user.userName]
+
+    //         if (!existingUser)
+    //           dispatch(addUserToCurrentUser(user))
+    //         else {
+    //             user = existingUser
+    //         }
+    //         // console.log(inputValue, " User Name");
+    //         navigate(`/home/${user.id}`);
+    //         toast.success(`Welcome ${user.userName}`);
+    //     } catch (error) {
+    //         toast.error(error.message);
+    //     }
+    //     finally {
+    //         setInputValue('');
+    //     }
+
+    // }
+
+    const handleChange = (e) => {
+        e.preventDefault();
         if (!inputValue.trim()) {
             toast.error('Enter your name.');
             return;
         }
         try {
             let user = {
-                    id:nanoid(), 
-                    userName: inputValue.trim()
-                }
-            const existingUser = users[user.userName]
-
-            if(!existingUser)
-            dispatch(addUserToCurrentUser(user))
-           else { 
-             user = existingUser
-           }
+                id: nanoid(),
+                userName: inputValue.trim()
+            }
+            const existingUser = users[user.userName];
+            if (!existingUser) {
+                dispatch(addUserToCurrentUser(user))
+                navigate(`/home/${user.id}`);
+                toast.success(`Welcome ${user.userName}`);
+            }
+            else {
+                // user = existingUser
+                toast.error('User already exist!')
+            }
             // console.log(inputValue, " User Name");
-            navigate(`/home/${user.id}`);
-            toast.success(`Welcome ${user.userName}`);
+            // navigate(`/home/${user.id}`);
+            // toast.success(`Welcome ${user.userName}`);
         } catch (error) {
             toast.error(error.message);
-        }
-        finally {
+        } finally {
             setInputValue('');
         }
+    };
 
-    }
+
 
     return (
         <div className="w-full h-[100vh] flex items-center justify-center">
@@ -81,7 +114,7 @@ const Login = () => {
                     </form>
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
-                    <Button type="submit" variant='outline' className="w-full cursor-pointer border-2 border-blue-500 text-blue-500"
+                    <Button type="type" variant='outline' className="w-full cursor-pointer border-2 border-blue-500 text-blue-500"
                         onClick={handleChange}
                     >
                         Login

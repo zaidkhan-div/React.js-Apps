@@ -13,8 +13,9 @@ const App = () => {
     <>
       <Navbar />
       <Routes>
-        <Route path='/home/:id' element={<ProtectedRoute><ChatApp /></ProtectedRoute>} />
+        <Route path='/' element={<Login />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/home/:id' element={<ProtectedRoute><ChatApp /></ProtectedRoute>} />
         <Route path='*' element={<NotFound />} />
       </Routes>
       <ToastContainer />

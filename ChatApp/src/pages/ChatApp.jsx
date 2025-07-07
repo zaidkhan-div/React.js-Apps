@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom'
 const ChatApp = () => {
     const { id } = useParams();
     const user = useSelector(selectCurrentUser(id))
-    console.log(id, user);
+    // console.log(user, " params");
 
     return (
         <div className="flex gap-5 h-[90vh] max-w-7xl mx-auto m-5 p-5 bg-gray-100">

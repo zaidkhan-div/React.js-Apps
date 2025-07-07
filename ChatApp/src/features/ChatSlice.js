@@ -12,21 +12,21 @@ const ChatSlice = createSlice({
     reducers: {
         addUserToCurrentUser: (state, action) => {
             const { userName } = action.payload;
-            const alreadyExists = state.users[userName];
+            // const alreadyExists = state.users[userName];
             // const alreadyExists = Object.values(state.users).find((user) => user.userName === userName);
-            if (!alreadyExists) {
-                state.users[userName] = action.payload
-                state.userNamesById[action.payload.id] = userName
-            }
-            else{
-                throw new Error('User already exist!')
-            }
+            // if (!alreadyExists) {
+            state.users[userName] = action.payload
+            state.userNamesById[action.payload.id] = userName;
+            // state.currentUser = action.payload
+            // }
+            // else {
+            //     throw new Error('User already exist!')
+            // }
         },
         setReceiver: (state, action) => {
             state.receiver = action.payload;
         },
         sendMessage: (state, action) => {
-            // const {}
             const chatId = [state.currentUser.id, state.receiver.id].sort().join('_');
             if (!state.messages[chatId]) {
                 state.messages[chatId] = []
@@ -51,14 +51,13 @@ export const { addUserToCurrentUser, setReceiver, sendMessage } = ChatSlice.acti
 // })
 
 
-export const selectUsers = state => state.Chat.users
+export const selectUsers = state => state.Chat.users;
 
-
-export const selectCurrentUser = (userId) => createSelector([
-    selectUsers, state => state.Chat.userNamesById
-], (users, userIds) => {
-    return users?.[userIds?.[userId]]
-})
+export const selectCurrentUser = (userId) => createSelector(
+    [selectUsers, state => state.Chat.userNamesById],
+    (users, userIds) => {
+        return users?.[userIds?.[userId]]
+    })
 
 // addUserToCurrentUser: (state, action) => {
 //     const userName = action.payload;

@@ -1,31 +1,32 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setReceiver } from '@/features/ChatSlice';
+import { selectCurrentUser, setReceiver } from '@/features/ChatSlice';
+import { useParams } from 'react-router-dom';
 
 const SideBar = () => {
     const dispatch = useDispatch();
     const [searchTerm, setSearchTerm] = useState('');
+    const { receiver, messages, userNamesById } = useSelector((state) => state.Chat);
 
     const users = useSelector((state) => state.Chat.users);
-    const { currentUser, receiver, messages } = useSelector((state) => state.Chat);
+    const { id } = useParams();
 
-    let result = Object.values(users) // converts Object to array
-    // console.log("chat", localStorage.getItem("persist:chatApp1"));
-    // console.log(result)
+    const currentUser = useSelector(selectCurrentUser(id))
+    console.log(currentUser, 'user');
 
+    let result = Object.values(users); // converts Objects to an array
 
-    const filterUsers = result.filter((el) => {
-        // console.log(el.id,currentUser.id)
-        return el.id !== currentUser.id
-    });
-
-    console.log("filtered Users ", filterUsers)
+    const filterUsers = result.filter((element) => {
+        return element.id !== currentUser.id
+    })
+    console.log(filterUsers, "filtered Users")
 
 
 
     const now = new Date();
     const timeString = `${now.getHours()}:${now.getMinutes()}`;
-    const dateString = `${now.getDate()} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][now.getMonth()]}`;
+    const dateString = `${now.getDate()}
+    ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][now.getMonth()]}`;
 
     // const filterUsers = result.filter((item) =>
     //     item.userName.toLowerCase().includes(searchTerm.toLocaleLowerCase())
