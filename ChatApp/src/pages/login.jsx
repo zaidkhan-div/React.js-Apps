@@ -71,7 +71,7 @@ const Login = () => {
                 toast.success(`Welcome ${user.userName}`);
             }
             else {
-                // user = existingUser
+                user = existingUser
                 toast.error('User already exist!')
             }
             // console.log(inputValue, " User Name");

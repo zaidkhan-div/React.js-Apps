@@ -26,18 +26,35 @@ const ChatSlice = createSlice({
         setReceiver: (state, action) => {
             state.receiver = action.payload;
         },
+        // sendMessage: (state, action) => {
+        //     const chatId = [state.userNamesById.id, state.receiver.id].sort().join('_');
+        //     if (!state.messages[chatId]) {
+        //         state.messages[chatId] = []
+        //     }
+        //     state.messages[chatId].push({
+        //         id: nanoid(),
+        //         text: action.payload,
+        //         senderId: state.userNamesById.id,
+        //         receiverId: state.receiver.id,
+        //     })
+        // }
         sendMessage: (state, action) => {
-            const chatId = [state.currentUser.id, state.receiver.id].sort().join('_');
+            const { senderId, text } = action.payload;
+            const receiverId = state.receiver.id;
+            const chatId = [senderId, receiverId].sort().join('_');
+
             if (!state.messages[chatId]) {
-                state.messages[chatId] = []
+                state.messages[chatId] = [];
             }
+
             state.messages[chatId].push({
                 id: nanoid(),
-                text: action.payload,
-                senderId: state.currentUser.id,
-                receiverId: state.receiver.id,
-            })
+                text,
+                senderId,
+                receiverId,
+            });
         }
+
     }
 
 })

@@ -6,11 +6,11 @@ import { useParams } from 'react-router-dom';
 
 const ChatArea = () => {
     const dispatch = useDispatch();
-    const [inputValue, setInputValue] = useState('')
+    const [inputValue, setInputValue] = useState('');
     const { id } = useParams();
-    const currentUser = useSelector(selectCurrentUser(id))
+    const currentUser = useSelector(selectCurrentUser(id));
 
-    const {  messages, receiver } = useSelector((state) => state.Chat);
+    const { messages, receiver } = useSelector((state) => state.Chat);
     let messageArray = Object.values(messages).flat();
     // const currentChatMessages = messageArray.filter((msg)=>
     // (msg.senderId === currentUser.id && msg.receiverId === receiver?.id) ||
@@ -24,7 +24,7 @@ const ChatArea = () => {
 
     // const currentChatMessages = messages[currentChatId] || [];
     console.log(currentChatMessages, " CurrentMessages");
-    console.log(messageArray, " Stil messages are in the MessageArray")
+    console.log(messageArray, " Stil messages are in the MessageArray");
 
     if (!receiver) {
         return (
@@ -36,7 +36,8 @@ const ChatArea = () => {
 
     const handleChange = () => {
         if (inputValue.trim()) {
-            dispatch(sendMessage(inputValue))
+            // dispatch(sendMessage(inputValue));
+            dispatch(sendMessage({ senderId: currentUser.id, text: inputValue }))
             setInputValue("");
         }
     }

@@ -36,6 +36,7 @@ const SideBar = () => {
     return (
         <div className="h-full bg-white border border-gray-200 rounded-3xl flex flex-col">
             <div className="p-3 bg-gray-50 rounded-3xl">
+                <p className='text-blue-800 py-2'>Current User: {currentUser.userName}</p>
                 <input
                     type="text"
                     placeholder="Search contacts..."
@@ -47,10 +48,14 @@ const SideBar = () => {
             </div>
             <div className="flex-1 overflow-y-auto">
                 {filterUsers.map((user) => (
+                    // <div
+                    //     key={user.id}
+                    //     className="p-3 hover:bg-gray-100 cursor-pointer flex items-center"
+                    //     onClick={() => dispatch(setReceiver(user))}
+                    // >
                     <div
                         key={user.id}
                         className="p-3 hover:bg-gray-100 cursor-pointer flex items-center"
-                        // onClick={() => onUserClick(setReceiver(user))} // Pass clicked user to parent
                         onClick={() => dispatch(setReceiver(user))}
                     >
                         <div className="w-10 h-10  rounded-full bg-gray-300 flex items-center justify-center mr-3">
