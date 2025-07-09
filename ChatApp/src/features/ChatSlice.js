@@ -69,12 +69,15 @@ export const { addUserToCurrentUser, setReceiver, sendMessage } = ChatSlice.acti
 
 
 export const selectUsers = state => state.Chat.users;
+// const selectUserNameById = state => state.Chat.userNamesById;
 
 export const selectCurrentUser = (userId) => createSelector(
+    // [selectUsers,selectUserNameById] //  These are input selectors
     [selectUsers, state => state.Chat.userNamesById],
-    (users, userIds) => {
+    (users, userIds) => { // (users, userIds) These are arguments passed to the result function
         return users?.[userIds?.[userId]]
     })
+
 
 // addUserToCurrentUser: (state, action) => {
 //     const userName = action.payload;

@@ -15,6 +15,7 @@ import { addUserToCurrentUser, selectUsers } from "@/features/ChatSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 import { nanoid } from "@reduxjs/toolkit"
+import { sendToTabs } from "@/broadcast"
 
 const Login = () => {
 
@@ -67,6 +68,7 @@ const Login = () => {
             const existingUser = users[user.userName];
             if (!existingUser) {
                 dispatch(addUserToCurrentUser(user))
+                sendToTabs("ADD_USER", user); // to list without refresf in other tabs
                 navigate(`/home/${user.id}`);
                 toast.success(`Welcome ${user.userName}`);
             }
@@ -114,7 +116,7 @@ const Login = () => {
                     </form>
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
-                    <Button type="type" variant='outline' className="w-full cursor-pointer border-2 border-blue-500 text-blue-500"
+                    <Button type="button" variant='outline' className="w-full cursor-pointer border-2 border-blue-500 text-blue-500"
                         onClick={handleChange}
                     >
                         Login

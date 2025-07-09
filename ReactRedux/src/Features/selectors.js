@@ -8,7 +8,6 @@ import { createSelector } from "@reduxjs/toolkit";
 
 const selectProfile = (state) => state.profile; // this is from store.js
 const selectCounter = (state) => state.counter; // this is from store.js
-const todosLength = (state) => state.todos;
 
 // Derived data is new information created by processing and transforming existing data.
 
@@ -25,12 +24,13 @@ export const selectName = createSelector(
 )
 // createSelector + useSelector = "Only update when any specific data changes."
 
+const todosLength = (state) => state.todos;
 
 export const selectTotalTodos = createSelector(
-    [todosLength],
+    [todosLength], // this is actually input selector and a parameter
     (todos) => todos.todos.length
-    // createSelector is for derived/computed data (e.g., totals, filtered lists).
 )
+
 // Purpose: Memoize Redux state-derived data (global, reusable).
 // Use Case: Optimize calculations used across multiple components
 

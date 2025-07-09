@@ -3,15 +3,18 @@ import { MdSend } from "react-icons/md";
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentUser, sendMessage } from '@/features/ChatSlice';
 import { useParams } from 'react-router-dom';
+import { sendToTabs } from '@/broadcast';
+
 
 const ChatArea = () => {
     const dispatch = useDispatch();
     const [inputValue, setInputValue] = useState('');
     const { id } = useParams();
     const currentUser = useSelector(selectCurrentUser(id));
-
+    console.log(currentUser, ' UserId')
     const { messages, receiver } = useSelector((state) => state.Chat);
     let messageArray = Object.values(messages).flat();
+
     // const currentChatMessages = messageArray.filter((msg)=>
     // (msg.senderId === currentUser.id && msg.receiverId === receiver?.id) ||
     // (msg.senderid === receiver?.id && msg.receiverId === currentUser.id)
@@ -37,7 +40,7 @@ const ChatArea = () => {
     const handleChange = () => {
         if (inputValue.trim()) {
             // dispatch(sendMessage(inputValue));
-            dispatch(sendMessage({ senderId: currentUser.id, text: inputValue }))
+            dispatch(sendMessage({ senderId: currentUser.id, text: inputValue }));
             setInputValue("");
         }
     }
@@ -52,6 +55,7 @@ const ChatArea = () => {
 
 
     return (
+
         <div className="flex flex-col rounded-3xl h-full">
             {/* Chat Header */}
             {receiver && (

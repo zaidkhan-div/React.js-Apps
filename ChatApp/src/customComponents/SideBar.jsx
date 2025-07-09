@@ -7,6 +7,7 @@ const SideBar = () => {
     const dispatch = useDispatch();
     const [searchTerm, setSearchTerm] = useState('');
     const { receiver, messages, userNamesById } = useSelector((state) => state.Chat);
+    console.log(receiver, " Receiver Id")
 
     const users = useSelector((state) => state.Chat.users);
     const { id } = useParams();
