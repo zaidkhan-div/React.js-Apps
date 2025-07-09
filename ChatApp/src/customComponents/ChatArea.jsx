@@ -40,7 +40,14 @@ const ChatArea = () => {
     const handleChange = () => {
         if (inputValue.trim()) {
             // dispatch(sendMessage(inputValue));
-            dispatch(sendMessage({ senderId: currentUser.id, text: inputValue }));
+            const message = {
+                senderId: currentUser.id,
+                receiverId: receiver.id,
+                text: inputValue,
+            };
+
+            dispatch(sendMessage(message));
+            sendToTabs("SEND_MESSAGE", message);
             setInputValue("");
         }
     }

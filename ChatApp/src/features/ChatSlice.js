@@ -27,26 +27,28 @@ const ChatSlice = createSlice({
             state.receiver = action.payload;
         },
         // sendMessage: (state, action) => {
-        //     const chatId = [state.userNamesById.id, state.receiver.id].sort().join('_');
+        //     const { senderId, text } = action.payload;
+        //     const receiverId = state.receiver.id;
+        //     const chatId = [senderId, receiverId].sort().join('_');
+
         //     if (!state.messages[chatId]) {
-        //         state.messages[chatId] = []
+        //         state.messages[chatId] = [];
         //     }
+
         //     state.messages[chatId].push({
         //         id: nanoid(),
-        //         text: action.payload,
-        //         senderId: state.userNamesById.id,
-        //         receiverId: state.receiver.id,
-        //     })
+        //         text,
+        //         senderId,
+        //         receiverId,
+        //     });
         // }
         sendMessage: (state, action) => {
-            const { senderId, text } = action.payload;
-            const receiverId = state.receiver.id;
-            const chatId = [senderId, receiverId].sort().join('_');
-
+            const { senderId, receiverId, text } = action.payload;
+            if (!senderId || !receiverId || !text) return;
+            const chatId = [senderId, receiverId].sort().join("_");
             if (!state.messages[chatId]) {
                 state.messages[chatId] = [];
             }
-
             state.messages[chatId].push({
                 id: nanoid(),
                 text,
@@ -54,10 +56,21 @@ const ChatSlice = createSlice({
                 receiverId,
             });
         }
-
     }
 
 })
+// sendMessage: (state, action) => {
+//     const chatId = [state.userNamesById.id, state.receiver.id].sort().join('_');
+//     if (!state.messages[chatId]) {
+//         state.messages[chatId] = []
+//     }
+//     state.messages[chatId].push({
+//         id: nanoid(),
+//         text: action.payload,
+//         senderId: state.userNamesById.id,
+//         receiverId: state.receiver.id,
+//     })
+// }
 
 export default ChatSlice.reducer;
 export const { addUserToCurrentUser, setReceiver, sendMessage } = ChatSlice.actions;
