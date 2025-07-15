@@ -1,5 +1,5 @@
 // Create a named channel
-const channel = new BroadcastChannel("chat-sync");
+const channel = new BroadcastChannel("chat-sync"); // can give anyName
 
 // 🔊 Function to send message to all other tabs
 export const sendToTabs = (type, payload) => {

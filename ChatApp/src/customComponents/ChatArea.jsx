@@ -103,23 +103,25 @@ const ChatArea = () => {
 
 
             {/* Input Box (Disabled) */}
-            < div className="p-3 border-t border-gray-300 bg-white flex items-center gap-2 rounded-b-3xl" >
-                < div className="flex flex-1 items-center border border-indigo-600 rounded-3xl overflow-hidden" >
-                    <input
-                        type="text"
-                        placeholder="Type a message..."
-                        className="w-full p-2 px-4 focus:outline-none bg-transparent"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                    />
-                    <button
-                        className="p-2 text-indigo-600 hover:text-indigo-800 pr-4 cursor-pointer"
-                        onClick={handleChange}
-                    >
-                        <MdSend className="w-5 h-5" />
-                    </button>
-                </div>
-            </div >
+            <form action="#">
+                < div className="p-3 border-t border-gray-300 bg-white flex items-center gap-2 rounded-b-3xl" >
+                    < div className="flex flex-1 items-center border border-indigo-600 rounded-3xl overflow-hidden" >
+                        <input
+                            type="text"
+                            placeholder="Type a message..."
+                            className="w-full p-2 px-4 focus:outline-none bg-transparent"
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                        />
+                        <button type='submit'
+                            className="p-2 text-indigo-600 hover:text-indigo-800 pr-4 cursor-pointer"
+                            onClick={handleChange}
+                        >
+                            <MdSend className="w-5 h-5 outline-none" />
+                        </button>
+                    </div>
+                </div >
+            </form>
         </div >
     );
 };
