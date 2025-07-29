@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
 // createAsyncThunk will take three parameters 
-// type, payloadCreator, options
+// type, payloadCreator, options => is Optional
 export const fetchUser = createAsyncThunk(
     'user/fetchUser', // Action type prefix (must be unique)
     // this type argument will generate three action types

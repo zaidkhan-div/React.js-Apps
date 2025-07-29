@@ -11,7 +11,7 @@ const ExtraReducerThunk = createSlice({
 
     // extraReducers:
     // Only for async thunk actions(not button clicks).
-    // Updates state based on pending/ fulfilled / rejected.
+    // Updates state based on: pending | fulfilled | rejected.
 
     reducers: {}, // Sync Reducers (Optionals)
     extraReducers: (builder) => {

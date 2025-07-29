@@ -15,8 +15,8 @@ const TodosSlice = createSlice({
             }
             state.todos.push(NewTodo)
         },
-        deleteTodo: (state, action) => {
-            state.todos = state.todos.filter(todo => todo.id !== action.payload.id)
+        deleteTodo: (state, { payload }) => {
+            state.todos = state.todos.filter(todo => todo.id !== payload.id)
         },
         startEditing: (state, action) => {
             state.editIndex = action.payload

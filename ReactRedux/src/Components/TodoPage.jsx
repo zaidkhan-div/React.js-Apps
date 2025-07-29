@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { addTodo, deleteTodo, editTodo, startEditing } from '../Features/todosSlice'
-import { nanoid } from '@reduxjs/toolkit'
 
 const TodoPage = () => {
     const [inputValue, setInputValue] = useState("")
@@ -9,7 +8,6 @@ const TodoPage = () => {
     const todo = useSelector((state) => state.todos.todos)
     const editIndex = useSelector((state) => state.todos.editIndex)
     console.log(editIndex, " EditIndex");
-
 
     console.log(todo, " Todo");
 
