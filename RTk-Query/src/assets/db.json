@@ -1,0 +1,29 @@
+{
+    "posts": [
+        {
+            "id": "1",
+            "title": "a title",
+            "views": "HI I am ZaidKhan, Here is my breif intro about myself i am a student of 12th grade and i am learning computer science from Pinnacle college also insitute from DMIT my teacher nme is alihu"
+        },
+        {
+            "id": "2",
+            "title": "another title",
+            "body": "this is the body section of this api we are using json server for testing the rtk query and i am also learning alot about it nothing else etc"
+        }
+    ],
+    "comments": [
+        {
+            "id": "1",
+            "text": "a comment about post 1",
+            "postId": "1"
+        },
+        {
+            "id": "2",
+            "text": "another comment about post 1",
+            "postId": "1"
+        }
+    ],
+    "profile": {
+        "name": "typicode"
+    }
+}
