@@ -10,14 +10,23 @@ const ApiSlice = createApi({
     tagTypes: ["Posts"],
     endpoints: (builder) => ({
         getPosts: builder.query({ // for getRequest we use query and for the rest of operation we use "mutation"
-            query: () => 'posts'
+            query: (id) => `posts${id}`,
+            providesTags: ["Posts"]
         }),
         newPost: builder.mutation({
-            query: () => ({
+            query: (body) => ({
                 url: "posts",
                 method: "POST",
                 body,
-            })
+            }),
+            invalidatesTags: ["Posts"]
+        }),
+        deletePost: builder.mutation({
+            query: (id) => ({
+                url: `posts/${id}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Posts"]
         })
     })
 })
@@ -25,6 +34,6 @@ const ApiSlice = createApi({
 // RTK Query is a powerful data fetching and caching tool. It is designed to simplify common cases for loading data in a web application, eliminating the need to hand-write data fetching & caching logic yourself.
 // RTK Query is an optional addon included in the Redux Toolkit package, and its functionality is built on top of the other APIs in Redux Toolkit.
 
-export const { useGetPostsQuery, useNewPostMutation } = ApiSlice; // Auto-generated hooks
+export const { useGetPostsQuery, useNewPostMutation, useDeletePostMutation } = ApiSlice; // Auto-generated hooks
 
 export default ApiSlice;
