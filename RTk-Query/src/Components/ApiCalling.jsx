@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetSinglePostQuery, useGetPostsQuery, useNewPostMutation, useDeletePostMutation, useEditPostMutation } from "../Features/ApiSlice";
 
 
@@ -11,7 +11,6 @@ const ApiCalling = () => {
     // const [postId, setPostId] = useState("");
     // const [ediTitle, setEditTitle] = useState("");
     // const [editBody, setEditBody] = useState("");
-    // const [editId, setEditId] = useState("");
     // New and Better Approach
 
     const [newPost, setNewPost] = useState({
@@ -25,15 +24,16 @@ const ApiCalling = () => {
     });
     const [deleteItem, setDeleteItem] = useState("");
     const [postId, setPostId] = useState("");
+    const [editId, setEditId] = useState("");
+    const [singlePost, setSinglePost] = useState("");
 
-    
+
     const { data, isLoading, isSuccess, isError, error, } = useGetPostsQuery();
     const { getPost } = useGetSinglePostQuery(postId);
     const [addPost] = useNewPostMutation();
     const [delePost, deleteResult] = useDeletePostMutation();
     const [editPost, { isLoading: isEditLoading, isSuccess: isEditSucess }] = useEditPostMutation();
 
-    console.log(getPost);
 
 
     if (isLoading) return console.log("Loading...");
@@ -42,17 +42,16 @@ const ApiCalling = () => {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         const dataId = data.length + 1;
-        if (title && body.trim()) {
+        e.preventDefault();
+        if (newPost.title.trim() && newPost.body.trim()) {
             const obj = {
                 id: dataId.toString(),
-                title: title,
-                body: body
+                title: newPost.title,
+                body: newPost.body
             }
             addPost(obj);
-            setTitle("");
-            setBody("");
+            setNewPost({ title: "", body: "" })
         } else {
             alert("Fill the Form")
         }
@@ -74,26 +73,31 @@ const ApiCalling = () => {
 
     const handleEdit = (e) => {
         e.preventDefault();
-        const id = editId;
+        const id = editPostData.id;
         const editObj = {
-            title: ediTitle,
-            body: editBody
+            title: editPostData.title,
+            body: editPostData.body,
         }
-        editPost({ body: editObj, id })
+        editPost({ body: editObj, id });
+        setEditPostData({ id: "", title: "", body: "" });
     }
+
+
+
     return (
         <div style={{ width: "100%", border: "1px solid red", overflow: "hidden" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                 <form onSubmit={handleSubmit}>
-                    <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-                    <input type="text" placeholder="Body" value={body} onChange={(e) => setBody(e.target.value)} />
+                    <input type="text" placeholder="Title" value={newPost.title} onChange={(e) => setNewPost({ ...newPost, title: e.target.value })} />
+                    <input type="text" placeholder="Body" value={newPost.body} onChange={(e) => setNewPost({ ...newPost, body: e.target.value })} />
                     <button type="submit">Add</button>
                 </form>
                 <form onSubmit={handleEdit}>
-                    <input type="text" placeholder="Edit Id" value={editId} onChange={(e) => setEditId(e.target.value)} />
-                    <input type="text" placeholder="Edit Title" value={ediTitle} onChange={(e) => setEditTitle(e.target.value)} />
-                    <input type="text" placeholder="Edit Body" value={editBody} onChange={(e) => setEditBody(e.target.value)} />
+                    <input type="text" placeholder="Edit Id" value={editPostData.id} onChange={(e) => setEditPostData({ ...editPostData, id: e.target.value })} />
+                    <input type="text" placeholder="Edit Title" value={editPostData.title} onChange={(e) => setEditPostData({ ...editPostData, title: e.target.value })} />
+                    <input type="text" placeholder="Edit Body" value={editPostData.body} onChange={(e) => setEditPostData({ ...editPostData, body: e.target.value })} />
                     <button type="submit">edit</button>
+                    {isEditSucess ? <p style={{ color: "red", fontSize: "14px" }}>Edited Successfully!</p> : ""}
                 </form>
                 <form onSubmit={handleDelete}>
                     <input type="text" value={deleteItem} onChange={(e) => setDeleteItem(e.target.value)} placeholder="DeletePost" />
