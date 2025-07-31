@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGetSinglePostQuery, useGetPostsQuery, useNewPostMutation, useDeletePostMutation } from "../Features/ApiSlice";
+import { useGetSinglePostQuery, useGetPostsQuery, useNewPostMutation, useDeletePostMutation, useEditPostMutation } from "../Features/ApiSlice";
 
 
 // json-server 
@@ -8,14 +8,18 @@ const ApiCalling = () => {
     const [body, setBody] = useState("");
     const [deleteItem, setDeleteItem] = useState(null);
     const [singlePost, setSinglePost] = useState(null)
-    const [postId, setPostId] = useState(null);
+    const [postId, setPostId] = useState("");
+    const [ediTitle, setEditTitle] = useState("");
+    const [editBody, setEditBody] = useState("");
+    const [editId, setEditId] = useState("")
 
-    const { data, isLoading, isSuccess, isError, error, } = useGetPostsQuery('');
+    const { data, isLoading, isSuccess, isError, error, } = useGetPostsQuery();
     const { getPost } = useGetSinglePostQuery(postId);
     const [newPost] = useNewPostMutation();
-    const [delePost] = useDeletePostMutation();
+    const [delePost, result] = useDeletePostMutation();
+    const [editPost, { isLoading: isEditLoading, isSuccess: isEditSucess }] = useEditPostMutation();
 
-    console.log(data);
+    console.log(getPost);
 
 
     if (isLoading) return console.log("Loading...");
@@ -35,7 +39,7 @@ const ApiCalling = () => {
             newPost(addPost);
             setTitle("");
             setBody("");
-        }else{
+        } else {
             alert("Fill the Form")
         }
 
@@ -52,13 +56,29 @@ const ApiCalling = () => {
         setPostId(singlePost);
         setSinglePost("");
     }
+
+    const handleEdit = (e) => {
+        e.preventDefault();
+        const id = editId;
+        const editObj = {
+            title: ediTitle,
+            body: editBody
+        }
+        editPost({ body: editObj, id })
+    }
     return (
         <div style={{ width: "100%", border: "1px solid red", overflow: "hidden" }}>
-            <div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                 <form onSubmit={handleSubmit}>
                     <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
                     <input type="text" placeholder="Body" value={body} onChange={(e) => setBody(e.target.value)} />
                     <button type="submit">Add</button>
+                </form>
+                <form onSubmit={handleEdit}>
+                    <input type="text" placeholder="Edit Id" value={editId} onChange={(e) => setEditId(e.target.value)} />
+                    <input type="text" placeholder="Edit Title" value={ediTitle} onChange={(e) => setEditTitle(e.target.value)} />
+                    <input type="text" placeholder="Edit Body" value={editBody} onChange={(e) => setEditBody(e.target.value)} />
+                    <button type="submit">edit</button>
                 </form>
                 <form onSubmit={handleDelete}>
                     <input type="text" value={deleteItem} onChange={(e) => setDeleteItem(e.target.value)} placeholder="DeletePost" />

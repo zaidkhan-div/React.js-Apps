@@ -1,46 +1,41 @@
 {
   "posts": [
     {
-      "id": "1",
-      "title": "a title",
-      "views": 100
-    },
-    {
-      "id": "2",
-      "title": "another title",
-      "views": 200
-    },
-    {
       "id": "3",
       "title": "Hello",
       "body": "This the new body"
     },
     {
       "id": "4",
-      "title": "newPost ",
-      "body": "this si the new body"
+      "title": "HI This is the new Titilr",
+      "body": "This si the new body of the text"
     },
     {
       "id": "5",
       "title": "title",
-      "body": "new body"
+      "body": "This is the new Body of Redux-Toolkit query"
     },
     {
       "id": "6",
-      "title": "qqwq",
-      "body": "eqweqwe"
+      "title": "This the Title",
+      "body": "the is the Body of Title"
+    },
+    {
+      "id": "7",
+      "title": "title",
+      "body": "body"
     }
   ],
   "comments": [
     {
       "id": "1",
       "text": "a comment about post 1",
-      "postId": "1"
+      "postId": null
     },
     {
       "id": "2",
       "text": "another comment about post 1",
-      "postId": "1"
+      "postId": null
     }
   ],
   "profile": {

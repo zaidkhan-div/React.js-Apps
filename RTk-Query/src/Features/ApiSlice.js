@@ -7,7 +7,7 @@ const ApiSlice = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
     // Endpoints are a set of operations that you want to perform against your server. You define them as an object using the builder syntax. 
     // Tags in Query 
-    tagTypes: ["Posts"],
+    tagTypes: ["Posts", "Comments"],
     endpoints: (builder) => ({
         getPosts: builder.query({ // for getRequest we use query and for the rest of operation we use "mutation"
             query: () => "posts",
@@ -34,6 +34,14 @@ const ApiSlice = createApi({
                 method: "DELETE",
             }),
             invalidatesTags: ["Posts"]
+        }),
+        editPost: builder.mutation({
+            query: ({ id, body }) => ({
+                url: `posts/${id}`,
+                method: "PUT",
+                body
+            }),
+            invalidatesTags: ["Posts"]
         })
     })
 })
@@ -42,6 +50,6 @@ const ApiSlice = createApi({
 // RTK Query is an optional addon included in the Redux Toolkit package, and its functionality is built on top of the other APIs in Redux Toolkit.
 
 
-export const { useGetPostsQuery, useGetSinglePostQuery, useNewPostMutation, useDeletePostMutation } = ApiSlice; // Auto-generated hooks
+export const { useGetPostsQuery, useGetSinglePostQuery, useNewPostMutation, useDeletePostMutation, useEditPostMutation } = ApiSlice; // Auto-generated hooks
 
 export default ApiSlice;
