@@ -4,19 +4,33 @@ import { useGetSinglePostQuery, useGetPostsQuery, useNewPostMutation, useDeleteP
 
 // json-server 
 const ApiCalling = () => {
-    const [title, setTitle] = useState("");
-    const [body, setBody] = useState("");
-    const [deleteItem, setDeleteItem] = useState(null);
-    const [singlePost, setSinglePost] = useState(null)
-    const [postId, setPostId] = useState("");
-    const [ediTitle, setEditTitle] = useState("");
-    const [editBody, setEditBody] = useState("");
-    const [editId, setEditId] = useState("")
+    // const [title, setTitle] = useState("");
+    // const [body, setBody] = useState("");
+    // const [deleteItem, setDeleteItem] = useState("");
+    // const [singlePost, setSinglePost] = useState("")
+    // const [postId, setPostId] = useState("");
+    // const [ediTitle, setEditTitle] = useState("");
+    // const [editBody, setEditBody] = useState("");
+    // const [editId, setEditId] = useState("");
+    // New and Better Approach
 
+    const [newPost, setNewPost] = useState({
+        title: "",
+        body: ""
+    });
+    const [editPostData, setEditPostData] = useState({
+        id: "",
+        title: "",
+        body: ""
+    });
+    const [deleteItem, setDeleteItem] = useState("");
+    const [postId, setPostId] = useState("");
+
+    
     const { data, isLoading, isSuccess, isError, error, } = useGetPostsQuery();
     const { getPost } = useGetSinglePostQuery(postId);
-    const [newPost] = useNewPostMutation();
-    const [delePost, result] = useDeletePostMutation();
+    const [addPost] = useNewPostMutation();
+    const [delePost, deleteResult] = useDeletePostMutation();
     const [editPost, { isLoading: isEditLoading, isSuccess: isEditSucess }] = useEditPostMutation();
 
     console.log(getPost);
@@ -31,12 +45,12 @@ const ApiCalling = () => {
         e.preventDefault();
         const dataId = data.length + 1;
         if (title && body.trim()) {
-            const addPost = {
+            const obj = {
                 id: dataId.toString(),
                 title: title,
                 body: body
             }
-            newPost(addPost);
+            addPost(obj);
             setTitle("");
             setBody("");
         } else {
@@ -45,9 +59,10 @@ const ApiCalling = () => {
 
     }
 
-    const handleDelete = (e) => {
+    const handleDelete = async (e) => {
         e.preventDefault();
-        delePost(deleteItem);
+        if (deleteResult.isError) throw new Error("The id is not found!")
+        await delePost(deleteItem);
         setDeleteItem("");
     }
 
@@ -91,7 +106,7 @@ const ApiCalling = () => {
             </div>
             <div style={{ border: "1px solid green" }}>
                 <h3>SinlePost</h3>
-                <pre>{getPost ? getPost && JSON.stringify(getPost, null, 2) : "Get single post"}</pre>
+                <pre>{getPost ? JSON.stringify(getPost, null, 2) : "Get single post"}</pre>
             </div>
             <div style={{ border: "1px solid blue" }}>
                 <h3>Data</h3>
