@@ -24,19 +24,17 @@ const ApiCalling = () => {
     });
     const [deleteItem, setDeleteItem] = useState("");
     const [postId, setPostId] = useState("");
-    const [editId, setEditId] = useState("");
     const [singlePost, setSinglePost] = useState("");
-
+    const [showMsg, setShowMsg] = useState(false);
 
     const { data, isLoading, isSuccess, isError, error, } = useGetPostsQuery();
-    const { getPost } = useGetSinglePostQuery(postId);
+    const { data: getPost } = useGetSinglePostQuery(postId, {
+        skip: !postId
+    });
     const [addPost] = useNewPostMutation();
     const [delePost, deleteResult] = useDeletePostMutation();
     const [editPost, { isLoading: isEditLoading, isSuccess: isEditSucess }] = useEditPostMutation();
 
-
-
-    if (isLoading) return console.log("Loading...");
     if (isSuccess) {
         console.log(data, "Data");
     }
@@ -67,7 +65,11 @@ const ApiCalling = () => {
 
     const handleSinglePost = (e) => {
         e.preventDefault();
-        setPostId(singlePost);
+        if (singlePost.trim()) {
+            setPostId(singlePost);
+        } else {
+            alert("Enter number to get the post")
+        }
         setSinglePost("");
     }
 
@@ -82,7 +84,14 @@ const ApiCalling = () => {
         setEditPostData({ id: "", title: "", body: "" });
     }
 
-
+    useEffect(() => {
+        let timer;
+        if (isEditSucess) {
+            setShowMsg(true);
+            timer = setTimeout(() => setShowMsg(false), 3000);
+        }
+        return () => clearTimeout(timer)
+    }, [isEditSucess])
 
     return (
         <div style={{ width: "100%", border: "1px solid red", overflow: "hidden" }}>
@@ -97,7 +106,7 @@ const ApiCalling = () => {
                     <input type="text" placeholder="Edit Title" value={editPostData.title} onChange={(e) => setEditPostData({ ...editPostData, title: e.target.value })} />
                     <input type="text" placeholder="Edit Body" value={editPostData.body} onChange={(e) => setEditPostData({ ...editPostData, body: e.target.value })} />
                     <button type="submit">edit</button>
-                    {isEditSucess ? <p style={{ color: "red", fontSize: "14px" }}>Edited Successfully!</p> : ""}
+                    {showMsg ? <p style={{ color: "red", fontSize: "14px" }}>Edited Successfully!</p> : ""}
                 </form>
                 <form onSubmit={handleDelete}>
                     <input type="text" value={deleteItem} onChange={(e) => setDeleteItem(e.target.value)} placeholder="DeletePost" />
@@ -109,8 +118,8 @@ const ApiCalling = () => {
                 </form>
             </div>
             <div style={{ border: "1px solid green" }}>
-                <h3>SinlePost</h3>
-                <pre>{getPost ? JSON.stringify(getPost, null, 2) : "Get single post"}</pre>
+                <h3>SinglePost</h3>
+                <pre>{getPost && JSON.stringify(getPost, null, 2)}</pre>
             </div>
             <div style={{ border: "1px solid blue" }}>
                 <h3>Data</h3>
