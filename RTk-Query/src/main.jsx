@@ -9,10 +9,10 @@ import { store } from './store.js'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ApiProvider api={ApiSlice}>
-      {/* <Provider store={store}> */}
+    {/* <ApiProvider api={ApiSlice}> */}
+    <Provider store={store}>
       <App />
-      {/* </Provider> */}
-    </ApiProvider>
+    </Provider>
+    {/* </ApiProvider> */}
   </StrictMode>,
 )

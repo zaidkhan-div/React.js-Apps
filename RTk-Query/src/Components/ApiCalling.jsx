@@ -80,7 +80,7 @@ const ApiCalling = () => {
             title: editPostData.title,
             body: editPostData.body,
         }
-        editPost({ body: editObj, id });
+        editPost({ id, body: editObj });
         setEditPostData({ id: "", title: "", body: "" });
     }
 

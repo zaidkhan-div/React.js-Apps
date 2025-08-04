@@ -1,89 +1,16 @@
 {
   "posts": [
     {
-      "title": "title",
-      "body": "body",
-      "id": "1"
+      "id": "6cc2",
+      "text": "Hello Hi"
     },
     {
-      "id": "2",
-      "title": "I am zaid",
-      "body": "thsis it the second"
+      "id": "8938",
+      "text": "Hello Hi"
     },
     {
-      "id": "3",
-      "title": "hello how are you ",
-      "body": "this is the third body of the API"
-    },
-    {
-      "id": "4",
-      "title": "Hello",
-      "body": "This si the forth 4 body of the blog"
-    },
-    {
-      "id": "5",
-      "title": "testing RTK_Query",
-      "body": "thsis i what i am testing the query blog"
-    },
-    {
-      "id": "6",
-      "title": "This is the new One",
-      "body": "HI this is the body"
-    },
-    {
-      "id": "7",
-      "title": "Hello thsi is the New title",
-      "body": "and ths is si the new Bosy"
-    },
-    {
-      "id": "8",
-      "title": "title",
-      "body": "body"
-    },
-    {
-      "id": "9",
-      "title": "title",
-      "body": "body"
-    },
-    {
-      "id": "10",
-      "title": "title",
-      "body": "body"
-    },
-    {
-      "id": "11",
-      "title": "title",
-      "body": "body"
-    },
-    {
-      "id": "12",
-      "title": "hi ",
-      "body": "this si title"
-    },
-    {
-      "id": "13",
-      "title": "Tite",
-      "body": "body"
-    },
-    {
-      "id": "14",
-      "title": "new ",
-      "body": "body"
+      "id": "284e",
+      "text": "new "
     }
-  ],
-  "comments": [
-    {
-      "id": "1",
-      "text": "a comment about post 1",
-      "postId": null
-    },
-    {
-      "id": "2",
-      "text": "another comment about post 1",
-      "postId": null
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }

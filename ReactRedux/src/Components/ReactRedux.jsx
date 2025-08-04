@@ -5,7 +5,7 @@ import { increment, updateValue, resetValue, updateName } from '../Features/Coun
 const ReactRedux = () => {
 
     // const value = useSelector((state) => state.counter.value)
-    const { value, name } = useSelector((state) => state.counter)
+    const { value, name } = useSelector((state) => state.counter);
     const dispatch = useDispatch(); // Send Action to Update State
 
     //  const value  = useSelector((state) => state.counter.value)
