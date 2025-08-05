@@ -1,0 +1,4 @@
+Tool	Best For
+Thunk	Simple apps, beginners, small tasks
+Saga	Complex async flows (e.g. retry, debounce, polling, cancellation, etc.)
+RTK Query	Declarative API fetching with caching
