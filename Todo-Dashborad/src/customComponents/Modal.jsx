@@ -11,15 +11,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import {
-    Card,
-    CardAction,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
@@ -31,9 +22,9 @@ const Modal = () => {
                 <DialogTrigger asChild>
                     <Button
                         className="bg-gradient-to-r from-blue-400 to-purple-500 fixed bottom-6 right-[calc((100vw-1300px)/2)] 
-                       rounded-full h-14 w-14 shadow-lg z-50"
+                       rounded-full h-14 w-14 cursor-pointer shadow-lg z-50"
                         variant="default">
-                        <Plus className="h-8 w-8 text-white" /> 
+                        <Plus className="h-8 w-8 text-white" />
                     </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">

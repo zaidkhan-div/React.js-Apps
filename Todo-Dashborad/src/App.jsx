@@ -1,12 +1,14 @@
 import React from 'react'
 import Navbar from './customComponents/Navbar'
 import Modal from './customComponents/Modal'
+import TodoPage from './pages/TodoPage'
 
 const App = () => {
   return (
     <div>
       <Navbar />
       <Modal />
+      <TodoPage />
     </div >
   )
 }

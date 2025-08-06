@@ -5,7 +5,10 @@ const Navbar = () => {
                 <div className='flex-1'>
                     <h1 className='text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent'>TaskMaster Pro</h1>
                 </div>
-                <div className="border border-gray-400 rounded-full flex-1 px-4 py-2 bg-white shadow-sm">
+                <div className="border border-gray-400 rounded-full flex items-center gap-1.5 flex-1 px-4 py-2 bg-white shadow-sm">
+                    <span>
+                        🔍
+                    </span>
                     <input
                         type="text"
                         placeholder="Search tasks, projects or tags.."
