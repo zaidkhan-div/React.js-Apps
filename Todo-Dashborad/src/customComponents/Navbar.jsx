@@ -1,4 +1,18 @@
+import { useState } from "react"
+import { useDispatch } from "react-redux";
+import { searchTodo } from "../features/TodoSlice";
+
 const Navbar = () => {
+    const [inputVal, setInputVal] = useState("");
+
+    const dispatch = useDispatch();
+    console.log(inputVal);
+    const handleSearch = (e) => {
+        const searchValue = e.target.value;
+        setInputVal(searchValue);
+        dispatch(searchTodo(searchValue))
+    }
+
     return (
         <div className='border-b border-gray-300 py-3'>
             <div className='max-w-[1300px]  w-full mx-auto flex items-center justify-between'>
@@ -10,6 +24,8 @@ const Navbar = () => {
                         🔍
                     </span>
                     <input
+                        value={inputVal}
+                        onChange={handleSearch}
                         type="text"
                         placeholder="Search tasks, projects or tags.."
                         className="outline-none w-full bg-transparent text-sm text-gray-700"

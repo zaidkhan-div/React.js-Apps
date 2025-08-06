@@ -9,7 +9,8 @@ const Content = () => {
     const [isChecked, setIsChecked] = useState(false);
     const { data, isLoading, isSuccess, isError } = useGetAllTodosQuery();
 
-    const todosData = useSelector((state) => state.todo.todos); // getting data from the TodoSlice
+    // const todosData = useSelector((state) => state.todo.todos); // getting data from the TodoSlice
+    const todosData = useSelector((state) => state.todo.filteredTodos); // getting data from the TodoSlice
     const dispatch = useDispatch();
     console.log(todosData, "TodoSlice");
 
@@ -29,7 +30,11 @@ const Content = () => {
             dispatch(setTodo(data));
             console.log(data);
         }
-    }, [data])
+    }, [data]);
+
+    const filteredTodos = active === "Completed"
+        ? todosData.filter(todo => todo.isChecked)
+        : todosData;
 
     return (
         <div className='py-5 px-5 h-full'>
@@ -52,11 +57,11 @@ const Content = () => {
 
             {/* All Tasks are rendered Here */}
 
-            <div className='mt-5 flex flex-col gap-5'>
+            <div className='mt-5 h-full flex flex-col gap-5'>
 
                 {isLoading ?
                     <h2 className='text-center text-2xl'>Loading...</h2>
-                    : data?.map((item, index) => (
+                    : todosData?.map((item, index) => (
                         <div key={index} className='bg-white shadow-lg w-full rounded-lg flex items-start justify-start px-3 py-5 gap-4'>
                             <div>
                                 <Checkbox
@@ -67,7 +72,7 @@ const Content = () => {
                                 <h2 className='text-black text-lg font-medium '>{item?.title}</h2>
                                 <p className='text-gray-500 text-[14px]'>{item?.description}</p>
                                 <div className='flex flex-wrap gap-5 items-center'>
-                                    <span className='bg-red-100 text-red-400 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
+                                    <span className={`${item?.priority === "high" ? "bg-red-100 text-red-400" : "bg-gray-100 text-gray-500"}  text-xs px-2 py-0.5 rounded-full cursor-pointer`}>
                                         {item?.priority}
                                     </span>
                                     <span className='bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
@@ -94,7 +99,7 @@ const Content = () => {
                 }
             </div>
 
-        </div>
+        </div >
     )
 }
 

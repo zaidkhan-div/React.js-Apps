@@ -38,27 +38,28 @@ const Modal = () => {
     let randomId = todos.length + 1;
 
     const handleSubmit = async (e) => {
-        // try {
-        //     let obj = {
-        //         id: randomId.toString(),
-        //         title: title,
-        //         description: description,
-        //         priority: priority,
-        //         dueDate: dueDate,
-        //         estimatedHours: estimatedHours,
-        //     }
-        //     await addTOdo(obj);
-        //     toast.success("Form submit!")
-        // } catch (error) {
-        //     toast(error.message);
-        // } finally {
-        //     setTitle("")
-        //     setDescription("")
-        //     setPriority("")
-        //     setDueDate("")
-        //     setEstimatedHours("")
-        // }
-        console.log(title, description, priority, dueDate, estimatedHours);
+        e.preventDefault();
+        try {
+            let obj = {
+                id: randomId.toString(),
+                title: title,
+                description: description,
+                priority: priority,
+                dueDate: dueDate,
+                estimatedHours: estimatedHours,
+            }
+            await addTOdo(obj);
+            toast.success("Form submit!")
+        } catch (error) {
+            toast(error.message);
+        } finally {
+            setTitle("")
+            setDescription("")
+            setPriority("")
+            setDueDate("")
+            setEstimatedHours("")
+        }
+        // console.log(title, description, priority, dueDate, estimatedHours);
     }
 
     return (
@@ -103,16 +104,17 @@ const Modal = () => {
                         <div className="flex flex-col gap-3">
                             <Label htmlFor="priority">Priority</Label>
                             <Select
-                                onChange={(e) => setPriority(e.target.value)}
+                                onValueChange={(value) => setPriority(value)}
+                                value={priority}
                             >
                                 <SelectTrigger className="w-[100%]">
                                     <SelectValue placeholder="Select a Priority" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
-                                        <SelectItem value="apple">High</SelectItem>
-                                        <SelectItem value="banana">Medium</SelectItem>
-                                        <SelectItem value="blueberry">Low</SelectItem>
+                                        <SelectItem value="high">High</SelectItem>
+                                        <SelectItem value="medium">Medium</SelectItem>
+                                        <SelectItem value="low">Low</SelectItem>
                                     </SelectGroup>
                                 </SelectContent>
                             </Select>
