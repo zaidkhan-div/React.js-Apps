@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 
 const LeftSidebar = () => {
-
+    const allTasks = useSelector((state) => state.todo.todos);
     const [active, setActive] = useState("All Tasks");
 
     return (
@@ -15,7 +16,7 @@ const LeftSidebar = () => {
                         className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
                         ${active === "All Tasks" ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600' : 'text-black'}`}>
                         <p>All Tasks</p>
-                        <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px] flex items-center justify-center'>23</span>
+                        <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px] flex items-center justify-center'>{allTasks.length}</span>
                     </div>
                     <div
                         onClick={() => setActive("Important")}

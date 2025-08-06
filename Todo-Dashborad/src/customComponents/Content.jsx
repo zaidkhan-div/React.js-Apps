@@ -1,9 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Checkbox } from "@/components/ui/checkbox"
+import { useGetAllTodosQuery } from '../features/ApiSlice';
+import { setTodo } from '../features/TodoSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Content = () => {
     const [active, setActive] = useState("All");
     const [isChecked, setIsChecked] = useState(false);
+    const { data, isLoading, isSuccess, isError } = useGetAllTodosQuery();
+
+    const todosData = useSelector((state) => state.todo.todos); // getting data from the TodoSlice
+    const dispatch = useDispatch();
+    console.log(todosData, "TodoSlice");
+
 
     const toggleList = [
         "All",
@@ -15,8 +24,15 @@ const Content = () => {
         "Design",
     ];
 
+    useEffect(() => {
+        if (isSuccess) {
+            dispatch(setTodo(data));
+            console.log(data);
+        }
+    }, [data])
+
     return (
-        <div className='bg-[#f1f1fb] py-5 px-5 h-full'>
+        <div className='py-5 px-5 h-full'>
             <h2 className='text-black text-3xl font-semibold font-serif'>All Tasks</h2>
 
             <div className='flex flex-wrap gap-5 mt-5'>
@@ -25,9 +41,9 @@ const Content = () => {
                         <div
                             key={item}
                             onClick={() => setActive(item)}
-                            className={`flex items-center justify-between rounded-xl py-0.5 px-3 cursor-pointer text-[14px]
+                            className={`flex items-center justify-between border border-[#0000001f] rounded-xl py-0.5 px-3 cursor-pointer text-[14px]
                              ${active === item ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600'
-                                    : 'text-black border bg-[#e1e3f9] border-[#0000002b]'}`}>
+                                    : 'text-black  bg-[#e1e3f9]'}`}>
                             {item}
                         </div>
                     ))}
@@ -36,8 +52,55 @@ const Content = () => {
 
             {/* All Tasks are rendered Here */}
 
-            <div className='mt-5'>
-                <div className='bg-white shadow-lg w-full rounded-lg flex items-start justify-start px-3 py-5 gap-4'>
+            <div className='mt-5 flex flex-col gap-5'>
+
+                {isLoading ?
+                    <h2 className='text-center text-2xl'>Loading...</h2>
+                    : data?.map((item, index) => (
+                        <div key={index} className='bg-white shadow-lg w-full rounded-lg flex items-start justify-start px-3 py-5 gap-4'>
+                            <div>
+                                <Checkbox
+                                    onCheckedChange={(value) => setIsChecked(value)}
+                                    className="border border-[#0000002b] cursor-pointer " />
+                            </div >
+                            <div className='flex flex-col gap-2'>
+                                <h2 className='text-black text-lg font-medium '>{item?.title}</h2>
+                                <p className='text-gray-500 text-[14px]'>{item?.description}</p>
+                                <div className='flex flex-wrap gap-5 items-center'>
+                                    <span className='bg-red-100 text-red-400 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
+                                        {item?.priority}
+                                    </span>
+                                    <span className='bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
+                                        Due: {item?.dueDate}
+                                    </span>
+                                    <span className='bg-gray-100 text-gray-500 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
+                                        Estimated: {item?.estimatedHours}
+                                    </span>
+                                </div>
+                                {/* <div className='flex flex-wrap gap-5 items-center'>
+                                    <span className='bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
+                                        {item?.tags[0]}
+                                    </span>
+                                    <span className='bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
+                                        {item?.tags[1]}
+                                    </span>
+                                    <span className='bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
+                                        {item?.tags[2]}
+                                    </span>
+                                </div> */}
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+
+        </div>
+    )
+}
+
+export default Content
+
+{/* <div className='bg-white shadow-lg w-full rounded-lg flex items-start justify-start px-3 py-5 gap-4'>
                     <div>
                         <Checkbox
                             onCheckedChange={(value) => setIsChecked(value)}
@@ -72,11 +135,4 @@ const Content = () => {
                             </span>
                         </div>
                     </div>
-                </div>
-            </div>
-
-        </div>
-    )
-}
-
-export default Content
+</div> */}

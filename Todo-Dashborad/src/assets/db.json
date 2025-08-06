@@ -1,0 +1,119 @@
+{
+  "todos": [
+    {
+      "id": "1",
+      "title": "Design system implementation",
+      "description": "Create reusable components library",
+      "completed": false,
+      "priority": "high",
+      "category": "development",
+      "tags": [
+        "react",
+        "ui",
+        "design"
+      ],
+      "dueDate": "2025-08-10",
+      "estimatedHours": 8,
+      "actualHours": 0,
+      "dependencies": [],
+      "createdAt": "2025-08-05T10:30:00Z",
+      "updatedAt": "2025-08-05T10:30:00Z"
+    },
+    {
+      "id": "1",
+      "title": "This is new task",
+      "description": "This is the description of my Task",
+      "priority": "high",
+      "dueDate": "2025-08-06",
+      "estimatedHours": "8"
+    },
+    {
+      "id": "fd4a",
+      "title": "titie",
+      "description": "descsv",
+      "priority": "high",
+      "dueDate": "2025-08-07",
+      "estimatedHours": "01"
+    },
+    {
+      "id": "4",
+      "title": "sasf",
+      "description": "sdfSDFSD",
+      "priority": "high",
+      "dueDate": "2025-08-06",
+      "estimatedHours": "122"
+    },
+    {
+      "id": "5",
+      "title": "title",
+      "description": "description",
+      "priority": "high",
+      "dueDate": "2025-08-06",
+      "estimatedHours": "12"
+    },
+    {
+      "id": "6",
+      "title": "title",
+      "description": "desc",
+      "priority": "high",
+      "dueDate": "2025-08-07",
+      "estimatedHours": "1"
+    },
+    {
+      "id": "7",
+      "title": "title",
+      "description": "desctiptip",
+      "priority": "high",
+      "dueDate": "2025-08-14",
+      "estimatedHours": "12"
+    },
+    {
+      "id": "8",
+      "title": "title",
+      "description": "descriptip",
+      "priority": "high",
+      "dueDate": "2025-08-07",
+      "estimatedHours": "12"
+    },
+    {
+      "id": "9",
+      "title": "title",
+      "description": "descriptiopn",
+      "priority": "high",
+      "dueDate": "2025-08-06",
+      "estimatedHours": "18"
+    },
+    {
+      "id": "10",
+      "title": "asdasdf",
+      "description": "asfsDFSF",
+      "priority": "high",
+      "dueDate": "2025-08-06",
+      "estimatedHours": "01"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Development",
+      "color": "#3B82F6",
+      "icon": "code"
+    },
+    {
+      "id": "2",
+      "name": "Design",
+      "color": "#8B5CF6",
+      "icon": "palette"
+    }
+  ],
+  "analytics": [
+    {
+      "date": "2025-08-05",
+      "completedTasks": 5,
+      "totalTasks": 8,
+      "productivityScore": 85,
+      "focusTimeMinutes": 240,
+      "id": "04ec"
+    }
+  ]
+}
