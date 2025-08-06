@@ -67,7 +67,7 @@ const Modal = () => {
             <form>
                 <DialogTrigger asChild>
                     <Button
-                        className="bg-gradient-to-r from-blue-400 to-purple-500 fixed bottom-6 right-[calc((100vw-1300px)/2)] 
+                        className="bg-gradient-to-r from-blue-400 to-purple-500 fixed bottom-6 right-[calc((102vw-1300px)/2)] 
                        rounded-full h-14 w-14 cursor-pointer shadow-lg z-50"
                         variant="default">
                         <Plus className="h-8 w-8 text-white" />

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Checkbox } from "@/components/ui/checkbox"
-import { useGetAllTodosQuery } from '../features/ApiSlice';
+import { useGetAllTodosQuery, useUpdateCompletedMutation } from '../features/ApiSlice';
 import { setTodo } from '../features/TodoSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
 
 const Content = () => {
     const [active, setActive] = useState("All");
     const [isChecked, setIsChecked] = useState(false);
     const { data, isLoading, isSuccess, isError } = useGetAllTodosQuery();
+    const [updateTodoCheck] = useUpdateCompletedMutation();
 
     // const todosData = useSelector((state) => state.todo.todos); // getting data from the TodoSlice
     const todosData = useSelector((state) => state.todo.filteredTodos); // getting data from the TodoSlice
@@ -28,13 +30,28 @@ const Content = () => {
     useEffect(() => {
         if (isSuccess) {
             dispatch(setTodo(data));
-            console.log(data);
         }
-    }, [data]);
+    }, [isSuccess, data]);
 
     const filteredTodos = active === "Completed"
         ? todosData.filter(todo => todo.isChecked)
         : todosData;
+
+    const handleCheckbox = async (value, item) => {
+        setIsChecked(value);
+        try {
+            let obj = {
+                id: item?.id,
+                body: {
+                    ...item,
+                    completed: value
+                }
+            }
+            await updateTodoCheck(obj);
+        } catch (error) {
+            toast(error.message);
+        }
+    }
 
     return (
         <div className='py-5 px-5 h-full'>
@@ -65,7 +82,8 @@ const Content = () => {
                         <div key={index} className='bg-white shadow-lg w-full rounded-lg flex items-start justify-start px-3 py-5 gap-4'>
                             <div>
                                 <Checkbox
-                                    onCheckedChange={(value) => setIsChecked(value)}
+                                    checked={item?.completed}
+                                    onCheckedChange={(value) => handleCheckbox(value, item)}
                                     className="border border-[#0000002b] cursor-pointer " />
                             </div >
                             <div className='flex flex-col gap-2'>
