@@ -1,14 +1,25 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
+import { RxCross2 } from "react-icons/rx";
 
-const LeftSidebar = () => {
+
+const LeftSidebar = ({ isVisible, onClose }) => {
     const allTasks = useSelector((state) => state.todo.todos);
     const [active, setActive] = useState("All Tasks");
 
-    return (
-        <div className='border-r border-gray-300 bg-[#f7f6fb] py-5 px-3 h-full flex flex-col gap-10'>
 
-            <div className='flex flex-col gap-5'>
+    return (
+        // <div className='border-r border-gray-300 bg-[#f7f6fb] py-5 px-3 h-full flex flex-col gap-10'>
+        <div className={`fixed top-0 left-0 h-full z-50 bg-[#f7f6fb] p-5 border-r border-gray-300
+            transform transition-transform duration-300 ease-in-out 
+            ${isVisible ? 'translate-x-0' : '-translate-x-full'} md:static md:translate-x-0 md:block`}>
+
+            <div className='flex flex-col gap-5 relative'>
+                <div
+                    onClick={onClose}
+                    className='block md:hidden absolute right-3'>
+                    <RxCross2 size="25" />
+                </div>
                 <p className='text-xs text-gray-600 font-medium uppercase'>Navigation</p>
                 <div className='flex flex-col gap-3'>
                     <div

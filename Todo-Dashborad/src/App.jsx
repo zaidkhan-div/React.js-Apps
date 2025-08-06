@@ -6,7 +6,6 @@ import TodoPage from './pages/TodoPage'
 const App = () => {
   return (
     <div>
-      <Navbar />
       <Modal />
       <TodoPage />
     </div >

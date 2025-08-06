@@ -1,21 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import LeftSidebar from '../customComponents/LeftSidebar'
 import Content from '../customComponents/Content'
 import RightSidebar from '../customComponents/RightSidebar'
+import Navbar from '../customComponents/Navbar'
 
 const TodoPage = () => {
+
+    const [showLeftSidebar, setShowLeftSidebar] = useState(false);
+    const [showRightSidebar, setShowRightSidebar] = useState(false);
+
     return (
-        <div className='h-[92vh] max-w-[1300px] w-full mx-auto flex justify-center items-start '>
-            <div className="h-full overflow-y-auto hidden md:flex-1">
-                <LeftSidebar />
+        <>
+            <Navbar
+                onLeftToggle={() => setShowLeftSidebar(true)}
+                onRightToggle={() => setShowRightSidebar(true)}
+            />
+
+            <div className='h-[92vh] max-w-[1300px] w-full mx-auto flex justify-center items-start '>
+                <div className="h-full hidden md:block flex-1">
+                    <LeftSidebar isVisible={showLeftSidebar} onClose={() => setShowLeftSidebar(false)} />
+                </div>
+                <div className="h-full bg-[#f1f1fb] removeScroll overflow-y-auto  flex-2">
+                    <Content />
+                </div>
+                <div className="h-full hidden md:block flex-1">
+                    <RightSidebar isVisible={showRightSidebar} onClose={() => setShowRightSidebar(false)} />
+                </div>
             </div>
-            <div className="h-full bg-[#f1f1fb] removeScroll overflow-y-auto  flex-2">
-                <Content />
-            </div>
-            <div className="h-full overflow-y-auto hidden md:flex-1">
-                <RightSidebar />
-            </div>
-        </div>
+        </>
     )
 }
 
