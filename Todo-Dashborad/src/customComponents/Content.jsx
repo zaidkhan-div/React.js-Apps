@@ -7,21 +7,16 @@ import { toast } from 'sonner';
 
 const Content = () => {
     const [active, setActive] = useState("All");
-    const [isChecked, setIsChecked] = useState(false);
     const { data, isLoading, isSuccess, isError } = useGetAllTodosQuery();
     const [updateTodoCheck] = useUpdateCompletedMutation();
 
-    // const todosData = useSelector((state) => state.todo.todos); // getting data from the TodoSlice
     const todosData = useSelector((state) => state.todo.filteredTodos); // getting data from the TodoSlice
     const dispatch = useDispatch();
-    console.log(todosData, "TodoSlice");
-
 
     const toggleList = [
         "All",
         "High Priority",
-        "Due Today",
-        "Overdue",
+        "Due Date",
         "Completed",
         "React",
         "Design",
@@ -33,12 +28,23 @@ const Content = () => {
         }
     }, [isSuccess, data]);
 
-    const filteredTodos = active === "Completed"
-        ? todosData.filter(todo => todo.isChecked)
-        : todosData;
+    const filteredTodos = todosData.filter((todo) => {
+        if (active === "Completed") {
+            return todo?.completed === true
+        } else if (active === 'High Priority') {
+            return todo?.priority === "high"
+        } else if (active === "Due Date") {
+            let today = new Date().toISOString().split("T")[0];
+            return todo?.dueDate > today
+        }
+        else {
+            return todo
+        }
+    })
+
+    console.log(filteredTodos, "Completed");
 
     const handleCheckbox = async (value, item) => {
-        setIsChecked(value);
         try {
             let obj = {
                 id: item?.id,
@@ -52,6 +58,9 @@ const Content = () => {
             toast(error.message);
         }
     }
+
+    let today = new Date().toISOString().split("T")[0];
+    console.log(today, "today")
 
     return (
         <div className='py-5 px-5 h-full'>
@@ -78,7 +87,7 @@ const Content = () => {
 
                 {isLoading ?
                     <h2 className='text-center text-2xl'>Loading...</h2>
-                    : todosData?.map((item, index) => (
+                    : filteredTodos?.map((item, index) => (
                         <div key={index} className='bg-white shadow-lg w-full rounded-lg flex items-start justify-start px-3 py-5 gap-4'>
                             <div>
                                 <Checkbox

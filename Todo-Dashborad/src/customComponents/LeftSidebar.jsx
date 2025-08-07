@@ -8,10 +8,15 @@ const LeftSidebar = ({ isVisible, onClose }) => {
     const [active, setActive] = useState("All Tasks");
 
 
+    const todayTask = allTasks.filter((todo) => {
+        let today = new Date().toISOString().split("T")[0];
+        return todo?.dueDate === today
+    });
+
     return (
         // <div className='border-r border-gray-300 bg-[#f7f6fb] py-5 px-3 h-full flex flex-col gap-10'>
-        <div className={`fixed top-0 left-0 h-full z-50 bg-[#f7f6fb] p-5 border-r border-gray-300
-            transform transition-transform duration-300 ease-in-out 
+        <div className={`fixed top-0 w-full left-0 h-full z-50 bg-[#f7f6fb] p-5 border-r border-gray-300
+            transform transition-transform duration-300 ease-in-out overflow-y-auto removeScroll
             ${isVisible ? 'translate-x-0' : '-translate-x-full'} md:static md:translate-x-0 md:block`}>
 
             <div className='flex flex-col gap-5 relative'>
@@ -41,7 +46,9 @@ const LeftSidebar = ({ isVisible, onClose }) => {
                         className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
                         ${active === "Today" ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600' : 'text-black '}`}>
                         <p>Today</p>
-                        <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px] flex items-center justify-center'>8</span>
+                        <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px] flex items-center justify-center'>
+                            {todayTask.length}
+                        </span>
                     </div>
                     <div
                         onClick={() => setActive("Aanalytic")}
@@ -50,34 +57,35 @@ const LeftSidebar = ({ isVisible, onClose }) => {
                         <p>Aanalytic</p>
                     </div>
                 </div>
-            </div>
 
-            <div className='flex flex-col gap-5'>
-                <p className='text-xs text-gray-600 font-medium uppercase'>Categories</p>
-                <div className='flex flex-col gap-3'>
-                    <div
-                        onClick={() => setActive("Work")}
-                        className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
+                <div className='flex flex-col gap-5'>
+                    <p className='text-xs text-gray-600 font-medium uppercase'>Categories</p>
+                    <div className='flex flex-col gap-3'>
+                        <div
+                            onClick={() => setActive("Work")}
+                            className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
                         ${active === "Work" ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600' : 'text-black'}`}>
-                        <p>Work</p>
-                        <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px]'>23</span>
-                    </div>
-                    <div
-                        onClick={() => setActive("Personal")}
-                        className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
+                            <p>Work</p>
+                            <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px]'>23</span>
+                        </div>
+                        <div
+                            onClick={() => setActive("Personal")}
+                            className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
                         ${active === "Personal" ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600' : 'text-black '}`}>
-                        <p>Personal</p>
-                        <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px]'>5</span>
-                    </div>
-                    <div
-                        onClick={() => setActive("Learning")}
-                        className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
+                            <p>Personal</p>
+                            <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px]'>5</span>
+                        </div>
+                        <div
+                            onClick={() => setActive("Learning")}
+                            className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
                         ${active === "Learning" ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600' : 'text-black '}`}>
-                        <p>Learning</p>
-                        <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px]'>8</span>
+                            <p>Learning</p>
+                            <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px]'>8</span>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
     )
 }

@@ -34,7 +34,7 @@ const Modal = () => {
     const [estimatedHours, setEstimatedHours] = useState(0);
 
     const [addTOdo, { isSuccess, isError, isLoading }] = useAddTodoMutation();
-    const todos = useSelector((state) => state.todo.todos);
+    const todos = useSelector((state) => state.todo.filteredTodos);
     let randomId = todos.length + 1;
 
     const handleSubmit = async (e) => {
@@ -68,7 +68,7 @@ const Modal = () => {
                 <DialogTrigger asChild>
                     <Button
                         className="bg-gradient-to-r from-blue-400 to-purple-500 fixed bottom-6 right-[calc((102vw-1300px)/2)] 
-                       rounded-full h-14 w-14 cursor-pointer shadow-lg z-50"
+                       rounded-full h-14 w-14 cursor-pointer shadow-lg z-500"
                         variant="default">
                         <Plus className="h-8 w-8 text-white" />
                     </Button>

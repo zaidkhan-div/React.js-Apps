@@ -10,7 +10,7 @@ const Navbar = ({ onLeftToggle, onRightToggle }) => {
     const [inputVal, setInputVal] = useState("");
 
     const dispatch = useDispatch();
-    console.log(inputVal);
+    
     const handleSearch = (e) => {
         const searchValue = e.target.value;
         setInputVal(searchValue);
