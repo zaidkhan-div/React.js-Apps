@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 
 const Content = () => {
     const [active, setActive] = useState("All");
-    const { data, isLoading, isSuccess, isError } = useGetAllTodosQuery();
+    const { data, isLoading, isSuccess } = useGetAllTodosQuery();
     const [updateTodoCheck] = useUpdateCompletedMutation();
 
     const todosData = useSelector((state) => state.todo.filteredTodos); // getting data from the TodoSlice

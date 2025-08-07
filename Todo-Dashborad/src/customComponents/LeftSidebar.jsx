@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import { RxCross2 } from "react-icons/rx";
-
+import CalendrImg from './../assets/calendar.png'
+import ReactImg from "./../assets/react.png"
+import RoblexImg from "./../assets/roblox.png"
+import AnalyticImg from "./../assets/analysis.png"
+import Bagimg from './../assets/bag.png'
+import KnowledgeImg from './../assets/knowledge.png'
+import ManImg from './../assets/man.png'
 
 const LeftSidebar = ({ isVisible, onClose }) => {
     const allTasks = useSelector((state) => state.todo.todos);
@@ -11,6 +17,9 @@ const LeftSidebar = ({ isVisible, onClose }) => {
     const todayTask = allTasks.filter((todo) => {
         let today = new Date().toISOString().split("T")[0];
         return todo?.dueDate === today
+    });
+    const importantTask = allTasks.filter((todo) => {
+        return todo?.priority === "high"
     });
 
     return (
@@ -31,21 +40,32 @@ const LeftSidebar = ({ isVisible, onClose }) => {
                         onClick={() => setActive("All Tasks")}
                         className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
                         ${active === "All Tasks" ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600' : 'text-black'}`}>
-                        <p>All Tasks</p>
-                        <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px] flex items-center justify-center'>{allTasks.length}</span>
+                        <div className='w-[30px] flex items-center justify-start gap-2'>
+                            <img src={RoblexImg} alt="" className='w-full' />
+                            <p>AllTasks</p>
+                        </div>
+                        <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px] flex items-center justify-center'>
+                            {allTasks.length}
+                        </span>
                     </div>
                     <div
                         onClick={() => setActive("Important")}
                         className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
                         ${active === "Important" ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600' : 'text-black '}`}>
-                        <p>Important</p>
-                        <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px] flex items-center justify-center'>5</span>
+                        <div className='w-[30px] flex items-center justify-start gap-2'>
+                            <img src={ReactImg} alt="" className='w-full' />
+                            <p>Important</p>
+                        </div>
+                        <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px] flex items-center justify-center'>{importantTask.length}</span>
                     </div>
                     <div
                         onClick={() => setActive("Today")}
                         className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
                         ${active === "Today" ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600' : 'text-black '}`}>
-                        <p>Today</p>
+                        <div className='w-[30px] flex items-center justify-start gap-2 '>
+                            <img src={CalendrImg} alt="" />
+                            <p>Today</p>
+                        </div>
                         <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px] flex items-center justify-center'>
                             {todayTask.length}
                         </span>
@@ -54,7 +74,10 @@ const LeftSidebar = ({ isVisible, onClose }) => {
                         onClick={() => setActive("Aanalytic")}
                         className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
                         ${active === "Aanalytic" ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600' : 'text-black '}`}>
-                        <p>Aanalytic</p>
+                        <div className='w-[30px] flex items-center justify-start gap-2 '>
+                            <img src={AnalyticImg} alt="" />
+                            <p>Aanalytic</p>
+                        </div>
                     </div>
                 </div>
 
@@ -65,21 +88,30 @@ const LeftSidebar = ({ isVisible, onClose }) => {
                             onClick={() => setActive("Work")}
                             className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
                         ${active === "Work" ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600' : 'text-black'}`}>
-                            <p>Work</p>
+                            <div className='w-[30px] flex items-center justify-start gap-2'>
+                                <img src={Bagimg} alt="" />
+                                <p>Work</p>
+                            </div>
                             <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px]'>23</span>
                         </div>
                         <div
                             onClick={() => setActive("Personal")}
                             className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
                         ${active === "Personal" ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600' : 'text-black '}`}>
-                            <p>Personal</p>
+                            <div className='w-[30px] flex items-center justify-start gap-2'>
+                                <img src={ManImg} alt="" />
+                                <p>Personal</p>
+                            </div>
                             <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px]'>5</span>
                         </div>
                         <div
                             onClick={() => setActive("Learning")}
                             className={`flex items-center justify-between rounded-xl py-3 px-3 cursor-pointer
                         ${active === "Learning" ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600' : 'text-black '}`}>
-                            <p>Learning</p>
+                            <div className='w-[30px] flex items-center justify-start gap-2'>
+                                <img src={KnowledgeImg} alt="" />
+                                <p>Learning</p>
+                            </div>
                             <span className='bg-red-500 text-[10px] font-bold text-white rounded-full px-2 py-[1px]'>8</span>
                         </div>
                     </div>
