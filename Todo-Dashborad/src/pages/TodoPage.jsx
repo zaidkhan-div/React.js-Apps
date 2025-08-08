@@ -8,6 +8,7 @@ const TodoPage = () => {
 
     const [showLeftSidebar, setShowLeftSidebar] = useState(false);
     const [showRightSidebar, setShowRightSidebar] = useState(false);
+    const [activeFilter, setActiveFilter] = useState("All Tasks");
 
     return (
         <>
@@ -17,18 +18,26 @@ const TodoPage = () => {
                 }}
                 onRightToggle={() => {
                     setShowRightSidebar(true);
-                }}
-            />
+                }} />
 
             <div className='h-[92vh] max-w-[1300px] w-full mx-auto flex justify-center items-start '>
                 <div className={`h-full transition-all ${showLeftSidebar ? 'block' : 'hidden'} md:block flex-1 z-50 `}>
-                    <LeftSidebar isVisible={showLeftSidebar} onClose={() => setShowLeftSidebar(false)} />
+                    <LeftSidebar
+                        activeFilter={activeFilter}
+                        setActiveFilter={setActiveFilter}
+                        isVisible={showLeftSidebar}
+                        onClose={() => setShowLeftSidebar(false)} />
                 </div>
-                <div className={`h-full ${showLeftSidebar || showRightSidebar ? "hidden" : "block"} bg-[#f1f1fb] removeScroll overflow-y-auto  flex-2`}>
-                    <Content />
+                <div className={`h-full ${showLeftSidebar || showRightSidebar == true ? "hidden" : "block"} bg-[#f1f1fb] removeScroll overflow-y-auto  flex-2`}>
+                    <Content
+                        activeFilter={activeFilter}
+                    />
                 </div>
                 <div className={`h-full ${showRightSidebar ? 'block' : 'hidden'} md:block flex-1 z-50`}>
-                    <RightSidebar isVisible={showRightSidebar} onClose={() => setShowRightSidebar(false)} />
+                    <RightSidebar isVisible={showRightSidebar}
+                        activeFilter={activeFilter}
+                        onClose={() => setShowRightSidebar(false)}
+                    />
                 </div>
             </div>
         </>

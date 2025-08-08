@@ -2,17 +2,49 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { RxCross2 } from 'react-icons/rx';
 import ProgressBar from './ProgressBar';
+import { toast } from 'sonner';
 
-const RightSidebar = ({ isVisible, onClose }) => {
+const RightSidebar = ({ isVisible, onClose, activeFilter }) => {
+
     const todosData = useSelector((state) => state.todo.todos);
 
-    const completionScore = todosData.filter((item) => item?.completed);
-    console.log(completionScore, "Rate");
+    // let completionScore = todosData.filter((item) => item?.completed);
+    // var calculateRate = (completionScore.length / todosData.length) * 100;
 
-    const calculateRate = (completionScore.length / todosData.length) * 100;
+    let calculateRate = 0;
+    function calculationRate(input, output) {
+        return (input.length / output.length) * 100;
+    }
+
+    if (activeFilter === "All Tasks") {
+        let completedTaks = todosData.filter((item) => item?.completed);
+        // let calculateAllTasks = (completedTaks.length / todosData.length) * 100;
+        let calculateAllTasks = (completedTaks.length / todosData.length) * 100;
+        calculateRate = calculateAllTasks;
+    }
+    if (activeFilter === "Important") {
+        // let completedTasks = todosData.filter((item) => item?.completed);
+        let completedTasks = todosData.filter((item) => {
+            return item?.priority === "high" ? item?.completed : ""
+        });
+        let priorityTasks = todosData.filter((item) => item?.priority === "high");
+        var importantRate = (completedTasks.length / priorityTasks.length) * 100;
+        calculateRate = importantRate
+    }
+    if (activeFilter === "Today") {
+        let today = new Date().toISOString().split("T")[0];
+        let todayTasksCompleted = todosData.filter((item) => {
+            return item?.dueDate === today ? item?.completed : ""
+        });
+        let todayTasks = todosData.filter(item => item?.dueDate === today)
+        let todayRates = (todayTasksCompleted.length / todayTasks.length) * 100;
+        calculateRate = todayRates
+    }
+
+
 
     return (
-        <div className={`fixed top-0 right-0 h-full w-full z-50 bg-[#f7f6fb] p-5 border-r border-gray-300
+        <div className={`fixed top-0 right-0 h-full w-full z-50 bg-[#f7f6fb] p-5 border-l border-gray-300
             transform transition-transform duration-300 ease-in-out overflow-y-auto removeScroll
             ${isVisible ? 'translate-x-0' : 'translate-x-full'} md:static md:translate-x-0 md:block`}>
             <div

@@ -14,7 +14,7 @@ const Navbar = ({ onLeftToggle, onRightToggle }) => {
     const handleSearch = (e) => {
         const searchValue = e.target.value;
         setInputVal(searchValue);
-        dispatch(searchTodo(searchValue))
+        dispatch(searchTodo(searchValue));
     }
 
     return (

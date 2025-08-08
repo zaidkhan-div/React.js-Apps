@@ -5,7 +5,7 @@ import { setTodo } from '../features/TodoSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 
-const Content = () => {
+const Content = ({ activeFilter }) => {
     const [active, setActive] = useState("All");
     const { data, isLoading, isSuccess } = useGetAllTodosQuery();
     const [updateTodoCheck] = useUpdateCompletedMutation();
@@ -28,21 +28,38 @@ const Content = () => {
         }
     }, [isSuccess, data]);
 
-    const filteredTodos = todosData.filter((todo) => {
-        if (active === "Completed") {
-            return todo?.completed === true
-        } else if (active === 'High Priority') {
-            return todo?.priority === "high"
-        } else if (active === "Due Date") {
-            let today = new Date().toISOString().split("T")[0];
-            return todo?.dueDate > today
-        }
-        else {
-            return todo
-        }
-    })
+    // const filteredTodos = todosData.filter((todo) => {
+    //     if (active === "Completed") {
+    //         return todo?.completed === true
+    //     } else if (active === 'High Priority') {
+    //         return todo?.priority === "high"
+    //     } else if (active === "Due Date") {
+    //         let today = new Date().toISOString().split("T")[0];
+    //         return todo?.dueDate > today
+    //     } else {
+    //         return todo
+    //     }
+    // });
 
-    console.log(filteredTodos, "Completed");
+    const filteredTodos = todosData.filter((todo) => {
+        const today = new Date().toISOString().split("T")[0];
+        if (activeFilter === "Important") {
+            return todo.priority === "high";
+        }
+        if (activeFilter === "Today") {
+            return todo.dueDate === today;
+        }
+        if (active === "Completed") {
+            return todo.completed === true;
+        }
+        if (active === "High Priority") {
+            return todo.priority === "high";
+        }
+        if (active === "Due Date") {
+            return todo.dueDate > today;
+        }
+        return true;
+    }).reverse();
 
     const handleCheckbox = async (value, item) => {
         try {
@@ -59,8 +76,6 @@ const Content = () => {
         }
     }
 
-    let today = new Date().toISOString().split("T")[0];
-    console.log(today, "today")
 
     return (
         <div className='py-5 px-5 h-full'>
@@ -131,40 +146,3 @@ const Content = () => {
 }
 
 export default Content
-
-{/* <div className='bg-white shadow-lg w-full rounded-lg flex items-start justify-start px-3 py-5 gap-4'>
-                    <div>
-                        <Checkbox
-                            onCheckedChange={(value) => setIsChecked(value)}
-                            className="border border-[#0000002b] cursor-pointer " />
-                    </div >
-                    <div className='flex flex-col gap-2'>
-                        <h2 className='text-black text-lg font-medium '>Implement Redux Toolkit with RTK Query</h2>
-                        <p className='text-gray-500 text-[14px]'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias expedita corporis asperiores similique ab? Similique deserunt soluta cupiditate rem, sunt magni illo quas laudantium ullam. Impedit delectus odit assumenda aliquid recusandae esse, officia voluptate adipisci?</p>
-                        <div className='flex flex-wrap gap-5 items-center'>
-                            <span className='bg-red-100 text-red-400 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
-                                High
-                            </span>
-                            <span className='bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
-                                Due Date
-                            </span>
-                            <span className='bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
-                                Estimated Hours
-                            </span>
-                            <span className='bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
-                                High
-                            </span>
-                        </div>
-                        <div className='flex flex-wrap gap-5 items-center'>
-                            <span className='bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
-                                react
-                            </span>
-                            <span className='bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
-                                redux
-                            </span>
-                            <span className='bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full cursor-pointer'>
-                                toolkit
-                            </span>
-                        </div>
-                    </div>
-</div> */}

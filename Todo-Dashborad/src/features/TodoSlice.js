@@ -20,7 +20,7 @@ const TodoSlice = createSlice({
                     item?.title.toLowerCase().includes(query)
                 );
             }
-        }
+        },
     }
 });
 
