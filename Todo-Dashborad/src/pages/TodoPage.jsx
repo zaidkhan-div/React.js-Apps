@@ -26,7 +26,8 @@ const TodoPage = () => {
                         activeFilter={activeFilter}
                         setActiveFilter={setActiveFilter}
                         isVisible={showLeftSidebar}
-                        onClose={() => setShowLeftSidebar(false)} />
+                        onClose={() => setShowLeftSidebar(false)}
+                    />
                 </div>
                 <div className={`h-full ${showLeftSidebar || showRightSidebar == true ? "hidden" : "block"} bg-[#f1f1fb] removeScroll overflow-y-auto  flex-2`}>
                     <Content

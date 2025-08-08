@@ -71,7 +71,7 @@
       "priority": "high",
       "dueDate": "2025-08-08",
       "estimatedHours": "3",
-      "completed": false
+      "completed": true
     },
     {
       "id": "7",
@@ -80,6 +80,14 @@
       "priority": "high",
       "dueDate": "2025-08-08",
       "estimatedHours": "3"
+    },
+    {
+      "id": "9",
+      "title": "title",
+      "description": "descri",
+      "priority": "high",
+      "dueDate": "",
+      "estimatedHours": 0
     }
   ],
   "categories": [

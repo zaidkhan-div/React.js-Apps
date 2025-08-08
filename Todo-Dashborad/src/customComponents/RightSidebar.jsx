@@ -19,29 +19,26 @@ const RightSidebar = ({ isVisible, onClose, activeFilter }) => {
     if (activeFilter === "All Tasks") {
         let completedTaks = todosData.filter((item) => item?.completed);
         // let calculateAllTasks = (completedTaks.length / todosData.length) * 100;
-        let calculateAllTasks = (completedTaks.length / todosData.length) * 100;
+        let calculateAllTasks = calculationRate(completedTaks, todosData);
         calculateRate = calculateAllTasks;
-    }
-    if (activeFilter === "Important") {
-        // let completedTasks = todosData.filter((item) => item?.completed);
+    } if (activeFilter === "Important") {
         let completedTasks = todosData.filter((item) => {
             return item?.priority === "high" ? item?.completed : ""
         });
         let priorityTasks = todosData.filter((item) => item?.priority === "high");
-        var importantRate = (completedTasks.length / priorityTasks.length) * 100;
+        var importantRate = calculationRate(completedTasks, priorityTasks);
         calculateRate = importantRate
-    }
-    if (activeFilter === "Today") {
+    } if (activeFilter === "Today") {
         let today = new Date().toISOString().split("T")[0];
         let todayTasksCompleted = todosData.filter((item) => {
             return item?.dueDate === today ? item?.completed : ""
         });
         let todayTasks = todosData.filter(item => item?.dueDate === today)
-        let todayRates = (todayTasksCompleted.length / todayTasks.length) * 100;
-        calculateRate = todayRates
+        let todayRates = calculationRate(todayTasksCompleted, todayTasks);
+        calculateRate = todayRates;
+    } else {
+        calculateRate;
     }
-
-
 
     return (
         <div className={`fixed top-0 right-0 h-full w-full z-50 bg-[#f7f6fb] p-5 border-l border-gray-300

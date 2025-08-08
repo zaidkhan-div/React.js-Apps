@@ -22,6 +22,35 @@ const LeftSidebar = ({ isVisible, onClose, activeFilter, setActiveFilter }) => {
         return todo?.priority === "high";
     });
 
+
+    let calculateRate = 0;
+    function calculationRate(input, output) {
+        return (input.length / output.length) * 100;
+    }
+    if (activeFilter === "All Tasks") {
+        let completedTaks = allTasks.filter((item) => item?.completed);
+        // let calculateAllTasks = (completedTaks.length / todosData.length) * 100;
+        let calculateAllTasks = calculationRate(completedTaks, allTasks);
+        calculateRate = calculateAllTasks;
+    } if (activeFilter === "Important") {
+        let completedTasks = allTasks.filter((item) => {
+            return item?.priority === "high" ? item?.completed : ""
+        });
+        let priorityTasks = allTasks.filter((item) => item?.priority === "high");
+        var importantRate = calculationRate(completedTasks, priorityTasks);
+        calculateRate = importantRate
+    } if (activeFilter === "Today") {
+        let today = new Date().toISOString().split("T")[0];
+        let todayTasksCompleted = allTasks.filter((item) => {
+            return item?.dueDate === today ? item?.completed : ""
+        });
+        let todayTasks = allTasks.filter(item => item?.dueDate === today)
+        let todayRates = calculationRate(todayTasksCompleted, todayTasks);
+        calculateRate = todayRates;
+    } else {
+        calculateRate;
+    }
+
     return (
         <div className={`fixed top-0 w-full left-0 h-full z-50 bg-[#f7f6fb] p-5 border-r border-gray-300
             transform transition-transform duration-300 ease-in-out overflow-y-auto removeScroll
