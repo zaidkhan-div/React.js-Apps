@@ -61,10 +61,10 @@ const RightSidebar = ({ isVisible, onClose, activeFilter }) => {
                     </div>
                 </div>
                 <div className='flex flex-col mt-10 md:mt-0 gap-5'>
-                    <div className='shadow-2xl bg-white h-auto w-full rounded-lg px-5 py-5 flex flex-col gap-2'>
+                    <div className='shadow-2xl bg-white h-auto w-full rounded-lg    px-5 py-5 flex flex-col gap-2'>
                         <div className='rounded-lg w-full py-2  px-10 flex flex-col gap-2 items-center justify-center'>
-                            <ProgressBar completionRate={calculateRate.toFixed(0)} />
-                            <p className='text-base uppercase text-gray-400'>Completion Rate</p>
+                            <ProgressBar completionRate={!isNaN(calculateRate) ? calculateRate.toFixed(0) : "Not found"} />
+                            <p className='text-xs uppercase text-gray-400'>Completion Rate</p>
                         </div>
                     </div>
                 </div>

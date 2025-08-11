@@ -42,7 +42,7 @@ const LeftSidebar = ({ isVisible, onClose, activeFilter, setActiveFilter }) => {
     } if (activeFilter === "Today") {
         let today = new Date().toISOString().split("T")[0];
         let todayTasksCompleted = allTasks.filter((item) => {
-            return item?.dueDate === today ? item?.completed : ""
+            return item?.dueDate === today ? item?.completed : "Not found"
         });
         let todayTasks = allTasks.filter(item => item?.dueDate === today)
         let todayRates = calculationRate(todayTasksCompleted, todayTasks);
