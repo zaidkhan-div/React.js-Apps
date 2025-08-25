@@ -5,8 +5,9 @@ import { setTodo } from '../features/TodoSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 
-const Content = ({ activeFilter }) => {
-    const [active, setActive] = useState("All");
+
+const Content = ({ activeFilter, active, setActive }) => {
+    // const [active, setActive] = useState("All");
     const { data, isLoading, isSuccess } = useGetAllTodosQuery();
     const [updateTodoCheck] = useUpdateCompletedMutation();
 
@@ -145,4 +146,4 @@ const Content = ({ activeFilter }) => {
     )
 }
 
-export default Content
+export default Content  

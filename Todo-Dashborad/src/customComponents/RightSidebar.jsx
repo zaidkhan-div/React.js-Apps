@@ -4,7 +4,7 @@ import { RxCross2 } from 'react-icons/rx';
 import ProgressBar from './ProgressBar';
 import { toast } from 'sonner';
 
-const RightSidebar = ({ isVisible, onClose, activeFilter }) => {
+const RightSidebar = ({ isVisible, onClose, activeFilter, active }) => {
 
     const todosData = useSelector((state) => state.todo.todos);
 
@@ -36,6 +36,22 @@ const RightSidebar = ({ isVisible, onClose, activeFilter }) => {
         let todayTasks = todosData.filter(item => item?.dueDate === today)
         let todayRates = calculationRate(todayTasksCompleted, todayTasks);
         calculateRate = todayRates;
+    } else {
+        calculateRate;
+    }
+
+    if (active === "Completed") {
+        let completed = todosData.filter((item) => item.completed);
+        calculateRate = calculationRate(completed, todosData);
+    } else if (active === "High Priority") {
+        let completed = todosData.filter((item) => item.priority === "high" && item.completed);
+        let priority = todosData.filter((item) => item.priority === "high");
+        calculateRate = calculationRate(completed, priority);
+    } else if (active === "Due Date") {
+        let today = new Date().toISOString().split("T")[0];
+        let completed = todosData.filter((item) => item.dueDate > today && item.completed);
+        let upcoming = todosData.filter((item) => item.dueDate > today);
+        calculateRate = calculationRate(completed, upcoming);
     } else {
         calculateRate;
     }

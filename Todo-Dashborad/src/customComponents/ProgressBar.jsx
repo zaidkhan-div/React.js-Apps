@@ -13,7 +13,7 @@ const ProgressBar = ({ completionRate }) => {
                                 }}
                             />
                             <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
-                                <p className="text-blue-500 text-lg font-black">{completionRate}%</p>
+                                <p className="text-blue-500 text-base text-center font-black">{completionRate}%</p>
                             </div>
                         </div>
                     </div>
